@@ -1,0 +1,261 @@
+input[type="text"],
+input[type="password"],
+input[type="date"],
+input[type="number"] {
+    padding: $spaceXS $spaceM;
+    border: 1px solid $colorGray200;
+    border-radius: $radiusM;
+    background-color: $colorGray100;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+.form-entry {
+    margin-bottom: $spaceM;
+    width: 100%;
+    input {
+        border-radius: 24px;
+        height: 40px;
+        box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        width: 100%;
+        &.has-error {
+            color: red !important;
+            border: 1px solid red;
+        }
+        &::placeholder,
+        &::-webkit-input-placeholder,
+        &:-ms-input-placeholder {
+            color: #8F9BB3;
+            font-size: 15px;
+            line-height: 20px;
+            font-weight: 400;
+            padding-left: 5px;
+        }
+        &:disabled {
+            background-color: #DDD;
+        }
+    }
+    &.is-one-line {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        label {
+            display: block;
+            width: 150px;
+        }
+    }
+    &.flex-column {
+        display: flex;
+        flex-direction: column;
+        label {
+            color: $colorMainBlue;
+            font-size: 12px;
+            font-weight: bold;
+            line-height: 16px;
+        }
+    }
+    &.subinformations {
+        display: flex;
+        flex-direction: column;
+        label {
+            color: #808080;
+            font-size: 11px;
+            font-weight: bold;
+            line-height: 5px;
+        }
+        .value {
+            font-size: 12px;
+            line-height: 14px;
+        }
+    }
+    .select {
+        position: relative;
+        display: flex;
+        width: 100%;
+        height: 40px;
+        line-height: 3;
+        background: #F8F9FA;
+        overflow: hidden;
+        border: 1px solid $colorGray200;
+        border-radius: 24px;
+        .select-value {
+            position: absolute;
+            height: 40px;
+            line-height: 40px;
+            padding-left: 20px;
+            color: #222B45;
+            font-size: 15px;
+            font-weight: 600;
+        }
+        select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            -ms-appearance: none;
+            appearance: none;
+            outline: 0;
+            box-shadow: none;
+            border: 0 !important;
+            background: #F8F9FA;
+            background-image: none;
+            flex: 1;
+            padding: 0 .5em;
+            color: #fff;
+            cursor: pointer;
+            width: 100%;
+            &::-ms-expand {
+                display: none;
+            }
+            option {
+                color: black
+            }
+        }
+        &::after {
+            content: '\2304';
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: 0 1em;
+            background: #F8F9FA;
+            cursor: pointer;
+            pointer-events: none;
+            -webkit-transition: .25s all ease;
+            -o-transition: .25s all ease;
+            transition: .25s all ease;
+            line-height: 30px;
+        }
+        &:hover::after {
+            color: $colorHover;
+        }
+    }
+    input[type=checkbox] {
+        display: none;
+        &:disabled+label {
+            color: #808080;
+            cursor: default !important;
+        }
+        &:disabled+label:before {
+            background-color: #e8e8e8;
+            cursor: default !important;
+        }
+        &+label {
+            display: block;
+            margin: 0.2em;
+            cursor: pointer;
+            padding: 0.2em;
+            color: #222B45;
+            font-size: 15px;
+            line-height: 24px;
+            font-weight: 600;
+            &:before {
+                content: "\2714";
+                border: 0.1em solid #8992A3;
+                border-radius: 0.2em;
+                display: inline-block;
+                width: 20px;
+                height: 20px;
+                margin-right: 10px;
+                vertical-align: bottom;
+                color: transparent;
+                transition: .2s;
+                line-height: 16px;
+                text-align: center;
+            }
+            &:active:before {
+                transform: scale(0);
+            }
+        }
+        &:checked+label:before {
+            background-color: $colorMainBlue;
+            border-color: $colorMainBlue;
+            color: white;
+        }
+        &:disabled+label:before {
+            transform: scale(1);
+            border-color: #aaa;
+        }
+        &:checked:disabled+label:before {
+            transform: scale(1);
+            background-color: #bfb;
+            border-color: #bfb;
+        }
+    }
+}
+
+.button-group {
+    display: flex;
+    margin-top: 30px;
+    justify-content: flex-end;
+    button+button {
+        margin-left: 15px;
+    }
+}
+
+.progress-bar {
+    display: flex;
+    flex-flow: row-reverse;
+    align-items: center;
+    .bar {
+        height: 10px;
+        position: relative;
+        background: #E4E9F2;
+        -moz-border-radius: 8px;
+        -webkit-border-radius: 8px;
+        border-radius: 8px;
+        padding: 0;
+        width: 100%;
+        .meter {
+            background-color: #00E096;
+            display: block;
+            width: 40%;
+            height: 10px;
+            -moz-border-radius: 8px;
+            -webkit-border-radius: 8px;
+            border-radius: 8px;
+            position: absolute;
+        }
+        .meter.aborted {
+            background-color: $colorMainBlue;
+            position: absolute;
+        }
+    }
+    .value {
+        color: #222B45;
+        font-size: 15px;
+        font-weight: 600;
+        line-height: 24px;
+        text-align: right;
+        padding: 0 20px;
+    }
+}
+
+textarea {
+    border-radius: 24px;
+    border: 1px solid $colorGray200;
+    padding: 1em;
+    &:focus {
+        border-color: $colorMainBlue;
+        outline-width: 0;
+        resize: none;
+    }
+}
+
+.deleted {
+    .value {
+        text-decoration: line-through;
+    }
+}
+
+tr.deleted,
+.table-data-deleted td {
+    text-decoration: line-through;
+}
