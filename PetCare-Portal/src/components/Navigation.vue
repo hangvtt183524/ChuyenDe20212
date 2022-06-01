@@ -3,11 +3,11 @@
         <div class="navigation-tittle">Pet Care</div>
         <div class="menu">
             <div class="choice">
-                Trang chủ
+                <router-link class="nav-link" to="/">Trang chủ</router-link>
                 <div class="underline"></div>
             </div>
             <div class="choice">
-                Dịch vụ
+                <router-link class="nav-link" to="/booking-schedule">Dịch vụ</router-link>
                 <div class="underline"></div>
             </div>
             <div class="choice">
