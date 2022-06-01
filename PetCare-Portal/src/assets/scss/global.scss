@@ -247,3 +247,10 @@ table th {
 .popover-wrapper-icon {
     cursor: pointer;
 }
+
+.label-wrapper {
+    background-color: $colorPrimary300;
+    padding: 20px;
+    border-top-left-radius: 14px;
+    border-top-right-radius: 14px;
+}
