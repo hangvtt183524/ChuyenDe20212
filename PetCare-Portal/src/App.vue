@@ -1,15 +1,19 @@
 <template>
   <div class="app-wrapper">
     <div class="app">
+      <TheNavigation/>
       <router-view />
     </div>
   </div>
 </template>
 
 <script>
+import TheNavigation from '../src/components/Navigation.vue'
 export default {
   name: "app",
-  components: {},
+  components: {
+    TheNavigation,
+  },
   data() {
     return {};
   },
@@ -21,34 +25,35 @@ export default {
 </script>
 
 <style lang="scss">
-@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
+// @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Quicksand", sans-serif;
-}
+// * {
+//   margin: 0;
+//   padding: 0;
+//   box-sizing: border-box;
+//   font-family: "Quicksand", sans-serif;
+// }
 
-.app {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
+// .app {
+//   display: flex;
+//   flex-direction: column;
+//   min-height: 100vh;
+// }
 
-.container {
-  max-width: 1440px;
-  margin: 0 auto;
-}
+// .container {
+//   max-width: 1440px;
+//   margin: 0 auto;
+// }
 
-.link {
-  cursor: pointer;
-  text-decoration: none;
-  text-transform: uppercase;
-  color: black;
-}
+// .link {
+//   cursor: pointer;
+//   text-decoration: none;
+//   text-transform: uppercase;
+//   color: black;
+// }
 
-.link-light {
-  color: #fff;
-}
+// .link-light {
+//   color: #fff;
+// }
+  @import url('./styles/main.css');
 </style>
