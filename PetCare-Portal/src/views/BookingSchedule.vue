@@ -1,11 +1,11 @@
 <template>
   <div id="booking-page" class="booking-page">
     <div class="booking-info">
-      <div class="booking-info-wrapper">
-        <div class="label-wrapper">
-          <label>Set a schedule</label>
+      <div class="booking-info-wrapper content-panel">
+        <div class="content-header">
+          <span>Set a schedule</span>
         </div>
-        <div class="booking-form">
+        <div class="booking-form content-body">
           <div class="booking-form-input">
             <div class="left-content">
               <div class="left-content-wrapper">
@@ -17,10 +17,18 @@
                     label="Date"
                     is-editing="true"
                 />
+                  <InputItem
+                    label="Time"
+                    is-editing="true"
+                />
               </div>
             </div>
             <div class="right-content">
               <div class="right-content-wrapper">
+                <InputItem
+                    label="Doctor"
+                    is-editing="true"
+                />
                 <InputItem
                     label="Situation"
                     is-editing="true"
@@ -35,18 +43,51 @@
       </div>
     </div>
     <div class="booking-history">
+      <div class="booking-history-wrapper content-panel" v-if="!showHistory">
+        <div
+            class="content-header clickable"
+            @click.stop="showHistory = !showHistory"
+        >
+          <span>History</span>
+          <span class="svg-icon">
+              <down class="is-fill-blue pull-right" />
+            </span>
+        </div>
+      </div>
+      <div class="booking-history-wrapper content-panel" v-if="showHistory">
+        <div
+            class="content-header clickable"
+            @click.stop="showHistory = !showHistory"
+        >
+          <span>History</span>
+          <span class="svg-icon">
+              <up class="is-fill-blue pull-right" />
+            </span>
+        </div>
+        <div class="history-detail">
 
-    </div>
+        </div>
+      </div>
+      </div>
   </div>
 </template>
 
 <script>
 import InputItem from "@/components/InputItem";
+import down from '@/assets/svg/chevron-down.svg'
+import up from '@/assets/svg/chevron-up.svg'
 
 export default {
   name: "BookingSchedule",
   components: {
-    InputItem
+    InputItem,
+    up,
+    down
+  },
+  data() {
+    return {
+      showHistory: false
+    }
   }
 }
 </script>
@@ -54,37 +95,23 @@ export default {
 <style lang="scss">
 .booking-page {
   display: flex;
+  justify-content: space-between;
   padding: 20px;
-
-  label {
-    color: #3366ff;
-    font-size: 24px;
-    font-weight: bold;
-    line-height: 16px;
-  }
 
   .booking-info {
 
     .booking-info-wrapper {
-      display: flex;
-      flex-direction: column;
 
       .booking-form {
-        display: flex;
-        flex-direction: column;
-
-        border-bottom-left-radius: 14px;
-        border-bottom-right-radius: 14px;
-        border: #a1d8ff7a solid 2px;
 
         .booking-form-input {
           display: flex;
           .left-content {
             z-index: 19;
-            max-width: 430px;
+            max-width: 360px;
             .left-content-wrapper {
-              max-width: 430px;
-              min-width: 430px;
+              max-width: 360px;
+              min-width: 360px;
             }
           }
 
@@ -94,15 +121,13 @@ export default {
             flex: auto;
 
             .right-content-wrapper {
-              max-width: 430px;
-              min-width: 430px;
+              max-width: 360px;
+              min-width: 360px;
             }
           }
         }
       }
     }
   }
-
-
 }
 </style>
