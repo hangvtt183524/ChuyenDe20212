@@ -4,6 +4,7 @@
       <div class="page d-flex flex-column flex-fluid">
         <div class="wrapper d-flex flex-row flex-fluid">
             <div class="App">
+              <TheNavigation/>
               <router-view />
             </div>
         </div>
@@ -13,9 +14,12 @@
 </template>
 
 <script>
+import TheNavigation from '../src/components/Navigation.vue'
 export default {
-  name: "App",
-  components: {},
+  name: "app",
+  components: {
+    TheNavigation,
+  },
   data() {
     return {};
   },
@@ -28,7 +32,7 @@ export default {
 
 <style lang="scss">
 @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
-
+@import url('./styles/main.css');
 * {
   margin: 0;
   padding: 0;
