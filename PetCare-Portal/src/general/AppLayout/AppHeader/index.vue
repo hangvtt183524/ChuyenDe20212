@@ -1,5 +1,11 @@
+<script>
+export default {
+    name: 'AppHeader',
+}
+</script>
+
 <template lang="">
-    <div class="navigation">
+    <div class="navigation container-fluid">
         <div class="navigation-tittle">Pet Care</div>
         <div class="menu">
             <div class="choice">
@@ -31,11 +37,8 @@
         </div>
     </div>
 </template>
-<script>
-export default {
-    name: 'TheNavigation',
-}
-</script>
+
+
 <style scoped>
-    @import url('../styles/layout/navigation.css');
+    @import url('./index.scss');
 </style>
