@@ -5,6 +5,9 @@ import store from "./store";
 import Vue2Editor from "vue2-editor";
 import { BootstrapVue, IconsPlugin, BootstrapVueIcons } from 'bootstrap-vue';
 
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
+
 import './assets/scss/main.scss';
 
 Vue.use(Vue2Editor);

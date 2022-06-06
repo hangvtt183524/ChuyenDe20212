@@ -1,14 +1,20 @@
 <template>
-  <div class="app-wrapper">
-    <div class="app">
-      <router-view />
+  <div id="root">
+    <div class="d-flex flex-column flex-root">
+      <div class="page d-flex flex-column flex-fluid">
+        <div class="wrapper d-flex flex-row flex-fluid">
+            <div class="App">
+              <router-view />
+            </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "app",
+  name: "App",
   components: {},
   data() {
     return {};
@@ -30,25 +36,16 @@ export default {
   font-family: "Quicksand", sans-serif;
 }
 
-.app {
+#root{
   display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+  height: 100vh;
 }
 
-.container {
-  max-width: 1440px;
-  margin: 0 auto;
+.flex-root {
+  flex: 1 1 0;
 }
 
-.link {
-  cursor: pointer;
-  text-decoration: none;
-  text-transform: uppercase;
-  color: black;
-}
-
-.link-light {
-  color: #fff;
+.flex-fluid {
+  flex: 1 0 0;
 }
 </style>
