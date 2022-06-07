@@ -1,8 +1,9 @@
 .content-panel {
     box-sizing: border-box;
-    border: 2px solid #a1d8ff7a;
+    border: 1px solid #E4E9F2;
     border-radius: 14px;
     background-color: #FFFFFF;
+    padding: 20px;
     .is-align-middle {
         justify-content: center;
         align-items: center;
@@ -11,7 +12,7 @@
         margin-bottom: 15px;
     }
     .content-body {
-        padding: 0px;
+        padding: 20px;
     }
     &.has-header {
         padding: 0;
@@ -24,15 +25,10 @@
         }
     }
     .content-header {
-        color: $colorMainBlue;
-        font-size: 24px;
+        color: #222B45;
+        font-size: 18px;
         font-weight: bold;
         line-height: 24px;
-        background-color: $colorPrimary300;
-        border-top-right-radius: 14px;
-        border-top-left-radius: 14px;
-        padding: 20px 0 0 20px;
-        height: 48px;
         &.has-arrow-up::after {
             content: '\2525 ';
             position: relative;

@@ -1,18 +1,10 @@
-<template>
-  <div class="app-wrapper">
-    <div class="app">
-      <TheNavigation/>
-      <router-view />
-    </div>
-  </div>
-</template>
-
 <script>
-import TheNavigation from '../src/components/Navigation.vue'
+import AppLayout from './general/AppLayout';
+
 export default {
-  name: "app",
+  name: "App",
   components: {
-    TheNavigation,
+    AppLayout,
   },
   data() {
     return {};
@@ -24,36 +16,42 @@ export default {
 };
 </script>
 
+
+<template>
+  <div id="root">
+    <div class="d-flex flex-column flex-root">
+      <div class="page d-flex flex-column flex-fluid">
+        <div class="wrapper d-flex flex-row flex-fluid">
+          <AppLayout>
+            <router-view />
+          </AppLayout>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+
 <style lang="scss">
-// @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
 
-// * {
-//   margin: 0;
-//   padding: 0;
-//   box-sizing: border-box;
-//   font-family: "Quicksand", sans-serif;
-// }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Quicksand", sans-serif;
+}
 
-// .app {
-//   display: flex;
-//   flex-direction: column;
-//   min-height: 100vh;
-// }
+#root{
+  display: flex;
+  height: 100vh;
+}
 
-// .container {
-//   max-width: 1440px;
-//   margin: 0 auto;
-// }
+.flex-root {
+  flex: 1 1 0;
+}
 
-// .link {
-//   cursor: pointer;
-//   text-decoration: none;
-//   text-transform: uppercase;
-//   color: black;
-// }
-
-// .link-light {
-//   color: #fff;
-// }
-  @import url('./styles/main.css');
+.flex-fluid {
+  flex: 1 0 0;
+}
 </style>

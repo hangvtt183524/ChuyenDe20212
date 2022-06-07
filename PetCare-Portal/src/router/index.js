@@ -1,20 +1,14 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
-import BookingSchedule from "../views/BookingSchedule";
+import Home from "../views/Home";
 
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: "/",
-    name: "Home",
+    alias: '/home',
     component: Home,
-  },
-  {
-    path: "/booking-schedule",
-    name: "BookingSchedule",
-    component: BookingSchedule,
   },
 ];
 
