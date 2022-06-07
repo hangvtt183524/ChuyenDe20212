@@ -1,35 +1,44 @@
 <script>
 export default {
     name: 'AppHeader',
-    data() {
-        return {
-        }
-    },
 }
 </script>
 
 <template lang="">
-    <div class="container AppHeader">
-        <div class="row align-items-center">
-            <div class="col-3 py-3">
-                <p class="AppLogo">Pet Care</p>
+    <div class="navigation container-fluid">
+        <div class="navigation-tittle">Pet Care</div>
+        <div class="menu">
+            <div class="choice">
+                Trang chủ
+                <div class="underline"></div>
             </div>
-            <div class="col-6">
-                <div class="d-flex flex-row justify-content-start">
-                    <a href="/home"><p class="AppHeader_Link Font_20 mx-4" >Trang chủ</p></a>
-                    <a href=""><p class="AppHeader_Link Font_20 mx-4">Sức khỏe thú cưng</p></a>
-                    <a href=""><p class="AppHeader_Link Font_20 mx-4">Forum</p></a>
-                </div>
+            <div class="choice">
+                Dịch vụ
+                <div class="underline"></div>
             </div>
-            <div class="col-3">
-
+            <div class="choice">
+                Sản phẩm
+                <div class="underline"></div>
+            </div>
+            <div class="choice">
+                Hỏi đáp
+                <div class="underline"></div>
             </div>
         </div>
-        
+        <div class="account">
+            <div class="choice">
+                Đăng xuất
+                <div class="underline"></div>
+                </div>
+            <div class="choice">
+                Đăng Nhập
+                <div class="underline"></div>
+                </div>
+        </div>
     </div>
 </template>
 
 
-<style lang="scss" scoped>
+<style scoped>
     @import url('./index.scss');
 </style>
