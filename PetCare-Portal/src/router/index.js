@@ -1,6 +1,11 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+
 import Home from '../views/Home';
+import Auth from '../views/Auth';
+  import Login from '../views/Auth/Login';
+  import SignUp from '../views/Auth/SignUp';
+
 import NotFound from "../views/NotFound";
 
 
@@ -16,6 +21,19 @@ const routes = [
     path: "/home",
     component: Home,
   },
+  {
+    path: '',
+    children: [{
+        path: '/login',
+        component: Login,
+      }, {
+        path: '/sign-up',
+        component: SignUp
+      },
+    ],
+    component: Auth,
+  },
+
 
   { path: '/:pathMatch(.*)*', component: NotFound },
 ];

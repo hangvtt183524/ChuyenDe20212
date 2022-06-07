@@ -16,9 +16,11 @@ export default {
       <div class="page d-flex flex-column flex-fluid">
         <div class="wrapper d-flex flex-row flex-fluid">
           <AppLayout>
-            <router-view v-slot="{ Component }">
-              <component :is="Component" view-prop="value" />
-            </router-view>
+            <div class="bg-blue">
+              <router-view v-slot="{ Component }">
+                <component :is="Component" view-prop="value" />
+              </router-view>
+            </div>
           </AppLayout>
         </div>
       </div>
@@ -50,5 +52,9 @@ export default {
 
 .flex-fluid {
   flex: 1 0 0;
+}
+
+.bg-blue {
+  background-color: #a1d8ff7a;
 }
 </style>

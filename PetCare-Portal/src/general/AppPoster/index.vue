@@ -39,18 +39,18 @@ export default {
 <style lang="scss" scoped>
 .image {
     position: relative;
-    height: 240px;
+    height: 220px;
     img {
         position: absolute;
         border-radius: 40px;
     }
     &.large img{
-        width: 240px;
-        height: 240px;
+        width: 220px;
+        height: 220px;
     }
     &.small img{
-        width: 185px;
-        height: 185px;
+        width: 180px;
+        height: 180px;
     }
     &.slot1 img{ right:0; bottom:0; }
     &.slot2 img{ left:0; bottom:0; }

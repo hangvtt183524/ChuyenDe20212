@@ -3,7 +3,6 @@ export default {
     name: 'AppHeader',
     data() {
         return {
-            activeTab: this.$route.path,
             tabs: [
                 {
                     id: 'home',
@@ -23,6 +22,11 @@ export default {
             ]
         }
     },
+    computed: {
+        curPath() {
+            return this.$route.path;
+        }
+    }
 }
 
 </script>
@@ -39,7 +43,7 @@ export default {
             <div class="col-6">
                 <div class="d-flex flex-row justify-content-start">
                     <router-link v-for="tab in tabs" :to="tab.path" :key="tab.id" class="mx-4">
-                        <p class="AppHeader_Link Font_20" :class="{active : activeTab == tab.path}">
+                        <p class="AppHeader_Link Font_20" :class="{active : curPath === tab.path}">
                             {{tab.text}}
                         </p>
                     </router-link>
@@ -48,11 +52,15 @@ export default {
 
             <div class="col-3">
                 <div class="d-flex flex-row justify-content-end">
-                    <router-link to="/home" class="mx-2">
-                        <p class="Font_20 text-capitalize">Đăng ký</p>
+                    <router-link to="/sign-up" class="mx-2">
+                        <p class="Font_20 text-capitalize" :class="{active: curPath === '/sign-up'}">
+                            Đăng ký
+                        </p>
                     </router-link>
-                    <router-link to="/home" class="mx-2">
-                        <p class="Font_20 text-capitalize">Đăng nhập</p>
+                    <router-link to="/login" class="mx-2">
+                        <p class="Font_20 text-capitalize" :class="{active: curPath === '/login'}">
+                            Đăng nhập
+                        </p>
                     </router-link>
                 </div>
             </div>
@@ -70,7 +78,7 @@ export default {
     line-height: 3rem;
     }
 
-    .AppHeader_Link:hover, .active {
+    .active {
         border-bottom: 2px solid #009fff;
     }
 </style>
