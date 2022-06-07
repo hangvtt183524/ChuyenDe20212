@@ -1,59 +1,60 @@
+<script>
+import AppLayout from './general/AppLayout';
+
+export default {
+  name: "App",
+  components: {
+    AppLayout,
+  },
+};
+</script>
+
+
 <template>
-  <div class="app-wrapper">
-    <div class="app">
-      <TheNavigation/>
-      <router-view />
+  <div id="app">
+    <div class="d-flex flex-column flex-root">
+      <div class="page d-flex flex-column flex-fluid">
+        <div class="wrapper d-flex flex-row flex-fluid">
+          <AppLayout>
+            <div class="bg-blue">
+              <router-view v-slot="{ Component }">
+                <component :is="Component" view-prop="value" />
+              </router-view>
+            </div>
+          </AppLayout>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
-<script>
-import TheNavigation from '../src/components/Navigation.vue'
-export default {
-  name: "app",
-  components: {
-    TheNavigation,
-  },
-  data() {
-    return {};
-  },
-  created() {},
-  mounted() {},
-  methods: {},
-  watch: {},
-};
-</script>
 
 <style lang="scss">
-// @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
 
-// * {
-//   margin: 0;
-//   padding: 0;
-//   box-sizing: border-box;
-//   font-family: "Quicksand", sans-serif;
-// }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Quicksand", sans-serif;
+}
 
-// .app {
-//   display: flex;
-//   flex-direction: column;
-//   min-height: 100vh;
-// }
+#app{
+  display: flex;
+  height: 100vh;
+  overflow-x:hidden;
+  overflow-y:auto;
+}
 
-// .container {
-//   max-width: 1440px;
-//   margin: 0 auto;
-// }
+.flex-root {
+  flex: 1 1 0;
+}
 
-// .link {
-//   cursor: pointer;
-//   text-decoration: none;
-//   text-transform: uppercase;
-//   color: black;
-// }
+.flex-fluid {
+  flex: 1 0 0;
+}
 
-// .link-light {
-//   color: #fff;
-// }
-  @import url('./styles/main.css');
+.bg-blue {
+  background-color: #a1d8ff7a;
+}
 </style>
