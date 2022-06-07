@@ -10,5 +10,5 @@ export default {
 
 
 <style scoped>
-    /* @import url('./index.scss'); */
+
 </style>

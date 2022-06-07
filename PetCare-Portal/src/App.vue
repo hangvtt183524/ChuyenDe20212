@@ -6,24 +6,19 @@ export default {
   components: {
     AppLayout,
   },
-  data() {
-    return {};
-  },
-  created() {},
-  mounted() {},
-  methods: {},
-  watch: {},
 };
 </script>
 
 
 <template>
-  <div id="root">
+  <div id="app">
     <div class="d-flex flex-column flex-root">
       <div class="page d-flex flex-column flex-fluid">
         <div class="wrapper d-flex flex-row flex-fluid">
           <AppLayout>
-            <router-view />
+            <router-view v-slot="{ Component }">
+              <component :is="Component" view-prop="value" />
+            </router-view>
           </AppLayout>
         </div>
       </div>
@@ -42,9 +37,11 @@ export default {
   font-family: "Quicksand", sans-serif;
 }
 
-#root{
+#app{
   display: flex;
   height: 100vh;
+  overflow-x:hidden;
+  overflow-y:auto;
 }
 
 .flex-root {

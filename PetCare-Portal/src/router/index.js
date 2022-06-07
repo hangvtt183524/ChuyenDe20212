@@ -1,15 +1,23 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home";
+import Home from '../views/Home';
+import NotFound from "../views/NotFound";
+
 
 Vue.use(VueRouter);
+
 
 const routes = [
   {
     path: "/",
-    alias: '/home',
+    redirect: '/home',
+  },
+  {
+    path: "/home",
     component: Home,
   },
+
+  { path: '/:pathMatch(.*)*', component: NotFound },
 ];
 
 const router = new VueRouter({
