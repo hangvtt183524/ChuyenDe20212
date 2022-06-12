@@ -37,16 +37,16 @@
             border-radius: 23px;
         }
         .img-zone .img1{
-            background-image: url('../assets/images/dog1.jpg');
+            background-image: url('../images/dog1.jpg');
         }
         .img-zone .img2{
-            background-image: url('../assets/images/cat1.jpg');
+            background-image: url('../images/cat1.jpg');
         }
         .img-zone .img3{
-            background-image: url('../assets/images/cat2.jpg');
+            background-image: url('../images/cat2.jpg');
         }
         .img-zone .img4{
-            background-image: url('../assets/images/dog2.jpg');
+            background-image: url('../images/dog2.jpg');
         }
     .home .home-slogan{
         height: 100%;

@@ -53,5 +53,5 @@ export default {
 // .link-light {
 //   color: #fff;
 // }
-@import url('./styles/main.css');
+@import url('./assets/styles/main.css');
 </style>
