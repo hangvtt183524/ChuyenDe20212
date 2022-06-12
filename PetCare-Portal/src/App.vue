@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import TheNavigation from './views/components/Navigation'
+import TheNavigation from "@/views/components/Navigation";
 
 export default {
   name: "app",
@@ -53,5 +53,5 @@ export default {
 // .link-light {
 //   color: #fff;
 // }
-@import url('./styles/main.css');
+//@import url('./styles/main.css');
 </style>

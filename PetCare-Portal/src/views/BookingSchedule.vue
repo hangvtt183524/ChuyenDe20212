@@ -73,9 +73,9 @@
 </template>
 
 <script>
-import InputItem from "@/components/InputItem";
-import down from '@/assets/svg/chevron-down.svg'
-import up from '@/assets/svg/chevron-up.svg'
+import InputItem from "@/views/components/InputItem";
+import down from "../assets/svg/chevron-down.svg"
+import up from "../assets/svg/chevron-up.svg"
 
 export default {
   name: "BookingSchedule",

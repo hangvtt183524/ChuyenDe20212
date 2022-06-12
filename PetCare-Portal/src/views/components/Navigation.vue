@@ -37,5 +37,5 @@ export default {
 }
 </script>
 <style scoped>
-@import url('../styles/layout/navigation.css');
+/*@import url('../styles/layout/navigation.css');*/
 </style>
