@@ -1,0 +1,64 @@
+.svg-icon {
+    text-align: center;
+    cursor: pointer;
+    svg {
+        &.is-fill-white {
+            path {
+                fill: white;
+            }
+        }
+        &.is-fill-blue {
+            path {
+                fill: #3366FF;
+            }
+        }
+        &.is-fill-orange {
+            path {
+                fill: #E46C4E;
+            }
+        }
+        &.is-fill-yellow {
+            path {
+                fill: $colorSelection;
+            }
+        }
+        &.is-fill-grey {
+            path {
+                fill: #C5CEE0;
+            }
+        }
+        &.is-fill-red {
+            path {
+                fill: red;
+            }
+        }
+        &.is-fill-green {
+            path {
+                fill: green;
+            }
+        }
+        &.is-fill-gray {
+            path {
+                fill: grey;
+            }
+        }
+        &.clip-left {
+            position: absolute;
+            top: 17px;
+            clip: rect(0px, 20px, 20px, 12px);
+            right: 0px;
+            path {
+                fill: #E46C4E;
+            }
+        }
+        &.clip-right {
+            position: absolute;
+            top: 17px;
+            clip: rect(1px, 12px, 20px, 1px);
+            right: 0px;
+            path {
+                fill: #E46C4E;
+            }
+        }
+    }
+}
