@@ -15,7 +15,7 @@
 <script>
 
 export default {
-  name: 'AppInputItem',
+  name: 'InputItem',
   props: {
     isEditing: {
       type: Boolean,
