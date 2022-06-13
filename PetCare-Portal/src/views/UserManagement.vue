@@ -42,6 +42,9 @@
 <script>
     export default {
         name: 'UserManagement',
+        compenents: {
+
+        },
         data() {
             return {
                 users: [
@@ -61,3 +64,7 @@
 
 </script>
 
+<style lang="scss">
+
+    
+</style>
