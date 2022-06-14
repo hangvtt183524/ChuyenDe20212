@@ -1,0 +1,114 @@
+.pet-info-background{
+    background-color: #a1d8ff7a;
+    height: calc(100vh - 70px);
+    position: relative;
+    overflow: auto;
+}
+.pet-card{
+    position: absolute;
+    top: 80px;
+    bottom: 80px;
+    left: 80px;
+    right: 80px;
+    background-color: #fff;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+}
+.pet-avatar-holder{
+    width: 300px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: #64b9f5;
+}
+.pet-avatar{
+    width: 200px;
+    height: 200px;
+    border-radius: 100%;
+    background-image: url('../images/dog1.jpg');
+    background-size: cover;
+    background-position: center;
+    cursor: pointer;
+}
+.pet-avatar:hover >.pet-avatar-cover{
+    opacity: 1;
+}
+.pet-avatar-cover{
+    width: 200px;
+    height: 200px;
+    border-radius: 100%;
+    background-color: rgba(0, 0, 0, 0.385);
+    color: white;
+    opacity: 0;
+}
+.pet-info-holder{
+    width: calc(100% - 300px);
+    height: 100%;
+    position: relative;
+}
+    .pet-name{
+        width: 100%;
+        height: 70px;
+        padding: 20px;
+        font-size: 20px;
+        box-sizing: border-box;
+        font-weight: bold;
+    }
+    .pet-name-underline{
+        background-color: #64b9f5;
+        height: 3px;
+        width: 100%;
+        bottom: 20px;
+    }
+    .general-info{
+        width: 50%;
+        height: calc(100% - 70px);
+        padding: 0 20px;
+        box-sizing: border-box;
+    }
+        .general-info-title{
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .info {
+            font-size: 17px;
+            padding: 20px;
+            box-sizing: border-box;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+            .info table {
+                width: 100%;
+            }
+            .info table tr{
+                height: 30px;
+            }
+            .info table th{
+                text-align: left;
+                vertical-align: top;
+            }
+            .info table td{
+                text-align: right;
+                max-width: 150px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+    .health-schedule{
+        position: absolute;
+        top: 60px;
+        right: 0px;
+        height: calc(100% - 60px);
+        left: 50%;
+        padding: 0 20px;
+        box-sizing: border-box;
+    }
+        .health-schedule-title{
+            font-size: 20px;
+            font-weight: bold;
+        }
+

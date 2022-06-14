@@ -23,7 +23,7 @@
     justify-content: center;
 }
 .choice{
-    width: 90px;
+    width: fit-content;
     padding: 15px;
     position: relative;
     cursor: pointer;

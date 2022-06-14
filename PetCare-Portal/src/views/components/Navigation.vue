@@ -18,6 +18,10 @@
                 Hỏi đáp
                 <div class="underline"></div>
             </div>
+            <div class="choice">
+                <router-link class="page-link" to="/pet-information">Thú cưng của tôi</router-link>
+                <div class="underline"></div>
+            </div>
         </div>
         <div class="account">
             <div class="choice">
