@@ -1,5 +1,5 @@
 <template>
-  <div id="booking-page" class="booking-page">
+  <div id="booking-page flex" class="booking-page">
     <div class="booking-info">
       <div class="booking-info-wrapper content-panel">
         <div class="content-header">
@@ -11,15 +11,15 @@
               <div class="left-content-wrapper">
                 <InputItem
                     label="Your Pet"
-                    is-editing="true"
+                    :is-editing="true"
                 />
                 <InputItem
                     label="Date"
-                    is-editing="true"
+                    :is-editing="true"
                 />
                   <InputItem
                     label="Time"
-                    is-editing="true"
+                    :is-editing="true"
                 />
               </div>
             </div>
@@ -27,11 +27,11 @@
               <div class="right-content-wrapper">
                 <InputItem
                     label="Doctor"
-                    is-editing="true"
+                    :is-editing="true"
                 />
                 <InputItem
                     label="Situation"
-                    is-editing="true"
+                    :is-editing="true"
                 />
               </div>
             </div>
@@ -73,9 +73,9 @@
 </template>
 
 <script>
-import InputItem from "@/components/InputItem";
-import down from '@/assets/svg/chevron-down.svg'
-import up from '@/assets/svg/chevron-up.svg'
+import InputItem from "./components/InputItem.vue"
+import down from "../assets/svg/chevron-down.svg"
+import up from "../assets/svg/chevron-up.svg"
 
 export default {
   name: "BookingSchedule",
@@ -94,12 +94,12 @@ export default {
 
 <style lang="scss">
 .booking-page {
-  display: flex;
-  justify-content: space-between;
   padding: 20px;
 
   .booking-info {
-
+    max-width: 60%;
+    min-width: 60%;
+    margin-bottom: 20px;
     .booking-info-wrapper {
 
       .booking-form {
@@ -128,6 +128,11 @@ export default {
         }
       }
     }
+  }
+  
+  .booking-history {
+    max-width: 60%;
+    min-width: 60%;
   }
 }
 </style>
