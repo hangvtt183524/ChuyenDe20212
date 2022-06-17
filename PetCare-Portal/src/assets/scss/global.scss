@@ -3,12 +3,23 @@ html {
 }
 
 html,
+
 body {
     font-family: 'Open Sans';
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     color: $colorText;
     height: 100%;
+    margin: 0;
+    font-size: 13px;
+}
+
+p {
+    margin: 0;
+}
+
+a:hover {
+    text-decoration: none;
 }
 
 .content {
@@ -16,23 +27,6 @@ body {
     background-color: $colorGray100;
     height: 100%;
     width: 100%;
-}
-
-.flex {
-    display: flex;
-    &.vertical {
-        flex-direction: column;
-        align-items: baseline;
-    }
-    &.align-center {
-        align-items: center;
-    }
-    &.space-between {
-        justify-content: space-between;
-    }
-    &.align-items-flex-end {
-        align-items: flex-end;
-    }
 }
 
 .small {
@@ -46,20 +40,6 @@ body {
 
 .fit-content {
     width: fit-content;
-}
-
-a,
-.clickable {
-    cursor: pointer;
-}
-
-h3 {
-    color: $colorSelection;
-    font-family: 'Open Sans';
-    font-size: 18px;
-    font-weight: bold;
-    letter-spacing: 0;
-    line-height: 24px;
 }
 
 .w-50 {
@@ -162,10 +142,6 @@ button {
     font-weight: bold;
     line-height: 16px;
     margin-bottom: 0.5rem;
-}
-
-.cursor-pointer {
-    cursor: pointer;
 }
 
 .popover-inner {

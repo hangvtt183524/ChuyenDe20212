@@ -1,22 +1,47 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+
 import Home from "../views/Home.vue";
+import Auth from "../views/Auth.vue";
+  import Login from "../views/Login.vue";
+  import SignUp from "../views/SignUp.vue";
 import BookingSchedule from "../views/BookingSchedule";
+
+import NotFound from "../views/NotFound";
+
 
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: "/",
-    name: "Home",
+    redirect: '/home',
+  },
+  {
+    path: "/home",
     component: Home,
   },
   {
+    path: '',
+    children: [{
+        path: '/login',
+        component: Login,
+      }, {
+        path: '/sign-up',
+        component: SignUp
+      },
+    ],
+    component: Auth,
+  }, {
     path: "/booking-schedule",
     name: "BookingSchedule",
     component: BookingSchedule,
   },
+
+
+  { path: '/:pathMatch(.*)*', component: NotFound },
 ];
+
 
 const router = new VueRouter({
   mode: "history",

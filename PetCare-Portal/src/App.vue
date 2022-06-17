@@ -1,8 +1,18 @@
 <template>
-  <div className="app-wrapper">
-    <div className="app">
-      <TheNavigation/>
-      <router-view/>
+  <div id="root">
+    <div class="d-flex flex-column flex-root">
+      <div class="page d-flex flex-column flex-fluid">
+        <div class="wrapper d-flex flex-row flex-fluid">
+          <div class="App flex-column flex-fluid">
+            <TheNavigation />
+            <div class="bg-blue">
+              <router-view v-slot="{ Component }">
+                <component :is="Component" view-prop="value" />
+              </router-view>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -28,30 +38,5 @@ export default {
 </script>
 
 <style lang="scss">
-// @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
-// * {
-//   margin: 0;
-//   padding: 0;
-//   box-sizing: border-box;
-//   font-family: "Quicksand", sans-serif;
-// }
-// .app {
-//   display: flex;
-//   flex-direction: column;
-//   min-height: 100vh;
-// }
-// .container {
-//   max-width: 1440px;
-//   margin: 0 auto;
-// }
-// .link {
-//   cursor: pointer;
-//   text-decoration: none;
-//   text-transform: uppercase;
-//   color: black;
-// }
-// .link-light {
-//   color: #fff;
-// }
 @import url('./assets/styles/main.css');
 </style>
