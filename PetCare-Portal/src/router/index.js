@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import BookingSchedule from "../views/BookingSchedule";
+import PetInformation from "../views/PetInformation.vue";
 
 Vue.use(VueRouter);
 
@@ -15,6 +16,11 @@ const routes = [
     path: "/booking-schedule",
     name: "BookingSchedule",
     component: BookingSchedule,
+  },
+  {
+    path: "/pet-information",
+    name: "PetInformation",
+    component: PetInformation,
   },
 ];
 
