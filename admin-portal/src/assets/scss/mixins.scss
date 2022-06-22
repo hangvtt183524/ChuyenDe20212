@@ -1,0 +1,11 @@
+$max: 5;
+$offset: 1;
+@mixin list-loop($className, $styleName, $unit) {
+    $i: 0;
+    @while $i <=$max {
+        #{$className + $i} {
+            #{$styleName}: #{$i + $unit};
+        }
+        $i: $i+$offset;
+    }
+}
