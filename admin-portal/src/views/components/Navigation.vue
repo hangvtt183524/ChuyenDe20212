@@ -7,29 +7,17 @@
                 <div class="underline"></div>
             </div>
             <div class="choice">
-                <router-link class="page-link" to="/booking-schedule">Dịch vụ</router-link>
+                <router-link class="page-link" to="/">Quản lý khách hàng</router-link>
                 <div class="underline"></div>
             </div>
             <div class="choice">
-                Sản phẩm
-                <div class="underline"></div>
-            </div>
-            <div class="choice">
-                Hỏi đáp
-                <div class="underline"></div>
-            </div>
-            <div class="choice">
-                <router-link class="page-link" to="/pet-information">Thú cưng của tôi</router-link>
+                <router-link class="page-link" to="/">Quản lý bác sĩ</router-link>
                 <div class="underline"></div>
             </div>
         </div>
         <div class="account">
             <div class="choice">
                 Đăng xuất
-                <div class="underline"></div>
-                </div>
-            <div class="choice">
-                Đăng Nhập
                 <div class="underline"></div>
                 </div>
         </div>
