@@ -1,0 +1,65 @@
+# HTTP Server
+server:
+  address: 0.0.0.0
+  servlet:
+    context-path: /gatewayservice
+  port: 8765
+
+# Discovery Server Access
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/discoveryservice/eureka/
+    registryFetchIntervalSeconds: 5
+  instance:
+    prefer-ip-address: true
+    #    ip-address: localhost
+    homePageUrlPath: ${server.servlet.context-path}
+    statusPageUrlPath: ${server.servlet.context-path}/actuator/info
+    healthCheckUrlPath: ${server.servlet.context-path}/actuator/health
+    leaseRenewalIntervalInSeconds: 10
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+
+management:
+  security:
+    enabled: false
+  info:
+    env:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  #    web:
+  #      base-path: /
+  endpoint:
+    health:
+      show-details: always
+
+zuul:
+  host:
+    socket-timeout-millis: 100000
+  ignoredServices: "*"
+  prefix: /api
+  sensitive-headers:
+  routes:
+    driverservice:
+      serviceId: driver
+      path: /driverservice/**
+      stripPrefix: false
+    infotypeservice:
+      serviceId: infotype
+      path: /infotypeservice/**
+      stripPrefix: false
+
+ribbon:
+  eureka:
+    enabled: false
+
+# https://stackoverflow.com/questions/28904247/zuul-timing-out-in-long-ish-requests
+hystrix:
+  command:
+    default:
+      execution:
+        timeout:
+          enabled: false
