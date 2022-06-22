@@ -1,6 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import UserManagement from "../views/UserManagement";
+import UserManagement from "../views/UserManagement.vue";
 
 Vue.use(VueRouter);
 
