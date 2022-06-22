@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import TheNavigation from "@/views/components/Navigation";
+import TheNavigation from './views/components/Navigation'
 export default {
   name: "app",
   components: {
