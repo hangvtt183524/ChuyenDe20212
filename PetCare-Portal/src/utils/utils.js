@@ -2,7 +2,7 @@ import axios from 'axios'
 import Vue from 'vue'
 
 const http = axios.create({
-    baseURL: process.env.VUE_APP_DRIVER_BASE_URL,
+    baseURL: process.env.VUE_APP_API_BASE_URL,
     timeout: 30000
 })
 
