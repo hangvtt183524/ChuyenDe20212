@@ -4,7 +4,8 @@
             <div class="pet-avatar-holder">
                 <div class="pet-avatar">
                     <div class="pet-avatar-cover"></div>
-                </div>                           
+                </div>    
+                                       
             </div>
             <div class="pet-info-holder">
                 <div class="pet-name">Milu

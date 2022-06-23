@@ -1,25 +1,9 @@
 <template lang="">
     <div class="navigation">
         <div class="navigation-tittle">Pet Care</div>
-        <div class="menu">
-            <div class="choice">
-                <router-link class="page-link" to="/">Trang chủ</router-link>
-                <div class="underline"></div>
-            </div>
-            <div class="choice">
-                <router-link class="page-link" to="/booking-schedule">Dịch vụ</router-link>
-                <div class="underline"></div>
-            </div>
-            <div class="choice">
-                Sản phẩm
-                <div class="underline"></div>
-            </div>
-            <div class="choice">
-                Hỏi đáp
-                <div class="underline"></div>
-            </div>
-            <div class="choice">
-                <router-link class="page-link" to="/pet-information">Thú cưng của tôi</router-link>
+        <div class="menu" ref="menu">
+            <div class="choice" v-on:click="highLight" v-for="(page, index) in pages" :key="index">
+                <router-link class="page-link" :to="page.path">{{page.name}}</router-link>
                 <div class="underline"></div>
             </div>
         </div>
@@ -38,6 +22,37 @@
 <script>
 export default {
   name: 'TheNavigation',
+  data(){
+    return {
+        pages: [
+            {
+                path: '/',
+                name: 'Trang chủ'
+            },
+            {
+                path: '/booking-schedule',
+                name: 'Dịch vụ'
+            },
+            {
+                path: '/',
+                name: 'Hỏi đáp'
+            },
+            {
+                path: '/pet-information',
+                name: 'Thú cưng của tôi'
+            },      
+        ]
+    }
+  },
+  methods: {
+    highLight(e){
+        var underlines = this.$refs.menu.querySelectorAll('.underline')
+        underlines.forEach(u => {
+            u.classList.remove('visible')
+        });
+        e.path[1].childNodes[1].classList.add('visible')
+    }
+},
 }
 </script>
 <style scoped>
