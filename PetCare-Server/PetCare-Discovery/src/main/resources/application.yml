@@ -1,0 +1,36 @@
+# HTTP Server
+server:
+  address: 0.0.0.0
+  servlet:
+    context-path: /discoveryservice
+  port: 8761
+
+# Configure this Discovery Server
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    eureka-server-connect-timeout-seconds: 5
+    enabled: true
+  instance:
+    preferIpAddress: false
+    #    hostname: localhost
+    homePageUrlPath: ${server.servlet.context-path}
+    statusPageUrlPath: ${server.servlet.context-path}/actuator/info
+    healthCheckUrlPath: ${server.servlet.context-path}/actuator/health
+    leaseRenewalIntervalInSeconds: 10
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+
+spring:
+  application:
+    name: discoveryservice
+
+management:
+  info:
+    env:
+      enabled: true
+
+  endpoints:
+    web:
+      exposure:
+        include: '*'

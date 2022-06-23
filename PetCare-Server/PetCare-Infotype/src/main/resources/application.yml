@@ -1,0 +1,44 @@
+# HTTP Server
+server:
+  address: 0.0.0.0
+  servlet:
+    context-path: /infotypeservice
+  port: 9000
+
+# Discovery Server Access
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/discoveryservice/eureka/
+    registryFetchIntervalSeconds: 5
+  instance:
+    prefer-ip-address: true
+    #    ip-address: localhost
+    homePageUrlPath: ${server.servlet.context-path}
+    statusPageUrlPath: ${server.servlet.context-path}/actuator/info
+    healthCheckUrlPath: ${server.servlet.context-path}/actuator/health
+    leaseRenewalIntervalInSeconds: 10
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+
+spring:
+  application:
+    name: infotypeservice
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/petcaredb?allowPublicKeyRetrieval=true&&useSSL=false
+    username: root
+    password: root
+  jpa:
+    hibernate.ddl-auto: update
+    generate-ddl: true
+    show-sql: true
+
+management:
+  info:
+    env:
+      enabled: true
+
+  endpoints:
+    web:
+      exposure:
+        include: '*'
