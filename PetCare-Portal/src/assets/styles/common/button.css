@@ -1,0 +1,30 @@
+.button {
+    padding: 0px 24px;
+    font-size: 13px;
+    font-weight: normal;
+    height: 36px;
+    width: fit-content;
+    border-radius: 4px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    /* margin-left: 16px; */
+    cursor: pointer;
+    margin-right: 15px;
+}
+.button.blue{
+    background-color: #64b9f5;
+    color: #fff;
+}
+.button.blue:hover {
+    background-color: #50b2f8;
+}
+.button.white {
+    background-color: #fff;
+    border: 1px solid #b5b5b5;
+    color: #b5b5b5 !important;
+}
+.button.white:hover {
+    background-color: #E9EBEE;
+}
+
