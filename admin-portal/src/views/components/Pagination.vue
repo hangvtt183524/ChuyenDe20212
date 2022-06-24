@@ -82,24 +82,26 @@ export default {
   },
   computed: {
     startPage() {
-      // When on the first page
       if (this.currentPage === 1) {
         return 1;
       }
-      // When on the last page
+
       if (this.currentPage === this.totalPages) {
-        return this.totalPages - this.maxVisibleButtons;
+        return this.totalPages - this.maxVisibleButtons + 1;
       }
-      // When in between
+
       return this.currentPage - 1;
+
+    },
+    endPage() {
+
+      return Math.min(this.startPage + this.maxVisibleButtons - 1, this.totalPages);
+
     },
     pages() {
       const range = [];
 
-      for (let i = this.startPage;
-           i <= Math.min(this.startPage + this.maxVisibleButtons - 1, this.totalPages);
-           i+= 1
-      ) {
+      for (let i = this.startPage; i <= this.endPage; i+= 1 ) {
         range.push({
           name: i,
           isDisabled: i === this.currentPage
@@ -116,28 +118,29 @@ export default {
     },
   },
   methods: {
-    isPageActive(page) {console.log(this.currentPage);
-      return this.currentPage === page;
-    },
-    onClickFirstPage() {console.log(this.currentPage);
+    onClickFirstPage() {
       this.$emit('pagechanged', 1);
     },
-    onClickPreviousPage() {console.log(this.currentPage);
+    onClickPreviousPage() {
       this.$emit('pagechanged', this.currentPage - 1);
     },
-    onClickPage(page) {console.log(this.currentPage);
+    onClickPage(page) {
       this.$emit('pagechanged', page);
     },
     onClickNextPage() {
-      console.log(this.currentPage);
       this.$emit('pagechanged', this.currentPage + 1);
     },
-    onClickLastPage() {console.log(this.currentPage);
+    onClickLastPage() {
       this.$emit('pagechanged', this.totalPages);
-    }
+    },
+    isPageActive(page) {
+      return this.currentPage === page;
+    },
   }
 }
 </script>
+
+
 <style>
 .pagination {
   list-style-type: none;

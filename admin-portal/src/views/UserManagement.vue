@@ -16,7 +16,7 @@
           </tr>
         </thead>
         <tbody class="body-row">
-          <tr v-for="user in renderUsers" :key="user.id">
+          <tr v-for="user in getRenderUsers(firstIndex, lastIndex)" :key="user.id">
             <td class="">{{user.id}}</td>
             <td class="">{{user.name}}</td>
             <td>{{user.dob}}</td>
@@ -28,10 +28,11 @@
 
 
       <pagination
-        v-bind:totalPages="totalPage"
-        v-bind:total="len"
-        v-bind:currentPage="currentPage"
-        v-on:pagechanged="onPageChange"
+          :total-pages="totalPage"
+          :total="len"
+          :per-page="numOfUsersPerPage"
+          :current-page="currentPage"
+          @pagechanged="onPageChange"
       />
 
     </div>
@@ -47,15 +48,7 @@
     props: {
       numOfUsersPerPage: {
         type: Number,
-        default: 3,
-      },
-      startIndex: {
-        type: Number,
-        default: 0,
-      },
-      endIndex: {
-        type: Number,
-        default: 3,
+        default: 8,
       }
     },
     components: {
@@ -63,15 +56,17 @@
     },
     data() {
       return {
-        users: this.fetchData().users,
+        users: this.getData().users,
         // renderUsers: this.fetchData().users.slice(0, this.numOfUsersPerPage),
-        len: this.fetchData().users.length,
-        totalPage: Math.ceil(this.fetchData().users.length / this.numOfUsersPerPage),
-        currentPage: 1
+        len: this.getData().users.length,
+        totalPage: Math.ceil(this.getData().users.length / this.numOfUsersPerPage),
+        currentPage: 1,
+        firstIndex: 0,
+        lastIndex: this.numOfUsersPerPage - 1
       }
     },
     methods: {
-      fetchData() {
+      getData() {
         return {
           users: [
             {
@@ -85,52 +80,37 @@
             {id: "003", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
             {id: "004", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
             {id: "005", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-            {id: "002", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-            {id: "003", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-            {id: "004", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-            {id: "005", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-            {id: "002", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-            {id: "003", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-            {id: "004", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-            {id: "005", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-            {id: "002", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-            {id: "003", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-            // {id: "004", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-            // {id: "005", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-            // {id: "002", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-            // {id: "003", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-            // {id: "004", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-            // {id: "005", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},{id: "002", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-            // {id: "003", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-            // {id: "004", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-            // {id: "005", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},{id: "002", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-            // {id: "003", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-            // {id: "004", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-            // {id: "005", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
+            {id: "006", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
+            {id: "007", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
+            {id: "008", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
+            {id: "009", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
+            {id: "010", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
+            {id: "011", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
+            {id: "012", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
+            {id: "013", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
+            {id: "014", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
+            {id: "016", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
+            {id: "015", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
           ]
         }
       },
+
       onPageChange(page) {
-        console.log(page)
+        // console.log(page)
         this.currentPage = page;
-        this.startIndex = (page - 1) * this.numOfUsersPerPage;
+        this.firstIndex = (page - 1) * this.numOfUsersPerPage;
         if (page == this.totalPage)
-          this.endIndex = this.len
-        else this.endIndex = page * this.numOfUsersPerPage - 1;
-        // console.log(this.renderUsers)
-        // this.renderUsers.length = 0
-        // console.log(this.renderUsers)
-        // for (let i = (page - 1) * this.numOfUsersPerPage; i <= this.users.length || i <= page * this.numOfUsersPerPage - 1; i++) {
-        //   this.renderUsers.push(this.users[i])
-        // }
-        // console.log(this.renderUsers)
-      }
-    },
-    computed: {
-      renderUsers() {
-        return this.users.filter(function(user) {
-          return (user.index >= this.startIndex) && (user.index <= this.endIndex);
-        });
+          this.lastIndex = this.len - 1
+        else this.lastIndex = page * this.numOfUsersPerPage - 1;
+      },
+
+      getRenderUsers(first, last) {
+        const renderUsers = []
+        for (let i = first; i <= last; i++) {
+          renderUsers.push(this.users[i])
+        }
+
+        return renderUsers;
       }
     }
   }
