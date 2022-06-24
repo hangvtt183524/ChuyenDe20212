@@ -1,31 +1,56 @@
 <template>
   <ul class="pagination">
     <li class="pagination-item">
-      <button type="button" @click="onClickFirstPage" :disabled="isInFirstPage">
+      <button
+          type="button"
+          @click="onClickFirstPage"
+          :disabled="isInFirstPage"
+      >
         First
       </button>
     </li>
 
     <li class="pagination-item">
-      <button type="button" @click="onClickPreviousPage" :disabled="isInFirstPage">
+      <button
+          type="button"
+          @click="onClickPreviousPage"
+          :disabled="isInFirstPage"
+      >
         Previous
       </button>
     </li>
 
-    <li v-for="page in pages" :key="page" class="pagination-item">
-      <button type="button" @click="onClickPage(page.name)" :disabled="page.isDisabled" :class="{ active: isPageActive(page.name) }">
-        {{ page }}
+    <li
+        v-for="page in pages"
+        :key="page.name"
+        class="pagination-item"
+    >
+      <button
+          type="button"
+          @click="onClickPage(page.name)"
+          :disabled="page.isDisabled"
+          :class="{ active: isPageActive(page.name) }"
+      >
+        {{ page.name }}
       </button>
     </li>
 
     <li class="pagination-item">
-      <button type="button" @click="onClickNextPage" :disabled="isInLastPage">
+      <button
+          type="button"
+          @click="onClickNextPage"
+          :disabled="isInLastPage"
+      >
         Next
       </button>
     </li>
 
     <li class="pagination-item">
-      <button type="button" @click="onClickLastPage" :disabled="isInLastPage">
+      <button
+          type="button"
+          @click="onClickLastPage"
+          :disabled="isInLastPage"
+      >
         Last
       </button>
     </li>
@@ -91,28 +116,29 @@ export default {
     },
   },
   methods: {
-    isPageActive(page) {
+    isPageActive(page) {console.log(this.currentPage);
       return this.currentPage === page;
     },
-    onClickFirstPage() {
+    onClickFirstPage() {console.log(this.currentPage);
       this.$emit('pagechanged', 1);
     },
-    onClickPreviousPage() {
+    onClickPreviousPage() {console.log(this.currentPage);
       this.$emit('pagechanged', this.currentPage - 1);
     },
-    onClickPage(page) {
+    onClickPage(page) {console.log(this.currentPage);
       this.$emit('pagechanged', page);
     },
     onClickNextPage() {
+      console.log(this.currentPage);
       this.$emit('pagechanged', this.currentPage + 1);
     },
-    onClickLastPage() {
+    onClickLastPage() {console.log(this.currentPage);
       this.$emit('pagechanged', this.totalPages);
     }
   }
 }
 </script>
-<style lang="scss">
+<style>
 .pagination {
   list-style-type: none;
 }

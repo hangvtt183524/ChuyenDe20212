@@ -16,7 +16,7 @@
           </tr>
         </thead>
         <tbody class="body-row">
-          <tr v-for="user in users" :key="user.id">
+          <tr v-for="user in renderUsers" :key="user.id">
             <td class="">{{user.id}}</td>
             <td class="">{{user.name}}</td>
             <td>{{user.dob}}</td>
@@ -25,13 +25,16 @@
           </tr>
         </tbody>
       </table>
-      <Pagination/>
 
 
+      <pagination
+        v-bind:totalPages="totalPage"
+        v-bind:total="len"
+        v-bind:currentPage="currentPage"
+        v-on:pagechanged="onPageChange"
+      />
 
     </div>
-
-
 
   </div>
 </template>
@@ -41,49 +44,94 @@
   import Pagination from "./components/Pagination.vue"
   export default {
     name: 'UserManagement',
-    compenents: {
-      Pagination
+    props: {
+      numOfUsersPerPage: {
+        type: Number,
+        default: 3,
+      },
+      startIndex: {
+        type: Number,
+        default: 0,
+      },
+      endIndex: {
+        type: Number,
+        default: 3,
+      }
+    },
+    components: {
+      pagination: Pagination
     },
     data() {
       return {
-        users: [
-          {
-            id: "001",
-            name: "Bùi Việt Anh",
-            dob: "24/1/2000",
-            address: "4 Bạch Mai, Hai Bà Trưng, TP Hà Nội",
-            email: 'anh@gmail.com'
-          },
-          {id: "002", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-          {id: "003", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-          {id: "004", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-          {id: "005", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-          {id: "002", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-          // {id: "003", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-          // {id: "004", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-          // {id: "005", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-          // {id: "002", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-          // {id: "003", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-          // {id: "004", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-          // {id: "005", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-          // {id: "002", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-          // {id: "003", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-          // {id: "004", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-          // {id: "005", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-          // {id: "002", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-          // {id: "003", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-          // {id: "004", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-          // {id: "005", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},{id: "002", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-          // {id: "003", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-          // {id: "004", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-          // {id: "005", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},{id: "002", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-          // {id: "003", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-          // {id: "004", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-          // {id: "005", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-
-
-        ]
-      };
+        users: this.fetchData().users,
+        // renderUsers: this.fetchData().users.slice(0, this.numOfUsersPerPage),
+        len: this.fetchData().users.length,
+        totalPage: Math.ceil(this.fetchData().users.length / this.numOfUsersPerPage),
+        currentPage: 1
+      }
+    },
+    methods: {
+      fetchData() {
+        return {
+          users: [
+            {
+              id: "001",
+              name: "Bùi Việt Anh",
+              dob: "24/1/2000",
+              address: "4 Bạch Mai, Hai Bà Trưng, TP Hà Nội",
+              email: 'anh@gmail.com'
+            },
+            {id: "002", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
+            {id: "003", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
+            {id: "004", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
+            {id: "005", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
+            {id: "002", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
+            {id: "003", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
+            {id: "004", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
+            {id: "005", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
+            {id: "002", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
+            {id: "003", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
+            {id: "004", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
+            {id: "005", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
+            {id: "002", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
+            {id: "003", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
+            // {id: "004", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
+            // {id: "005", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
+            // {id: "002", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
+            // {id: "003", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
+            // {id: "004", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
+            // {id: "005", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},{id: "002", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
+            // {id: "003", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
+            // {id: "004", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
+            // {id: "005", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},{id: "002", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
+            // {id: "003", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
+            // {id: "004", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
+            // {id: "005", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
+          ]
+        }
+      },
+      onPageChange(page) {
+        console.log(page)
+        this.currentPage = page;
+        this.startIndex = (page - 1) * this.numOfUsersPerPage;
+        if (page == this.totalPage)
+          this.endIndex = this.len
+        else this.endIndex = page * this.numOfUsersPerPage - 1;
+        // console.log(this.renderUsers)
+        // this.renderUsers.length = 0
+        // console.log(this.renderUsers)
+        // for (let i = (page - 1) * this.numOfUsersPerPage; i <= this.users.length || i <= page * this.numOfUsersPerPage - 1; i++) {
+        //   this.renderUsers.push(this.users[i])
+        // }
+        // console.log(this.renderUsers)
+      }
+    },
+    computed: {
+      renderUsers() {
+        return this.users.filter(function(user) {
+          return (user.index >= this.startIndex) && (user.index <= this.endIndex);
+        });
+      }
     }
   }
 
