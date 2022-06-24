@@ -9,6 +9,14 @@
           :class="[valid ? '' : 'has-error']"
       />
     </div>
+    <div v-else>
+      <input
+          :type="inputType"
+          :placeholder="value"
+          :class="[valid ? '' : 'has-error']"
+          :disabled="true"
+      />
+    </div>
   </div>
 </template>
 
