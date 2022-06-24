@@ -36,30 +36,17 @@ management:
     health:
       show-details: always
 
-zuul:
-  host:
-    socket-timeout-millis: 100000
-  ignoredServices: "*"
-  prefix: /api
-  sensitive-headers:
-  routes:
-    driverservice:
-      serviceId: driver
-      path: /driverservice/**
-      stripPrefix: false
-    infotypeservice:
-      serviceId: infotype
-      path: /infotypeservice/**
-      stripPrefix: false
-
-ribbon:
-  eureka:
-    enabled: false
-
-# https://stackoverflow.com/questions/28904247/zuul-timing-out-in-long-ish-requests
-hystrix:
-  command:
-    default:
-      execution:
-        timeout:
-          enabled: false
+spring:
+  application:
+    name: gatewayservice
+  cloud:
+    gateway:
+      routes:
+        - id: infotypeservice
+          uri: http://localhost:9000/infotypeservice/
+          predicates:
+            - Path=/infotypeservice/**
+        - id: driverservice
+          uri: http://localhost:2222/driverservice/
+          predicates:
+            - Path=/driverservice/**

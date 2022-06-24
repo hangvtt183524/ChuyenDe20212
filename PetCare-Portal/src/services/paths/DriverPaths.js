@@ -1,8 +1,9 @@
+const PREFIX = 'driverservice'
 const VERSION = '/v1'
 
 const SAVE = 'save'
 
-const BASE = `${VERSION}`
+const BASE = `${PREFIX}/${VERSION}`
 
 const USERS = 'users'
 const DOCTORS = 'doctors'

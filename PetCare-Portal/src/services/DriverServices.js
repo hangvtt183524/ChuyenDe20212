@@ -1,4 +1,4 @@
-import { http } from "@/utils/Driver";
+import { http } from "@/utils/utils";
 import { PATHS } from "@/services/paths/DriverPaths";
 
 export default {

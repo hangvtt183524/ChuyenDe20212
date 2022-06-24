@@ -1,8 +1,9 @@
+const PREFIX = 'infotypeservice'
 const VERSION = '/v1'
 
 const SEARCH = 'search'
 
-const BASE = `${VERSION}`
+const BASE = `${PREFIX}/${VERSION}`
 
 const USERS = 'users'
 const DOCTORS = 'doctors'
