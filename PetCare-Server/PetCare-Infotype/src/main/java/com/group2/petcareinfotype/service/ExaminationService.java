@@ -32,13 +32,14 @@ public class ExaminationService {
         return examinationRepository.findAll();
     }
 
-    public List<Examination> getExam(final Long doctorId, final Long ownerId, final Long petId, final Integer dateStart, final Integer dateEnd) {
+    public List<Examination> getExam(final Long doctorId, final Long ownerId, final Long petId, final Integer dateStart, final Integer dateEnd, final Integer status) {
         return examinationRepository.findAll().stream().filter(exam -> {
             boolean equalDoctor = true;
             boolean equalOwner = true;
             boolean equalPet = true;
             boolean inDateStart = true;
             boolean inDateEnd = true;
+            boolean equalStatus = true;
 
             if (doctorId != null) {
                 equalDoctor = exam.getDoctorId().equals(doctorId);
@@ -55,8 +56,11 @@ public class ExaminationService {
             if (dateEnd != null) {
                 inDateEnd = exam.getEndDate() <= dateEnd;
             }
+            if (status != null) {
+                equalStatus = exam.getStatus().equals(status);
+            }
 
-            return equalDoctor && equalOwner && equalPet && inDateStart && inDateEnd;
+            return equalDoctor && equalOwner && equalPet && inDateStart && inDateEnd && equalStatus;
         }).collect(Collectors.toList());
     }
 
@@ -74,5 +78,15 @@ public class ExaminationService {
         } else {
             examinationRepository.delete(examination);
         }
+    }
+
+    public Examination createExam(final Examination examination) {
+        Optional<Examination> existedExamination = examinationRepository.findById(examination.getId());
+        if (existedExamination.isPresent()) {
+            throw new IllegalArgumentException("Examination with same Id had been existed!");
+        }
+
+        Examination savedExam = examinationRepository.save(examination);
+        return savedExam;
     }
 }

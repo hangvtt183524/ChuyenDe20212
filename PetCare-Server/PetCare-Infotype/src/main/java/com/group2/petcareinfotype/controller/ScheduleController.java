@@ -26,8 +26,9 @@ public class ScheduleController {
                                                   @RequestParam(name = "ownerId", required = false) Long ownerId,
                                                   @RequestParam(name = "petId", required = false) Long petId,
                                                   @RequestParam(name = "dateStart", required = false) Integer dateStart,
-                                                  @RequestParam(name = "dateEnd", required = false) Integer dateEnd) {
-        return ResponseEntity.accepted().body(examinationService.getExam(doctorId, ownerId, petId, dateStart, dateEnd));
+                                                  @RequestParam(name = "dateEnd", required = false) Integer dateEnd,
+                                                  @RequestParam(name = "status", required = false) Integer status) {
+        return ResponseEntity.accepted().body(examinationService.getExam(doctorId, ownerId, petId, dateStart, dateEnd, status));
     }
 
     @GetMapping(value = "/searchAll")
@@ -44,5 +45,10 @@ public class ScheduleController {
     public ResponseEntity<String> deleteExam(@RequestBody Examination examination) {
         examinationService.deleteExam(examination);
         return ResponseEntity.accepted().body("Delete examination success");
+    }
+
+    @PostMapping(value = "/create")
+    public ResponseEntity<Examination> createExam(@RequestBody Examination examination) {
+        return ResponseEntity.accepted().body(examinationService.createExam(examination));
     }
 }
