@@ -76,27 +76,11 @@
               address: "4 Bạch Mai, Hai Bà Trưng, TP Hà Nội",
               email: 'anh@gmail.com'
             },
-            {id: "002", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-            {id: "003", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-            {id: "004", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-            {id: "005", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-            {id: "006", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-            {id: "007", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-            {id: "008", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-            {id: "009", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-            {id: "010", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-            {id: "011", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-            {id: "012", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-            {id: "013", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-            {id: "014", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-            {id: "016", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-            {id: "015", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
           ]
         }
       },
 
       onPageChange(page) {
-        // console.log(page)
         this.currentPage = page;
         this.firstIndex = (page - 1) * this.numOfUsersPerPage;
         if (page == this.totalPage)
