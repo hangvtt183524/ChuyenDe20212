@@ -4,8 +4,7 @@
             <div class="pet-avatar-holder">
                 <div class="pet-avatar">
                     <div class="pet-avatar-cover"></div>
-                </div>    
-                                       
+                </div>                     
             </div>
             <div class="pet-info-holder">
                 <div class="pet-name">Milu
@@ -26,9 +25,9 @@
                             label = "Tuổi"
                             isEditing="true"
                         />
-                        <InputItem 
+                        <Dropdown
                             label = "Giới tính"
-                            isEditing="true"
+                            :items="this.gender"
                         />
                     </div>
                     <div class="pet-content-right">
@@ -47,6 +46,7 @@
                     </div>
                 </div>
                 <div class="pet-buttons-holder">
+                      
                     <Button
                         text="Hủy"
                         color="white"
@@ -54,7 +54,7 @@
                     <Button 
                         text="Lưu"
                         color="blue"
-                    />      
+                    />     
                 </div>
             </div>
         </div>
@@ -63,9 +63,22 @@
 <script>
 import InputItem from './components/InputItem.vue'
 import Button from './components/Button.vue'
+import Dropdown from './components/Dropdown.vue'
 export default {
     components: {
-        InputItem, Button
+        InputItem, Button, Dropdown
+    },
+    data(){
+        return{
+            gender: [
+                {
+                    text: "Giống đực"
+                },
+                {
+                    text: "Giống cái"
+                }
+            ]
+        }
     }
 }
 </script>
