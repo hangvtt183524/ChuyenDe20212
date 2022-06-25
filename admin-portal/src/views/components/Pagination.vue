@@ -1,31 +1,56 @@
 <template>
   <ul class="pagination">
     <li class="pagination-item">
-      <button type="button" @click="onClickFirstPage" :disabled="isInFirstPage">
+      <button
+          type="button"
+          @click="onClickFirstPage"
+          :disabled="isInFirstPage"
+      >
         First
       </button>
     </li>
 
     <li class="pagination-item">
-      <button type="button" @click="onClickPreviousPage" :disabled="isInFirstPage">
+      <button
+          type="button"
+          @click="onClickPreviousPage"
+          :disabled="isInFirstPage"
+      >
         Previous
       </button>
     </li>
 
-    <li v-for="page in pages" :key="page" class="pagination-item">
-      <button type="button" @click="onClickPage(page.name)" :disabled="page.isDisabled" :class="{ active: isPageActive(page.name) }">
-        {{ page }}
+    <li
+        v-for="page in pages"
+        :key="page.name"
+        class="pagination-item"
+    >
+      <button
+          type="button"
+          @click="onClickPage(page.name)"
+          :disabled="page.isDisabled"
+          :class="{ active: isPageActive(page.name) }"
+      >
+        {{ page.name }}
       </button>
     </li>
 
     <li class="pagination-item">
-      <button type="button" @click="onClickNextPage" :disabled="isInLastPage">
+      <button
+          type="button"
+          @click="onClickNextPage"
+          :disabled="isInLastPage"
+      >
         Next
       </button>
     </li>
 
     <li class="pagination-item">
-      <button type="button" @click="onClickLastPage" :disabled="isInLastPage">
+      <button
+          type="button"
+          @click="onClickLastPage"
+          :disabled="isInLastPage"
+      >
         Last
       </button>
     </li>
@@ -57,24 +82,26 @@ export default {
   },
   computed: {
     startPage() {
-      // When on the first page
       if (this.currentPage === 1) {
         return 1;
       }
-      // When on the last page
+
       if (this.currentPage === this.totalPages) {
-        return this.totalPages - this.maxVisibleButtons;
+        return this.totalPages - this.maxVisibleButtons + 1;
       }
-      // When in between
+
       return this.currentPage - 1;
+
+    },
+    endPage() {
+
+      return Math.min(this.startPage + this.maxVisibleButtons - 1, this.totalPages);
+
     },
     pages() {
       const range = [];
 
-      for (let i = this.startPage;
-           i <= Math.min(this.startPage + this.maxVisibleButtons - 1, this.totalPages);
-           i+= 1
-      ) {
+      for (let i = this.startPage; i <= this.endPage; i+= 1 ) {
         range.push({
           name: i,
           isDisabled: i === this.currentPage
@@ -91,9 +118,6 @@ export default {
     },
   },
   methods: {
-    isPageActive(page) {
-      return this.currentPage === page;
-    },
     onClickFirstPage() {
       this.$emit('pagechanged', 1);
     },
@@ -108,11 +132,16 @@ export default {
     },
     onClickLastPage() {
       this.$emit('pagechanged', this.totalPages);
-    }
+    },
+    isPageActive(page) {
+      return this.currentPage === page;
+    },
   }
 }
 </script>
-<style lang="scss">
+
+
+<style>
 .pagination {
   list-style-type: none;
 }
