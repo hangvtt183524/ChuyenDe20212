@@ -12,26 +12,14 @@ import java.io.Serializable;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "examination")
-public class Examination implements Serializable {
+@Table(name = "status")
+public class Status implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    private Long ownerId;
-
-    private Long petId;
-
-    private Long doctorId;
-
-    private Integer startDate;
-
-    private Integer endDate;
-
-    private String firstDescription;
-
-    private String result;
-
     private Integer status;
+
+    private String description;
 }
