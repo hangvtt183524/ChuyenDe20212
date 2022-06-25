@@ -89,4 +89,16 @@ public class ExaminationService {
         Examination savedExam = examinationRepository.save(examination);
         return savedExam;
     }
+
+    public Examination setExam(final Examination examination) {
+        if (examination.getDoctorId() == null) {
+            throw new IllegalArgumentException("Must set doctor for examination!");
+        }
+
+        if (examination.getStatus() != null) {
+            throw new IllegalArgumentException("Must set status for examination!");
+        }
+
+        return examinationRepository.save(examination);
+    }
 }

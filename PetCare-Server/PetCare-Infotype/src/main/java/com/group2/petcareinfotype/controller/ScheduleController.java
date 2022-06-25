@@ -51,4 +51,9 @@ public class ScheduleController {
     public ResponseEntity<Examination> createExam(@RequestBody Examination examination) {
         return ResponseEntity.accepted().body(examinationService.createExam(examination));
     }
+
+    @PostMapping(value = "/set-schedule")
+    public ResponseEntity<Examination> setSchedule(@RequestBody Examination examination) {
+        return ResponseEntity.accepted().body(examinationService.setExam(examination));
+    }
 }
