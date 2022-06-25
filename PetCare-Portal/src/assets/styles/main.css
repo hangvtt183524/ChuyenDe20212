@@ -4,3 +4,14 @@ body{
     font-family: sans-serif !important;
     font-size: 17px;
 }
+input {
+    font-size: 17px !important;
+}
+.scrollable::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+}
+.scrollable::-webkit-scrollbar-thumb {
+    background-color: #cdd3d6;
+    border-radius: 1px;
+}
