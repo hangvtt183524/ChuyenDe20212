@@ -31,8 +31,11 @@
     justify-content: center;
     font-size: 17px;
 }
-    .choice a{
+    a{
         text-decoration: none;
+    }
+    .choice .page-link{
+        /* text-decoration: none !important; */
         color: #64b9f5 !important;
     }
     .choice .underline{
@@ -44,9 +47,12 @@
         right: 0;
         opacity: 0;
     }
-    .choice:hover .underline{
+    .choice .underline.visible{
         opacity: 1;
     }
+    /* .choice:hover .underline{
+        opacity: 1;
+    } */
 .account{
     width: 300px;
     display: flex;

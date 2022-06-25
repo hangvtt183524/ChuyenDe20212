@@ -1,4 +1,4 @@
-import { http } from "@/utils/Infotype";
+import { http } from "@/utils/utils";
 import { PATHS } from "@/services/paths/InfotypePaths";
 
 export default {
