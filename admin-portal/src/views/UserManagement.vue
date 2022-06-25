@@ -48,7 +48,7 @@
     props: {
       numOfUsersPerPage: {
         type: Number,
-        default: 8,
+        default: 3,
       }
     },
     components: {
