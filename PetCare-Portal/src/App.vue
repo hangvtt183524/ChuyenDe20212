@@ -2,7 +2,7 @@
   <div className="app-wrapper">
     <div className="app">
       <TheNavigation/>
-      <router-view/>
+      <router-view v-on:click.native="disappearElement"/>
     </div>
   </div>
 </template>
@@ -22,7 +22,11 @@ export default {
   },
   mounted() {
   },
-  methods: {},
+  methods: {
+    disappearElement(){
+      document.querySelector('.navMenu').classList.remove('nm-activate')
+    }
+  },
   watch: {},
 };
 </script>

@@ -59,7 +59,7 @@ export default {
         petMenuItemOnClick(index){
             // console.log(this.$refs.info.classList)
             var items = this.$refs.petMenu.childNodes
-            Array.from(items).forEach(item => {
+            items.forEach(item => {
                 item.classList.remove('selected-item')
             });
             items[index].classList.add('selected-item')

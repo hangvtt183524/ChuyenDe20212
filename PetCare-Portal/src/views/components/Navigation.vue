@@ -6,6 +6,18 @@
                 <div class="page-link">{{page.name}}</div>
                 <div class="underline"></div>
             </router-link>
+             <div class="choice" v-on:click="showNavMenu">
+                <div class="page-link">Thú cưng của tôi</div>
+                <div class="underline" ref="thirdUnderline"></div>
+                <div class="navMenu" ref="navMenu">
+                    <router-link class="navItem" v-for="(pet, index) in this.pets" :key="index" :to="{path: `/my-pet/${pet.id}/info`}">
+                        <div class="navIcon">
+                            <i class="fa-solid fa-paw"></i>
+                        </div>
+                        <div class="navText">{{pet.name}}</div>
+                    </router-link>
+                </div>
+            </div>
         </div>
         <div class="account">
             <div class="choice">
@@ -37,10 +49,20 @@ export default {
                 path: '/',
                 name: 'Hỏi đáp'
             },
+            // {
+            //     path: '/my-pet/info',
+            //     name: 'Thú cưng của tôi'
+            // },      
+        ],
+        pets: [
             {
-                path: '/my-pet/info',
-                name: 'Thú cưng của tôi'
-            },      
+                id: '1',
+                name: 'Milu'
+            },
+            {
+                id: '2',
+                name: 'Ki'
+            }
         ]
     }
   },
@@ -54,7 +76,17 @@ export default {
             u.classList.remove('visible')
         });
         underlines[index].classList.add('visible')
-    }
+        this.$refs.navMenu.classList.remove('nm-activate')
+    },
+    showNavMenu(){
+        this.$refs.navMenu.classList.toggle('nm-activate')
+        var underlines = this.$refs.menu.querySelectorAll('.underline')
+        underlines.forEach(u => {
+            u.classList.remove('visible')
+        });
+        this.$refs.thirdUnderline.classList.add('visible')
+        // console.log(window.location.pathname)
+    },
 },
 }
 </script>

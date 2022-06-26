@@ -23,7 +23,10 @@ export default {
     name: "MDropdown",
     props: {
         displaySelectedText: null,
-        items: [],
+        items: {
+            type: Array,
+            default: null
+        },
         valueInput: null,
         label: null,
     },
@@ -32,14 +35,6 @@ export default {
             selectedIcon: null,
             selectedText: null,
             originSelectedText: this.selectedText,
-            // items: [
-            //     {
-            //         text: "First choice"
-            //     },
-            //     {
-            //         text: "Second choice"
-            //     }
-            // ],
         }
     },
     mounted() {
