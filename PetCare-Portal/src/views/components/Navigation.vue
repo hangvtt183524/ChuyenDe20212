@@ -2,10 +2,10 @@
     <div class="navigation">
         <div class="navigation-tittle">Pet Care</div>
         <div class="menu" ref="menu">
-            <div class="choice" v-on:click="highLight" v-for="(page, index) in pages" :key="index">
-                <router-link class="page-link" :to="page.path">{{page.name}}</router-link>
+            <router-link :to="page.path" class="choice" v-on:click.native="highLight(index)" v-for="(page, index) in pages" :key="index">
+                <div class="page-link">{{page.name}}</div>
                 <div class="underline"></div>
-            </div>
+            </router-link>
         </div>
         <div class="account">
             <div class="choice">
@@ -38,19 +38,22 @@ export default {
                 name: 'Hỏi đáp'
             },
             {
-                path: '/pet-information',
+                path: '/my-pet/info',
                 name: 'Thú cưng của tôi'
             },      
         ]
     }
   },
+  mounted(){
+    console.log(this.$refs.menu.childNodes[0].childNodes[1].classList.add('visible'))
+  },
   methods: {
-    highLight(e){
+    highLight(index){
         var underlines = this.$refs.menu.querySelectorAll('.underline')
         underlines.forEach(u => {
             u.classList.remove('visible')
         });
-        e.path[1].childNodes[1].classList.add('visible')
+        underlines[index].classList.add('visible')
     }
 },
 }

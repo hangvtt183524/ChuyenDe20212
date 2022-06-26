@@ -4,13 +4,13 @@
         <div class="dropdown-content">                   
             <div class="select-list" ref="selectList">
                 <div class="select-item" v-for="(item, index) in items" :key="index" @click="selectItemOnclick(index, $event)" :id="item.id">
+                    <i class="fa-solid fa-check"></i>
                     <div class="dd-item-text">{{item.text}}</div>
                 </div>
             </div>
             
             <div class="select" @click="ddSelectOnclick" ref="select">
                 <div class="select-content">
-                    <!-- <div class="dd-item-icon" :class="this.selectedIcon"></div> -->
                     <div class="dd-item-text">{{this.selectedText}}</div>
                 </div>
                 <i class="fas fa-angle-down"></i>
