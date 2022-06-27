@@ -27,4 +27,11 @@
 .button.white:hover {
     background-color: #E9EBEE;
 }
+.button.orange{
+    background-color: #ffc021;
+    color: #fff;
+}
+.button.orange:hover{
+    background-color: #ffb700;
+}
 

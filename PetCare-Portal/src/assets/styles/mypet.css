@@ -178,6 +178,7 @@ table{
 }
 table th{
     background-color: #cdcdcd;
+    z-index: 0 !important;
 }
 table th, tr{
     height: 35px;
