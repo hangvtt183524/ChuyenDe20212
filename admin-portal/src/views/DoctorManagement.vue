@@ -1,11 +1,14 @@
 <template>
-    <div class="user-management-page">
+    <div class="doctor-management-page">
       <div class="page-title">
-        <p>Quản lý tài khoản</p>
+        <p>Quản lý tài khoản bác sĩ</p>
       </div>
+
+      <p v-if="len == 0" class="noti">Không có dữ liệu hiển thị</p>
+
   
-      <div class="table-wrapper">
-        <table class="user-table">
+      <div v-else class="table-wrapper">
+        <table class="doctor-table">
           <thead class="header-row">
             <tr>
               <th>Tên</th>
@@ -15,34 +18,47 @@
               <th>Địa chỉ</th>
               <th>Chuyên ngành</th>
               <th>Password</th>
-              <th>Hành động</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody class="body-row">
-            <tr v-for="doctor in renderUsers" :key="doctor.id">
-              <template v-if="doctor.isEditting">
-                <td><input type="text" :value=doctor.name></td>
-                <td><input type="text" :value=doctor.dob></td>
-                <td><input type="text" :value=doctor.phone></td>
-                <td><input type="email" :value=doctor.email></td>
-                <td><input type="text" :value=doctor.address></td>
-                <td><input type="text" :value=doctor.major></td>
-                <td><input type="password" :value=doctor.password></td>
-                <td><a v-on:click="handleDoneClick(doctor)">Lưu</a></td>
-              </template>
-              <template v-else>
-                <td>{{doctor.name}}</td>
-                <td>{{doctor.dob}}</td>
-                <td>{{doctor.phone}}</td>
-                <td>{{doctor.email}}</td>
-                <td>{{doctor.address}}</td>
-                <td>{{doctor.major}}</td>
-                <td>{{doctor.password}}</td>
-                <td class="action">
-                  <a v-on:click="handleEditClick(doctor)">Sửa</a>
-                  <a href="#">Xoá</a>
-                </td>
-              </template>
+            <tr v-for="doctor in renderDoctors" :key="doctor.id">
+              <td>
+                <input type="text" v-model="doctor.name" :disabled="!doctor.isEditing" :class="{view: !doctor.isEditing}">
+              </td>
+              <td>
+                <input type="text" v-model="doctor.dob" :disabled="!doctor.isEditing" :class="{view: !doctor.isEditing}">
+              </td>
+              <td>
+                <input type="text" v-model="doctor.phone" :disabled="!doctor.isEditing" :class="{view: !doctor.isEditing}">
+              </td>
+              <td>
+                <input type="text" v-model="doctor.email" :disabled="!doctor.isEditing" :class="{view: !doctor.isEditing}">
+              </td>
+              <td>
+                <input type="text" v-model="doctor.address" :disabled="!doctor.isEditing" :class="{view: !doctor.isEditing}">
+              </td>
+              <td>
+                <input type="text" v-model="doctor.major" :disabled="!doctor.isEditing" :class="{view: !doctor.isEditing}">
+              <td>
+                <input type="text" v-model="doctor.password" :disabled="!doctor.isEditing" :class="{view: !doctor.isEditing}">
+              </td>
+              <td>
+                <button
+                    @click="doctor.isEditing = true; isEditing = true"
+                    v-if="!doctor.isEditing && !isEditing">
+                  Sửa
+                </button>
+                <button
+                    @click="deleteHandle(doctor)"
+                    v-if="!isEditing">
+                  Xoá
+                </button>
+                <button @click="saveHandle(doctor)" v-else-if="doctor.isEditing">Lưu</button>
+                <button v-if="doctor.isEditing" @click="cancelHandle(doctor)">Huỷ</button>
+              </td>
+
+
             </tr>
           </tbody>
         </table>
@@ -51,7 +67,7 @@
         <pagination
             :total-pages="totalPage"
             :total="len"
-            :per-page="numOfUsersPerPage"
+            :per-page="numOfDoctorsPerPage"
             :current-page="currentPage"
             @pagechanged="onPageChange"
         />
@@ -67,7 +83,7 @@
     export default {
       name: 'DoctorManagement',
       props: {
-        numOfUsersPerPage: {
+        numOfDoctorsPerPage: {
           type: Number,
           default: 2,
         }
@@ -76,25 +92,31 @@
         pagination: Pagination
       },
       data() {
-        const users = this.getData().users;
-        const renderUsers = users.slice(0, Math.min(this.numOfUsersPerPage, this.getData().users.length))
-        renderUsers.forEach(user => {
-          user.isEditting = false;
+        const doctors = this.getData().doctors;
+        const renderDoctors = doctors.slice(0, Math.min(this.numOfDoctorsPerPage, this.getData().doctors.length))
+        renderDoctors.forEach(doctor => {
+          doctor.isEditing = false;
         })
 
         return {
-          users,
-          renderUsers,
-          len: this.getData().users.length,
-          totalPage: Math.ceil(this.getData().users.length / this.numOfUsersPerPage),
+          doctors,
+          renderDoctors,
+          len: doctors.length,
+          totalPage: Math.ceil(doctors.length / this.numOfDoctorsPerPage),
           currentPage: 1,
           firstIndex: 0,
-          lastIndex: Math.min(this.numOfUsersPerPage - 1, this.getData().users.length - 1),
+          lastIndex: Math.min(this.numOfDoctorsPerPage - 1, doctors.length - 1),
+          isEditing: false,
+          cachedDoctors: []
         }
+      },
+      mounted() {
+        this.cachedDoctors = Object.assign({}, this.renderDoctors);
+        console.log(this.doctors)
       },
       methods: {
         getData() {
-          const users = [
+          const doctors = [
             {
               id: "001",
               name: "Bùi Việt Anh",
@@ -113,63 +135,57 @@
               password: '',
               major: '',
             },
-            {
-              id: "003",
-              name: "Bùi Việt Anh",
-              dob: "24/1/2000",
-              address: "4 Bạch Mai, Hai Bà Trưng, TP Hà Nội",
-              email: 'anh@gmail.com',
-              password: '',
-              major: '',
-            },
           ]
           return {
-            users
+            doctors
           }
         },
   
         onPageChange(page) {
           this.currentPage = page;
-          this.firstIndex = (page - 1) * this.numOfUsersPerPage;
-          if (page == this.totalPage)
+          this.firstIndex = (page - 1) * this.numOfDoctorsPerPage;
+          if (page === this.totalPage)
             this.lastIndex = this.len - 1
-          else this.lastIndex = page * this.numOfUsersPerPage - 1;
+          else this.lastIndex = page * this.numOfDoctorsPerPage - 1;
 
-          const renderUsers = []
+          const renderDoctors = []
           for (let i = this.firstIndex; i <= this.lastIndex; i++) {
-            renderUsers.push(this.users[i])
+            renderDoctors.push(this.doctors[i])
           }
 
 
-          renderUsers.forEach(user => {
-            user.isEditting = false;
+          renderDoctors.forEach(doctor => {
+            doctor.isEditing = false;
           })
-          console.log(renderUsers)
-          this.renderUsers = renderUsers
+          console.log(renderDoctors)
+          this.renderDoctors = renderDoctors
         },
 
-        handleEditClick(doctor) {
-          this.renderUsers[this.renderUsers.indexOf(doctor)].isEditting = true;
-          console.log(this.renderUsers)
+        saveHandle(doctor) {
+          console.log(this.cachedDoctors)
+          this.cachedDoctors = Object.assign({}, this.renderDoctors);
+          doctor.isEditing = false;
+          this.isEditing = false;
+          console.log(this.renderDoctors)
         },
 
-        handleDoneClick(doctor) {
-          this.renderUsers[this.renderUsers.indexOf(doctor)].isEditting = false;
+        cancelHandle(doctor) {
+          console.log(this.cachedDoctors)
+          this.renderDoctors = Object.assign({}, this.cachedDoctors);
+          doctor.isEditing = false;
+          this.isEditing = false;
+          console.log(this.renderDoctors)
         },
-  
-        getRenderUsers(first, last) {
 
-          const renderUsers = []
-          for (let i = first; i <= last; i++) {
-            renderUsers.push(this.users[i])
-          }
-
-          renderUsers.forEach(user => {
-            user.isEditting = false;
-          })
-          console.log(renderUsers)
-          this.renderUsers = renderUsers
-          return renderUsers;
+        deleteHandle(doctor) {
+          console.log(this.doctors.indexOf(doctor))
+          console.log(this.doctors)
+          this.doctors.splice(this.doctors.indexOf(doctor), 1)
+          console.log(this.doctors)
+          this.len = this.doctors.length
+          this.totalPage = Math.ceil(this.len / this.numOfDoctorsPerPage)
+          this.isEditing = false
+          this.lastIndex = Math.min(this.lastIndex, this.doctors.length - 1)
         }
       }
     }
@@ -180,7 +196,7 @@
   
   @import "../assets/scss/main.scss";
   
-  .user-management-page{
+  .doctor-management-page{
     padding: 30px;
     background-color: $colorPrimary100;
   
@@ -190,11 +206,15 @@
       color: $colorPrimary900;
     }
 
+    .noti {
+      padding-left: 100px;
+    }
+
     .table-wrapper {
       padding-left: 100px;
       padding-right: 100px;
   
-      .user-table {
+      .doctor-table {
         border: 1px solid #ddd;
         border-collapse: collapse;
         width: 100%;
@@ -211,6 +231,7 @@
         }
   
         .body-row {
+
           tr:nth-child(even) {
             background-color: $colorPrimary300;
           }
@@ -226,16 +247,19 @@
             padding-bottom: 10px;
           }
 
-          .action {
-            padding-right: 15px;
+          .view {
+            border-color: transparent;
+            background-color: initial;
+            color: initial
           }
         }
   
       }
     }
-  
-  
-  
+
+
+
+
   }
   
   </style>
