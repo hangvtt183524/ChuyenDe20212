@@ -20,7 +20,7 @@ const routes = [
     component: BookingSchedule,
   },
   {
-    path: "/my-pet",
+    path: "/my-pet/:petId",
     name: "MyPet",
     component: MyPet,
     children: [

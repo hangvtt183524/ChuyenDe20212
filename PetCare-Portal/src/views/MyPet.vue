@@ -26,6 +26,7 @@
     </div>
 </template>
 <script>
+import Vue from 'vue'
 
 export default {
     components: {
@@ -33,37 +34,78 @@ export default {
     },
     data(){
         return{
+            petId: this.$route.path.split('/')[2],
             menuItems: [
                 {
                     icon: 'fa-solid fa-circle-info',
                     text: 'Thông tin chung',
-                    path: '/my-pet/info'
+                    path: ''
                 },
                  {
                     icon: 'fa-solid fa-file',
                     text: 'Lịch sử khám bệnh',
-                    path: '/my-pet/history'
+                    path: ''
                 },
                  {
                     icon: 'fa-solid fa-stethoscope',
                     text: 'Đăng ký khám bệnh',
                     path: '/booking-schedule'
                 }
+            ],
+            test: [
+                {
+                    name: this.petId
+                }
             ]
         }
     },
+    created(){
+        // this.petId = this.$route.path.split('/')[2]
+        // console.log(this.petId)
+        this.setUpPetMenuPath()
+    },
+
     mounted(){
-        this.$refs.petMenu.childNodes[0].classList.add('selected-item')
+        this.petMenuItemOnClick(0)
     },
     methods: {
         petMenuItemOnClick(index){
             // console.log(this.$refs.info.classList)
             var items = this.$refs.petMenu.childNodes
-            Array.from(items).forEach(item => {
+            items.forEach(item => {
                 item.classList.remove('selected-item')
             });
             items[index].classList.add('selected-item')
+        },
+        setUpPetMenuPath(){
+            this.menuItems.forEach((item, index) => {
+            if(index == 0){
+                item.path = `/my-pet/${this.petId}/info`
+            }
+            if(index == 1){
+                item.path = `/my-pet/${this.petId}/history`
+            }
+        });
+        },
+        reload(){
+            this.petMenuItemOnClick(0)
         }
+    },
+    watch:{
+        $route: function(){
+            this.petId = this.$route.path.split('/')[2]
+            
+            // console.log(this.petId)
+        },
+        petId: function(){
+            this.setUpPetMenuPath()
+            //reload lại page
+            Vue.nextTick(()=>{
+                this.reload()
+            })
+            
+        }
+
     }
 }
 </script>

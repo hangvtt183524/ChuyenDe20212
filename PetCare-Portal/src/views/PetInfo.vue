@@ -17,7 +17,7 @@
                 />
                 <Dropdown
                     label = "Giới tính"
-                    :items="this.gender"
+                    :items="this.genders"
                 />
             </div>
             <div class="pet-info-right">
@@ -57,7 +57,7 @@ export default {
     },
     data(){
         return{
-            gender: [
+            genders: [
                 {
                     text: "Giống đực"
                 },
