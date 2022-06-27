@@ -95,7 +95,9 @@ export default {
     watch:{
         $route: function(){
             this.petId = this.$route.path.split('/')[2]
-            
+            Vue.nextTick(()=>{
+                this.reload()
+            })
             // console.log(this.petId)
         },
         petId: function(){

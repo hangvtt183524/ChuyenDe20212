@@ -47,6 +47,11 @@ export default {
                     receiverId: '2',
                     content: 'International playboys'
                 },
+                 {
+                    senderId: '1',
+                    receiverId: '2',
+                    content: 'International playboys djfk akfj alfjk alfj alfkjd djf '
+                },
                 
                 
             ]
