@@ -1,12 +1,12 @@
 <template>
   <div class="user-management-page">
     <div class="page-title">
-      <p>Quản lý tài khoản người dùng</p>
+      <p>Quản lý tài khoản khách hàng</p>
     </div>
 
     <p v-if="len == 0" class="noti">Không có dữ liệu hiển thị</p>
 
-    <div v-else class="table-wrapper">
+    <div class="table-wrapper">
       <table class="user-table">
         <thead class="header-row">
           <tr>
@@ -21,44 +21,78 @@
           </tr>
         </thead>
         <tbody class="body-row">
-        <tr v-for="user in renderUsers" :key="user.id">
-          <td>
-            <input type="text" v-model="user.name" :disabled="!user.isEditing" :class="{view: !user.isEditing}">
-          </td>
-          <td>
-            <input type="text" v-model="user.username" :disabled="!user.isEditing" :class="{view: !user.isEditing}">
-          </td>
-          <td>
-            <input type="text" v-model="user.dob" :disabled="!user.isEditing" :class="{view: !user.isEditing}">
-          </td>
-          <td>
-            <input type="text" v-model="user.phone" :disabled="!user.isEditing" :class="{view: !user.isEditing}">
-          </td>
-          <td>
-            <input type="text" v-model="user.email" :disabled="!user.isEditing" :class="{view: !user.isEditing}">
-          </td>
-          <td>
-            <input type="text" v-model="user.address" :disabled="!user.isEditing" :class="{view: !user.isEditing}">
-          <td>
-            <input type="text" v-model="user.password" :disabled="!user.isEditing" :class="{view: !user.isEditing}">
-          </td>
-          <td>
-            <button
-                @click="editHandle(user)"
-                v-if="!user.isEditing && !isEditing">
-              Sửa
-            </button>
-            <button
-                @click="deleteHandle(user)"
-                v-if="!isEditing">
-              Xoá
-            </button>
-            <button @click="saveHandle(user)" v-else-if="user.isEditing">Lưu</button>
-            <button v-if="user.isEditing" @click="cancelHandle(user)">Huỷ</button>
-          </td>
-
-
-        </tr>
+          <tr v-for="user in userItems" :key="user.id">
+            <td>
+              <InputItem
+                  :is-editing="user.isEditing"
+                  v-model="user.name"
+                  :is-only-numeric="false"
+                  :is-only-alpha="false"
+              />
+            </td>
+            <td>
+              <InputItem
+                  :is-editing="user.isEditing"
+                  v-model="user.username"
+                  :is-only-numeric="false"
+                  :is-only-alpha="false"
+              />
+            </td>
+            <td>
+              <InputItem
+                  :is-editing="user.isEditing"
+                  v-model="user.dob"
+                  :is-only-numeric="false"
+                  :is-only-alpha="false"
+              />
+            </td>
+            <td>
+              <InputItem
+                  :is-editing="user.isEditing"
+                  v-model="user.phone"
+                  :is-only-numeric="true"
+                  :is-only-alpha="false"
+              />
+            </td>
+            <td>
+              <InputItem
+                  :is-editing="user.isEditing"
+                  v-model="user.email"
+                  :is-only-numeric="false"
+                  :is-only-alpha="false"
+              />
+            </td>
+            <td>
+              <InputItem
+                  :is-editing="user.isEditing"
+                  v-model="user.address"
+                  :is-only-numeric="false"
+                  :is-only-alpha="false"
+              />
+            </td>
+            <td>
+              <InputItem
+                  :is-editing="user.isEditing"
+                  v-model="user.password"
+                  :is-only-numeric="false"
+                  :is-only-alpha="false"
+              />
+            </td>
+            <td class="flex">
+              <div class="svg-icon clickable" v-if="user.isEditing === false">
+                <edit-icon class="is-fill-blue" @click="editUser(user)" />
+              </div>
+              <div class="svg-icon clickable" v-if="user.isEditing === true">
+                <save-icon class="is-fill-blue" @click="saveUser(user)" />
+              </div>
+              <div class="svg-icon clickable" v-if="user.isEditing === true">
+                <cross-icon class="is-fill-red" @click="cancelEdit(user)" />
+              </div>
+              <div class="svg-icon clickable" v-else>
+                <delete-icon class="is-fill-blue" @click="deleteUser(user)" />
+              </div>
+            </td>
+          </tr>
         </tbody>
       </table>
 
@@ -77,177 +111,174 @@
 </template>
 
 <script>
-
-  import Pagination from "./components/Pagination.vue"
-  export default {
-    name: 'UserManagement',
-    props: {
-      numOfUsersPerPage: {
-        type: Number,
-        default: 3,
-      }
-    },
-    components: {
-      pagination: Pagination
-    },
-    mounted() {
-      this.cachedUsers = Object.assign({}, this.renderUsers);
-    },
-    data() {
-      const users = this.getData().users;
-      const renderUsers = users.slice(0, Math.min(this.numOfUsersPerPage, this.getData().users.length))
-      renderUsers.forEach(user => {
-        user.isEditing = false;
-      })
-
-      console.log(renderUsers)
-
-      return {
-        users,
-        renderUsers,
-        len: users.length,
-        totalPage: Math.ceil(users.length / this.numOfUsersPerPage),
-        currentPage: 1,
-        firstIndex: 0,
-        lastIndex: Math.min(this.numOfUsersPerPage - 1, users.length - 1),
-        isEditing: false,
-        cachedUsers: []
-      }
-    },
-    methods: {
-      getData() {
-        return {
-          users: [
-            {
-              id: "001",
-              username: "bva001",
-              name: "Bùi Việt Anh",
-              dob: "24/1/2000",
-              address: "4 Bạch Mai, Hai Bà Trưng, TP Hà Nội",
-              email: 'anh@gmail.com',
-              password: "",
-              phone: "0933244323"
-            },
-            {
-              id: "002",
-              username: "bva002",
-              name: "Bùi Việt Anh",
-              dob: "24/1/2000",
-              address: "4 Bạch Mai, Hai Bà Trưng, TP Hà Nội",
-              email: 'anh@gmail.com',
-              password: "",
-              phone: "0933244323"
-            },
-          ]
-        }
-      },
-
-      onPageChange(page) {
-        this.currentPage = page;
-        this.firstIndex = (page - 1) * this.numOfUsersPerPage;
-        if (page === this.totalPage)
-          this.lastIndex = this.len - 1
-        else this.lastIndex = page * this.numOfUsersPerPage - 1;
-
-        const renderUsers = []
-        for (let i = this.firstIndex; i <= this.lastIndex; i++) {
-          renderUsers.push(this.users[i])
-        }
-
-        renderUsers.forEach(user => {
-          user.isEditing = false;
-        })
-        this.renderUsers = renderUsers
-      },
-
-      editHandle(user) {
-        user.isEditing = true;
-        this.isEditing = true;
-      },
-
-      saveHandle(user) {
-        console.log(this.cachedUsers)
-        this.cachedUsers = Object.assign({}, this.renderUsers);
-        user.isEditing = false;
-        this.isEditing = false;
-        console.log(this.renderUsers)
-      },
-
-      cancelHandle(user) {
-        user.isEditing = false;
-      },
-
-      deleteHandle(user) {
-        this.isEditing = false
-        user.isEditing = false;
-      },
-
-
+import editIcon from '@/assets/svg/edit.svg'
+import deleteIcon from '@/assets/svg/delete.svg'
+import saveIcon from '@/assets/svg/save.svg'
+import crossIcon from '@/assets/svg/close.svg'
+import InputItem from "@/views/components/InputItem";
+import Pagination from "./components/Pagination.vue"
+export default {
+  name: 'UserManagement',
+  props: {
+    numOfUsersPerPage: {
+      type: Number,
+      default: 15,
     }
+  },
+  components: {
+    pagination: Pagination,
+    editIcon,
+    deleteIcon,
+    saveIcon,
+    crossIcon,
+    InputItem
+  },
+  data() {
+    return {
+      users: null,
+      // renderUsers: this.fetchData().users.slice(0, this.numOfUsersPerPage),
+      len: 0,
+      totalPage: 0,
+      currentPage: 1,
+      firstIndex: 0,
+      lastIndex: 0,
+      usersDataBackup: null
+    }
+  },
+  methods: {
+    getData() {
+      return [
+        {
+          id: "001",
+          name: "Bùi Việt Anh",
+          dob: "24/1/2000",
+          address: "4 Bạch Mai, Hai Bà Trưng, TP Hà Nội",
+          email: 'anh@gmail.com',
+          password: '',
+          phone: '',
+          username: '',
+          isEditing: false
+        },
+        {id: "002", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com', isEditing: false, password: '', phone: '', username: '',},
+        {id: "003", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com', isEditing: false, password: '', phone: '', username: '',},
+        {id: "004", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com', isEditing: false, password: '', phone: '', username: '',},
+        {id: "005", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com', isEditing: false, password: '', phone: '', username: '',},
+        {id: "006", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com', isEditing: false, password: '', phone: '', username: '',},
+        {id: "007", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com', isEditing: false, password: '', phone: '', username: '',},
+        {id: "008", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com', isEditing: false, password: '', phone: '', username: '',},
+        {id: "009", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com', isEditing: false, password: '', phone: '', username: '',},
+        {id: "010", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com', isEditing: false, password: '', phone: '', username: '',},
+        {id: "011", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com', isEditing: false, password: '', phone: '', username: '',},
+        {id: "012", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com', isEditing: false, password: '', phone: '', username: '',},
+        {id: "013", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com', isEditing: false, password: '', phone: '', username: '',},
+        {id: "014", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com', isEditing: false, password: '', phone: '', username: '',},
+        {id: "016", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com', isEditing: false, password: '', phone: '', username: '',},
+        {id: "015", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com', isEditing: false, password: '', phone: '', username: '',},
+      ]
+    },
+    onPageChange(page) {
+      // console.log(page)
+      this.currentPage = page;
+      this.firstIndex = (page - 1) * this.numOfUsersPerPage;
+      if (page == this.totalPage)
+        this.lastIndex = this.len - 1
+      else this.lastIndex = page * this.numOfUsersPerPage - 1;
+    },
+    getRenderUsers() {
+      let first = this.firstIndex
+      let last = this.lastIndex
+      const renderUsers = []
+      for (let i = first; i <= last; i++) {
+        renderUsers.push(this.users[i])
+      }
+      return renderUsers;
+    },
+    editUser(user) {
+      if (user.isEditing === false) {
+        user.isEditing = !user.isEditing
+      }
+    },
+    deleteUser(user) {
+      user.isEditing = false
+      /*
+      call api delete user
+      */
+      let userIndex = this.users.indexOf(user)
+      this.users.splice(userIndex, 1)
+      this.usersDataBackup.splice(userIndex, 1)
+      this.len = this.users.length
+      this.totalPage = Math.ceil(this.users.length / this.numOfUsersPerPage)
+    },
+    saveUser(user) {
+      console.log(user)
+      /*
+      call api save user
+      */
+      user.isEditing = false
+      this.usersDataBackup = JSON.parse(JSON.stringify(this.users))
+    },
+    cancelEdit(user) {
+      let userIndex = this.users.indexOf(user)
+      this.users = JSON.parse(JSON.stringify(this.usersDataBackup))
+      this.users[userIndex].isEditing = false
+    }
+  },
+  computed: {
+    userItems() {
+      return this.getRenderUsers()
+    }
+  },
+  created() {
+    this.users = this.getData()
+    this.len = this.users.length
+    this.totalPage = Math.ceil(this.users.length / this.numOfUsersPerPage)
+    this.lastIndex = Math.min(this.numOfDoctorsPerPage - 1, this.len - 1)
+    this.usersDataBackup = JSON.parse(JSON.stringify(this.users))
   }
-
+}
 </script>
 
 <style lang="scss">
-
 @import "../assets/scss/main.scss";
-
 .user-management-page{
   padding: 30px;
   background-color: $colorPrimary100;
-
   .page-title {
     padding-left: 100px;
     font-size: 40px;
     color: $colorPrimary900;
   }
-
-  .noti {
-    padding-left: 100px;
-  }
-
   .table-wrapper {
     padding-left: 100px;
     padding-right: 100px;
-
     .user-table {
       border: 1px solid #ddd;
       border-collapse: collapse;
       width: 100%;
-
       .header-row {
         margin: 50px;
-        background-color: #63a2d8;
-
+        background-color: $colorPrimary900;
         th {
+          color: white;
           border: 1px solid #ddd;
-          padding-top: 10px;
-          padding-bottom: 10px;
+          padding-top: 20px;
+          padding-bottom: 20px;
         }
       }
-
       .body-row {
         tr:nth-child(even) {
           background-color: $colorPrimary300;
         }
-
         tr:hover {
-          background-color: $colorPrimary300;
+          background-color: $colorPrimary400;
         }
-
         td {
-          border: 1px solid #ddd;
           padding-left: 10px;
           padding-top: 10px;
           padding-bottom: 10px;
         }
       }
-
     }
   }
-
-
-
 }
-
 </style>

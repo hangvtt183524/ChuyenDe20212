@@ -151,7 +151,7 @@ export default {
 
 
 <style lang="scss">
-
+@import "../../assets/scss/main.scss";
 .pagination {
   list-style-type: none;
 }
@@ -161,7 +161,7 @@ export default {
 }
 
 .active {
-  background-color: #4AAE9B;
+  background-color: $colorPrimary400;
   color: #ffffff;
 }
 </style>
