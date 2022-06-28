@@ -24,4 +24,10 @@ public class Pet implements Serializable {
     private String name;
 
     private String species;
+
+    private Integer age;
+
+    private String gender;
+
+    private Double weight;
 }

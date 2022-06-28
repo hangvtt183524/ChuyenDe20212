@@ -22,7 +22,7 @@ public class UserService {
         User user = null;
         if (id != null) {
             Optional<User> optionalUser = userRepository.findById(Long.parseLong(id));
-            if (optionalUser.isPresent()) {
+            if (optionalUser.isPresent() && optionalUser.get() != null) {
                 user = optionalUser.get();
             } else {
                 throw new IllegalArgumentException("No User existed!");
@@ -75,4 +75,14 @@ public class UserService {
             userRepository.delete(user);
         }
     }
+
+    public User createUser(final User user) {
+        Optional<User> exitUserWithMail = userRepository.findFirstByMail(user.getMail());
+        if (exitUserWithMail.isPresent()) {
+            throw new IllegalArgumentException("User with mail existed!");
+        } else {
+            return userRepository.save(user);
+        }
+    }
+
 }
