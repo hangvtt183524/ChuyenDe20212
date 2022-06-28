@@ -16,6 +16,9 @@
                 <div class="chat-window" v-if="showChatWindow">
                     <div class="header chat-window-header">
                         ABC
+                        <div class="exit" @click="exitBtnOnClick">
+                            <i class="fa-solid fa-xmark"></i>
+                        </div>
                     </div>
                     <div class="msgs scrollable" ref="msgs">
                         <div class="wrap-msg" v-for="(msg, index) in msgs" :key="index" :class="getClass(msg)">
@@ -34,6 +37,7 @@
     </div>
 </template>
 <script>
+import Vue from 'vue'
 export default {
     name: 'MessagesScreen',
     data(){
@@ -72,11 +76,12 @@ export default {
                 },
             ],
             myId: '1',
-            msgs: []
+            msgs: [],
+            msgsData: [],
         }
     },
     created(){
-        this.msgs=[
+        this.msgsData=[
             {
                 senderId: '2',
                 receiverId: '1',
@@ -139,16 +144,26 @@ export default {
         },
         autoScroll(){
             var element = this.$refs.msgs
-            element.scrollTop = element.scrollHeight;
+            if(element){
+                element.scrollTop = element.scrollHeight;
+            }
         },
         userOnClick(){
-            this.showChatWindow = !this.showChatWindow
-        }
+            this.showChatWindow = true
+            this.msgs = this.msgsData      
+        },
+         exitBtnOnClick(){
+            this.showChatWindow = false
+            this.msgs = []
+        },
     }, 
     watch:{
         msgs(){
             console.log("ahihi")
-            this.autoScroll()
+            Vue.nextTick(()=>{
+                this.autoScroll()
+            })
+            
         }
     }
 }
