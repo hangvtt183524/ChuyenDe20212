@@ -87,7 +87,7 @@ export default {
       }
 
       if (this.currentPage === this.totalPages) {
-        return this.totalPages - this.maxVisibleButtons + 1;
+        return (this.totalPages - this.maxVisibleButtons + 1 > 0 ? this.totalPages - this.maxVisibleButtons + 1 : 1);
       }
 
       return this.currentPage - 1;
@@ -98,9 +98,18 @@ export default {
       return Math.min(this.startPage + this.maxVisibleButtons - 1, this.totalPages);
 
     },
+    leftPage() {
+      return this.currentPage - 1;
+    },
+    rightPage() {
+      return this.currentPage + 1;
+    },
     pages() {
       const range = [];
 
+      // if (this.currentPage <= 3) {
+      //
+      // }
       for (let i = this.startPage; i <= this.endPage; i+= 1 ) {
         range.push({
           name: i,
@@ -141,7 +150,8 @@ export default {
 </script>
 
 
-<style>
+<style lang="scss">
+@import "../../assets/scss/main.scss";
 .pagination {
   list-style-type: none;
 }
@@ -151,7 +161,7 @@ export default {
 }
 
 .active {
-  background-color: #4AAE9B;
+  background-color: $colorPrimary400;
   color: #ffffff;
 }
 </style>
