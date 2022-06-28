@@ -2,9 +2,21 @@
     <div class="navigation">
         <div class="navigation-tittle">Pet Care</div>
         <div class="menu" ref="menu">
-            <div class="choice" v-on:click="highLight" v-for="(page, index) in pages" :key="index">
-                <router-link class="page-link" :to="page.path">{{page.name}}</router-link>
+            <router-link :to="page.path" class="choice" v-on:click.native="highLight(index)" v-for="(page, index) in pages" :key="index">
+                <div class="page-link">{{page.name}}</div>
                 <div class="underline"></div>
+            </router-link>
+             <div class="choice" v-on:click="showNavMenu">
+                <div class="page-link">Thú cưng của tôi</div>
+                <div class="underline" ref="thirdUnderline"></div>
+                <div class="navMenu" ref="navMenu">
+                    <router-link class="navItem" v-for="(pet, index) in this.pets" :key="index" :to="{path: `/my-pet/${pet.id}/info`}">
+                        <div class="navIcon">
+                            <i class="fa-solid fa-paw"></i>
+                        </div>
+                        <div class="navText">{{pet.name}}</div>
+                    </router-link>
+                </div>
             </div>
         </div>
         <div class="account">
@@ -37,21 +49,44 @@ export default {
                 path: '/',
                 name: 'Hỏi đáp'
             },
+            // {
+            //     path: '/my-pet/info',
+            //     name: 'Thú cưng của tôi'
+            // },      
+        ],
+        pets: [
             {
-                path: '/pet-information',
-                name: 'Thú cưng của tôi'
-            },      
+                id: '1',
+                name: 'Milu'
+            },
+            {
+                id: '2',
+                name: 'Ki'
+            }
         ]
     }
   },
+  mounted(){
+    console.log(this.$refs.menu.childNodes[0].childNodes[1].classList.add('visible'))
+  },
   methods: {
-    highLight(e){
+    highLight(index){
         var underlines = this.$refs.menu.querySelectorAll('.underline')
         underlines.forEach(u => {
             u.classList.remove('visible')
         });
-        e.path[1].childNodes[1].classList.add('visible')
-    }
+        underlines[index].classList.add('visible')
+        this.$refs.navMenu.classList.remove('nm-activate')
+    },
+    showNavMenu(){
+        this.$refs.navMenu.classList.toggle('nm-activate')
+        var underlines = this.$refs.menu.querySelectorAll('.underline')
+        underlines.forEach(u => {
+            u.classList.remove('visible')
+        });
+        this.$refs.thirdUnderline.classList.add('visible')
+        // console.log(window.location.pathname)
+    },
 },
 }
 </script>
