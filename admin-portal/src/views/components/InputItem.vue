@@ -9,6 +9,9 @@
             :class="[valid ? '' : 'has-error']"
         />
       </div>
+      <div v-else>
+        {{ inputTxt }}
+      </div>
     </div>
   </template>
   
@@ -75,6 +78,9 @@
         set(value) {
           this.$emit('input', value)
         }
+      },
+      inputTxt() {
+        return this.value
       }
     },
     methods: {
