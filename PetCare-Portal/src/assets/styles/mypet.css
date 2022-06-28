@@ -114,7 +114,6 @@
         box-sizing: border-box;
         position: relative;
         height: 350px;
-        overflow-y: auto;
     }
         .pet-info-left {
             font-size: 17px;
@@ -178,6 +177,7 @@ table{
 }
 table th{
     background-color: #cdcdcd;
+    z-index: 0 !important;
 }
 table th, tr{
     height: 35px;

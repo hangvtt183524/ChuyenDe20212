@@ -24,19 +24,38 @@
                             <Button
                                 text="Chi tiết"
                                 color="blue"
+                                @click.native="detailBtnOnClick"
                             />
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
+        <PetHistoryDetail
+            v-if="showPetHistoryDetail"
+            @exitDetail="hidePetHistoryDetail"
+        />
     </div>
 </template>
 <script>
 import Button from './components/Button.vue'
+import PetHistoryDetail from './PetHistoryDetail.vue'
 export default {
     components:{
-        Button, 
+        Button, PetHistoryDetail
+    },
+    data(){
+        return{
+            showPetHistoryDetail: false,
+        }
+    },
+    methods: {
+        detailBtnOnClick(){
+            this.showPetHistoryDetail = true
+        },
+        hidePetHistoryDetail(){
+            this.showPetHistoryDetail = false
+        }
     }
 }
 </script>

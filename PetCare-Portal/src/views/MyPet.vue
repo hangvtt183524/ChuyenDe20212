@@ -75,6 +75,7 @@ export default {
             items.forEach(item => {
                 item.classList.remove('selected-item')
             });
+            console.log(items)
             items[index].classList.add('selected-item')
         },
         setUpPetMenuPath(){
@@ -94,7 +95,9 @@ export default {
     watch:{
         $route: function(){
             this.petId = this.$route.path.split('/')[2]
-            
+            Vue.nextTick(()=>{
+                this.reload()
+            })
             // console.log(this.petId)
         },
         petId: function(){
