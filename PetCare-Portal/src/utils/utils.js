@@ -35,6 +35,17 @@ http.interceptors.response.use(
     }
 )
 
+const prepareParams = function(params) {
+    var str = ''
+    for (var key in params) {
+        if (str !== '') str += '&'
+        if (!params[key]) continue
+        str += key + '=' + encodeURIComponent(params[key])
+    }
+    return str
+}
+
 export {
-    http
+    http,
+    prepareParams
 }

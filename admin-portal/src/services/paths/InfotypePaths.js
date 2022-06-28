@@ -1,5 +1,5 @@
 const PREFIX = 'infotypeservice'
-const VERSION = '/v1'
+const VERSION = 'v1'
 
 const SEARCH = 'search'
 const SEARCH_ALL = 'searchAll'

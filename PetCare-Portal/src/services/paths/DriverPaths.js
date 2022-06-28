@@ -1,5 +1,5 @@
 const PREFIX = 'driverservice'
-const VERSION = '/v1'
+const VERSION = 'v1'
 
 const SAVE = 'save'
 

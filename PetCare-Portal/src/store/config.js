@@ -1,3 +1,5 @@
+import InfotypeServices from "@/services/InfotypeServices"
+
 export default {
     namespaced: true,
     state: {
@@ -27,8 +29,13 @@ export default {
         }
     },
     actions: {
-        getListPetOfUser({state, commit}, {user}) {
-
+        async getListPetOfUser({commit}, {user}) {
+            const pets = await InfotypeServices.searchPetByUser(user)
+            commit('setPetOfUser', pets)
+        },
+        async loginAndSetCurrentUser({commit}, {user}) {
+            const loginUser = await InfotypeServices.login(user)
+            commit('setCurrentUser', loginUser)
         }
     }
 }

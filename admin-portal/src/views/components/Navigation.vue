@@ -24,8 +24,17 @@
   </div>
 </template>
 <script>
+import {mapGetters} from "vuex"
 export default {
   name: 'TheNavigation',
+  mounted() {
+    console.log(this.configUser)
+  },
+  computed: {
+    ...mapGetters({
+      configUser: 'config/getConfigUser'
+    })
+  }
 }
 </script>
 <style scoped>
