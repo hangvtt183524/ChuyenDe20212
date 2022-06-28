@@ -21,7 +21,7 @@ public class MailService {
 
     public Mail saveMail(final String mail, final Integer type) {
         Optional<User> optionalUser = userRepository.findFirstByMail(mail);
-        if (!optionalUser.isPresent()) {
+        if (!optionalUser.isPresent() || optionalUser.get() == null) {
             throw new IllegalArgumentException("No User with mail existed!");
         }
 
