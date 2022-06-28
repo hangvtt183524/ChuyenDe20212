@@ -200,6 +200,7 @@ export default {
       this.doctors.splice(doctorIndex, 1)
       this.doctorsDataBackup.splice(doctorIndex, 1)
       this.len = this.doctors.length
+      this.lastIndex = Math.min(this.lastIndex, this.len - 1)
       this.totalPage = Math.ceil(this.doctors.length / this.numOfDoctorsPerPage)
     },
     saveDoctor(doctor) {
