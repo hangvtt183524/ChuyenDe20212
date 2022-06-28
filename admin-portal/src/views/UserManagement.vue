@@ -13,15 +13,58 @@
             <th>Ngày sinh</th>
             <th>Địa chỉ</th>
             <th>Email</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody class="body-row">
-          <tr v-for="user in getRenderUsers(firstIndex, lastIndex)" :key="user.id">
+          <tr v-for="user in userItems" :key="user.id">
             <td class="">{{user.id}}</td>
-            <td class="">{{user.name}}</td>
-            <td>{{user.dob}}</td>
-            <td>{{user.address}}</td>
-            <td>{{user.email}}</td>
+            <td class="">
+              <InputItem
+                  :is-editing="user.isEditing"
+                  v-model="user.name"
+                  :is-only-numeric="false"
+                  :is-only-alpha="false"
+              />
+            </td>
+            <td>
+              <InputItem
+                  :is-editing="user.isEditing"
+                  v-model="user.dob"
+                  :is-only-numeric="false"
+                  :is-only-alpha="false"
+              />
+            </td>
+            <td>
+              <InputItem
+                  :is-editing="user.isEditing"
+                  v-model="user.address"
+                  :is-only-numeric="false"
+                  :is-only-alpha="false"
+              />
+            </td>
+            <td>
+              <InputItem
+                  :is-editing="user.isEditing"
+                  v-model="user.email"
+                  :is-only-numeric="false"
+                  :is-only-alpha="false"
+              />
+            </td>
+            <td class="flex">
+              <div class="svg-icon clickable">
+                <edit-icon class="is-fill-blue" @click="editUser(user)" />
+              </div>
+              <div class="svg-icon clickable" v-if="user.isEditing === true">
+                <save-icon class="is-fill-blue" @click="saveUser(user)" />
+              </div>
+              <div class="svg-icon clickable" v-if="user.isEditing === true">
+                <cross-icon class="is-fill-red" @click="cancelEdit(user)" />
+              </div>
+              <div class="svg-icon clickable" v-else>
+                <delete-icon class="is-fill-blue" @click="deleteUser(user)" />
+              </div>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -41,7 +84,11 @@
 </template>
 
 <script>
-
+import editIcon from '@/assets/svg/edit.svg'
+import deleteIcon from '@/assets/svg/delete.svg'
+import saveIcon from '@/assets/svg/save.svg'
+import crossIcon from '@/assets/svg/close.svg'
+import InputItem from "@/views/components/InputItem";
   import Pagination from "./components/Pagination.vue"
   export default {
     name: 'UserManagement',
@@ -52,47 +99,52 @@
       }
     },
     components: {
-      pagination: Pagination
+      pagination: Pagination,
+      editIcon,
+      deleteIcon,
+      saveIcon,
+      crossIcon,
+      InputItem
     },
     data() {
       return {
-        users: this.getData().users,
+        users: null,
         // renderUsers: this.fetchData().users.slice(0, this.numOfUsersPerPage),
-        len: this.getData().users.length,
-        totalPage: Math.ceil(this.getData().users.length / this.numOfUsersPerPage),
+        len: 0,
+        totalPage: 0,
         currentPage: 1,
         firstIndex: 0,
-        lastIndex: this.numOfUsersPerPage - 1
+        lastIndex: 0,
+        usersDataBackup: null
       }
     },
     methods: {
       getData() {
-        return {
-          users: [
+        return [
             {
               id: "001",
               name: "Bùi Việt Anh",
               dob: "24/1/2000",
               address: "4 Bạch Mai, Hai Bà Trưng, TP Hà Nội",
-              email: 'anh@gmail.com'
+              email: 'anh@gmail.com',
+              isEditing: false
             },
-            {id: "002", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-            {id: "003", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-            {id: "004", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-            {id: "005", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-            {id: "006", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-            {id: "007", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-            {id: "008", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-            {id: "009", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-            {id: "010", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-            {id: "011", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-            {id: "012", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-            {id: "013", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-            {id: "014", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-            {id: "016", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-            {id: "015", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com'},
-          ]
-        }
+            {id: "002", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com', isEditing: false},
+            {id: "003", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com', isEditing: false},
+            {id: "004", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com', isEditing: false},
+            {id: "005", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com', isEditing: false},
+            {id: "006", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com', isEditing: false},
+            {id: "007", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com', isEditing: false},
+            {id: "008", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com', isEditing: false},
+            {id: "009", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com', isEditing: false},
+            {id: "010", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com', isEditing: false},
+            {id: "011", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com', isEditing: false},
+            {id: "012", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com', isEditing: false},
+            {id: "013", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com', isEditing: false},
+            {id: "014", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com', isEditing: false},
+            {id: "016", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com', isEditing: false},
+            {id: "015", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com', isEditing: false},
+        ]
       },
 
       onPageChange(page) {
@@ -104,14 +156,53 @@
         else this.lastIndex = page * this.numOfUsersPerPage - 1;
       },
 
-      getRenderUsers(first, last) {
+      getRenderUsers() {
+        let first = this.firstIndex
+        let last = this.lastIndex
         const renderUsers = []
         for (let i = first; i <= last; i++) {
           renderUsers.push(this.users[i])
         }
 
         return renderUsers;
+      },
+      editUser(user) {
+        if (user.isEditing === false) {
+          user.isEditing = !user.isEditing
+        }
+      },
+      deleteUser(user) {
+        user.isEditing = false
+        /*
+        call api delete user
+        */
+        let userIndex = this.users.indexOf(user)
+        this.users.splice(userIndex, 1)
+        this.usersDataBackup.splice(userIndex, 1)
+      },
+      saveUser(user) {
+        console.log(user)
+        /*
+        call api delete user
+        */
+      },
+      cancelEdit(user) {
+        let userIndex = this.users.indexOf(user)
+        this.users = JSON.parse(JSON.stringify(this.usersDataBackup))
+        this.users[userIndex].isEditing = false
       }
+    },
+    computed: {
+      userItems() {
+        return this.getRenderUsers()
+      }
+    },
+    created() {
+      this.users = this.getData()
+      this.len = this.users.length
+      this.totalPage = Math.ceil(this.users.length / this.numOfUsersPerPage)
+      this.lastIndex = this.numOfUsersPerPage - 1
+      this.usersDataBackup = JSON.parse(JSON.stringify(this.users))
     }
   }
 
