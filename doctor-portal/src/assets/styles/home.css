@@ -1,0 +1,66 @@
+.home{
+    background-color: #a1d8ff7a;
+    height: calc(100vh - 70px);
+    display: flex;
+    align-items: center;
+}
+    .home .img-zone{
+        width: 550px;
+        height: 550px;
+        display: flex;
+        flex-wrap: wrap;       
+        margin-left: 60px;
+    }
+        .home .img-zone .img-zone-part {
+            height: 250px;
+            width: 250px;
+            margin: 10px;
+            position: relative;
+        }    
+        .home .img-zone .img-zone-part .small-img-1 {
+            width: 200px;
+            height: 200px;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+        }
+        .home .img-zone .img-zone-part .small-img-2 {
+            width: 200px;
+            height: 200px;
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+        .img-zone .img{
+            background-size: cover;
+            background-position: center;
+            border-radius: 23px;
+        }
+        .img-zone .img1{
+            background-image: url('../images/dog1.jpg');
+        }
+        .img-zone .img2{
+            background-image: url('../images/cat1.jpg');
+        }
+        .img-zone .img3{
+            background-image: url('../images/cat2.jpg');
+        }
+        .img-zone .img4{
+            background-image: url('../images/dog2.jpg');
+        }
+    .home .home-slogan{
+        height: 100%;
+        width: calc(100% - 550px - 60px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 30px;
+        font-weight: bold;
+        color: #64b9f5;
+    }
+    p span{
+        display: block;
+        padding: 10px 30px;
+        font-size: 40px;
+    }
+    

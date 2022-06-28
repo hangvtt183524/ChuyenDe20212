@@ -6,7 +6,7 @@
                 <i class="fa-solid fa-xmark"></i>
             </div>
         </div>
-        <div class="msgs scrollable">
+        <div class="msgs scrollable" ref="msgs">
             <div class="wrap-msg" v-for="(msg, index) in msgs" :key="index" :class="getClass(msg)">
                 <div class="msg">
                     {{msg.content}}
@@ -26,7 +26,11 @@ export default {
     data(){
         return{
             myId: '1',
-            msgs:[
+           msgs: []
+        }
+    },
+    created(){
+        this.msgs=[
                 {
                     senderId: '2',
                     receiverId: '1',
@@ -47,7 +51,32 @@ export default {
                     receiverId: '2',
                     content: 'International playboys'
                 },
-                 {
+                {
+                    senderId: '1',
+                    receiverId: '2',
+                    content: 'International playboys djfk akfj alfjk alfj alfkjd djf '
+                },
+                {
+                    senderId: '2',
+                    receiverId: '1',
+                    content: 'Do you know BTS ?'
+                },
+                {
+                    senderId: '1',
+                    receiverId: '2',
+                    content: 'International playboys'
+                },
+                {
+                    senderId: '2',
+                    receiverId: '1',
+                    content: 'Do you know BTS ?'
+                },
+                {
+                    senderId: '1',
+                    receiverId: '2',
+                    content: 'International playboys'
+                },
+                {
                     senderId: '1',
                     receiverId: '2',
                     content: 'International playboys djfk akfj alfjk alfj alfkjd djf '
@@ -55,7 +84,6 @@ export default {
                 
                 
             ]
-        }
     },
     methods: {
         getClass(msg){
@@ -65,6 +93,16 @@ export default {
         },
         exitBtnOnClick(){
             this.$emit('hideChatWindow')
+        },
+        autoScroll(){
+            var element = this.$refs.msgs
+            element.scrollTop = element.scrollHeight;
+        }
+    }, 
+    watch:{
+        msgs(){
+            console.log("ahihi")
+            this.autoScroll()
         }
     }
 }
