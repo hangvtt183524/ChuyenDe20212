@@ -71,7 +71,7 @@ export default {
           let checkedText = this.value !== null ? this.value.replace(/[a-zA-Z]+/g, '') : this.value
           return checkedText
         } else if (this.isOnlyNumeric) {
-          let checkedText = this.value !== null ? this.value.replace(/[0-9]+/g, '') : this.value
+          let checkedText = this.value !== null ? this.value.replace(/[^0-9]/g, '') : this.value
           return checkedText
         }
         return this.value

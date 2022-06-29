@@ -10,7 +10,7 @@
       <table class="data-table">
         <thead class="header-row">
           <tr>
-            <th>Tên</th>
+            <th>STT</th>
             <th>Username</th>
             <th>Ngày sinh</th>
             <th>Điện thoại</th>
@@ -21,11 +21,11 @@
           </tr>
         </thead>
         <tbody class="body-row">
-          <tr v-for="user in userItems" :key="user.id">
+          <tr v-for="(user, index) in users" :key="index">
             <td>
               <InputItem
-                  :is-editing="user.isEditing"
-                  v-model="user.name"
+                  :is-editing="false"
+                  v-model="user.id"
                   :is-only-numeric="false"
                   :is-only-alpha="false"
               />
@@ -41,7 +41,7 @@
             <td>
               <InputItem
                   :is-editing="user.isEditing"
-                  v-model="user.dob"
+                  v-model="user.birthDate"
                   :is-only-numeric="false"
                   :is-only-alpha="false"
               />
@@ -57,7 +57,7 @@
             <td>
               <InputItem
                   :is-editing="user.isEditing"
-                  v-model="user.email"
+                  v-model="user.mail"
                   :is-only-numeric="false"
                   :is-only-alpha="false"
               />
@@ -118,6 +118,8 @@ import saveIcon from '@/assets/svg/save.svg'
 import crossIcon from '@/assets/svg/close.svg'
 import InputItem from "@/views/components/InputItem";
 import Pagination from "./components/Pagination.vue"
+import {mapGetters} from "vuex";
+import InfotypeServices from "@/services/InfotypeServices"
 export default {
   name: 'UserManagement',
   props: {
@@ -146,35 +148,15 @@ export default {
     }
   },
   methods: {
-    getData() {
-      return [
-        {
-          id: "001",
-          name: "Bùi Việt Anh",
-          dob: "24/1/2000",
-          address: "4 Bạch Mai, Hai Bà Trưng, TP Hà Nội",
-          email: 'anh@gmail.com',
-          password: '',
-          phone: '',
-          username: '',
-          isEditing: false
-        },
-        {id: "002", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com', isEditing: false, password: '', phone: '', username: '',},
-        {id: "003", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com', isEditing: false, password: '', phone: '', username: '',},
-        {id: "004", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com', isEditing: false, password: '', phone: '', username: '',},
-        {id: "005", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com', isEditing: false, password: '', phone: '', username: '',},
-        {id: "006", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com', isEditing: false, password: '', phone: '', username: '',},
-        {id: "007", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com', isEditing: false, password: '', phone: '', username: '',},
-        {id: "008", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com', isEditing: false, password: '', phone: '', username: '',},
-        {id: "009", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com', isEditing: false, password: '', phone: '', username: '',},
-        {id: "010", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com', isEditing: false, password: '', phone: '', username: '',},
-        {id: "011", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com', isEditing: false, password: '', phone: '', username: '',},
-        {id: "012", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com', isEditing: false, password: '', phone: '', username: '',},
-        {id: "013", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com', isEditing: false, password: '', phone: '', username: '',},
-        {id: "014", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com', isEditing: false, password: '', phone: '', username: '',},
-        {id: "016", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com', isEditing: false, password: '', phone: '', username: '',},
-        {id: "015", name: "Việt Anh", dob: "24/1/2000", address: "4 Bạch Mai", email: 'anh@gmail.com', isEditing: false, password: '', phone: '', username: '',},
-      ]
+    async getData() {
+      this.users = this.getAllUsers
+      this.len = this.users.length
+      this.users.forEach(item => {
+        item.isEditing = false
+      })
+      this.usersDataBackup = JSON.parse(JSON.stringify(this.users))
+      this.totalPage = Math.ceil(this.users.length / this.numOfUsersPerPage)
+      this.lastIndex = Math.min(this.numOfUsersPerPage - 1, this.len - 1)
     },
     onPageChange(page) {
       // console.log(page)
@@ -187,22 +169,24 @@ export default {
     getRenderUsers() {
       let first = this.firstIndex
       let last = this.lastIndex
-      const renderUsers = []
-      for (let i = first; i <= last; i++) {
-        renderUsers.push(this.users[i])
+      if (this.users != null) {
+        return this.users.slice(first, last + 1);
+      } else {
+        return []
       }
-      return renderUsers;
     },
     editUser(user) {
       if (user.isEditing === false) {
-        user.isEditing = !user.isEditing
+        let userClone = JSON.parse(JSON.stringify(user))
+        userClone.isEditing = true
+        let userIndex = this.users.indexOf(user)
+        this.users.splice(userIndex, 1)
+        this.users.splice(userIndex, 0, userClone)
       }
     },
-    deleteUser(user) {
+    async deleteUser(user) {
       user.isEditing = false
-      /*
-      call api delete user
-      */
+
       let userIndex = this.users.indexOf(user)
       this.users.splice(userIndex, 1)
       this.usersDataBackup.splice(userIndex, 1)
@@ -210,12 +194,19 @@ export default {
       this.lastIndex = Math.min(this.lastIndex, this.len - 1)
       this.totalPage = Math.ceil(this.users.length / this.numOfUsersPerPage)
     },
-    saveUser(user) {
-      console.log(user)
-      /*
-      call api save user
-      */
-      user.isEditing = false
+    async saveUser(user) {
+      let userIndex = this.users.indexOf(user)
+      await InfotypeServices.saveUser(user)
+      let savedUser = JSON.parse(JSON.stringify(user))
+      savedUser.isEditing = false
+      this.users.splice(userIndex, 1)
+      this.users.splice(userIndex, 0, savedUser)
+
+      this.$notify({
+        group: 'default',
+        type: 'success',
+        title: 'Save successfully!'
+      })
       this.usersDataBackup = JSON.parse(JSON.stringify(this.users))
     },
     cancelEdit(user) {
@@ -225,17 +216,14 @@ export default {
     }
   },
   computed: {
-    userItems() {
-      return this.getRenderUsers()
-    }
+    ...mapGetters({
+      getAllUsers: 'config/getAllUsers'
+    })
   },
-  created() {
-    this.users = this.getData()
-    this.len = this.users.length
-    this.totalPage = Math.ceil(this.users.length / this.numOfUsersPerPage)
-    this.lastIndex = Math.min(this.numOfUsersPerPage - 1, this.len - 1)
-    this.usersDataBackup = JSON.parse(JSON.stringify(this.users))
-  }
+  mounted() {
+    this.$store.dispatch('config/getAllUsersByAdmin')
+    this.getData()
+  },
 }
 </script>
 

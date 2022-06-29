@@ -1,6 +1,7 @@
 package com.group2.petcareinfotype.service;
 
 import com.group2.petcareinfotype.entity.Doctor;
+import com.group2.petcareinfotype.entity.User;
 import com.group2.petcareinfotype.repository.DoctorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,7 @@ public class DoctorService {
         Doctor doctor = null;
         if (id != null) {
             Optional<Doctor> optionalDoctor = doctorRepository.findById(Long.parseLong(id));
-            if (optionalDoctor.isPresent()) {
+            if (optionalDoctor.isPresent() && optionalDoctor.get() != null) {
                 doctor = optionalDoctor.get();
             } else {
                 throw new IllegalArgumentException("No Doctor existed!");
@@ -66,6 +67,10 @@ public class DoctorService {
         } else {
             return doctorRepository.save(doctor);
         }
+    }
+
+    public Doctor createDoctor(final Doctor doctor) {
+        return doctorRepository.save(doctor);
     }
 
     public void deleteDoctor(final Doctor doctor) {

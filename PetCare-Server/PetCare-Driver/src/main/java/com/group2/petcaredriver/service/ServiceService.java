@@ -1,15 +1,16 @@
 package com.group2.petcaredriver.service;
 
-import com.fasterxml.jackson.databind.ser.Serializers;
 import com.group2.petcaredriver.entity.BaseService;
 import com.group2.petcaredriver.repository.BaseServiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class ServiceService {
     @Autowired
     BaseServiceRepository baseServiceRepository;
@@ -19,13 +20,15 @@ public class ServiceService {
     }
 
     public BaseService createNewService(final BaseService baseService) {
-        Optional<BaseService> optionalExistedIdService = baseServiceRepository.findById(baseService.getId());
-        if (optionalExistedIdService.isPresent()) {
-            throw new IllegalArgumentException("Service with same Id existed!");
+        if (baseService.getId() != null) {
+            Optional<BaseService> optionalExistedIdService = baseServiceRepository.findById(baseService.getId());
+            if (optionalExistedIdService.isPresent() && optionalExistedIdService.get() != null) {
+                throw new IllegalArgumentException("Service with same Id existed!");
+            }
         }
 
         Optional<List<BaseService>> optionalExistedCodeService = baseServiceRepository.findBaseServicesByCode(baseService.getCode());
-        if (optionalExistedCodeService.isPresent()) {
+        if (optionalExistedCodeService.isPresent() && optionalExistedCodeService.get().size() > 0) {
             throw new IllegalArgumentException("Service with same Code existed!");
         }
 
@@ -34,7 +37,7 @@ public class ServiceService {
 
     public void deleteService(final BaseService baseService) {
         Optional<BaseService> optionalExistedIdService = baseServiceRepository.findById(baseService.getId());
-        if (!optionalExistedIdService.isPresent()) {
+        if (!optionalExistedIdService.isPresent() || optionalExistedIdService.get() == null) {
             throw new IllegalArgumentException("No service existed!");
         }
 
@@ -43,7 +46,7 @@ public class ServiceService {
 
     public BaseService updateService(final BaseService baseService) {
         Optional<BaseService> optionalExistedIdService = baseServiceRepository.findById(baseService.getId());
-        if (!optionalExistedIdService.isPresent()) {
+        if (!optionalExistedIdService.isPresent() || optionalExistedIdService.get() == null) {
             throw new IllegalArgumentException("No service existed!");
         }
 

@@ -1,0 +1,47 @@
+.is-weekly {
+    background-color: #ffaa00;
+}
+
+.is-monthly {
+    background-color: #00e096;
+}
+
+.is-daily {
+    background-color: #ff3d71;
+}
+
+.is-blue {
+    background-color: $colorMainBlue;
+}
+
+.is-loading {
+    background-color: $colorSelection;
+}
+
+.is-grey {
+    background-color: #666666;
+}
+
+.strikethrough {
+    text-decoration: line-through;
+}
+
+.red-bg {
+    background-color: $redBg !important;
+}
+
+.orange-bg {
+    background-color: $orangeBg !important;
+}
+
+.yellow-bg {
+    background-color: #ffc107 !important;
+}
+
+.green-bg {
+    background-color: $colorSelection !important;
+}
+
+.orange-txt {
+    color: $orangeBg !important;
+}

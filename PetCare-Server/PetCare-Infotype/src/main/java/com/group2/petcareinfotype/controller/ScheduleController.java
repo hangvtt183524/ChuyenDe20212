@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping(path = "v1/schedule")
 @Slf4j
@@ -16,8 +17,8 @@ public class ScheduleController {
     @Autowired
     ExaminationService examinationService;
 
-    @PostMapping(value = "/searchById")
-    public ResponseEntity<Examination> searchExamById(@RequestBody String id) {
+    @GetMapping(value = "/searchById")
+    public ResponseEntity<Examination> searchExamById(@RequestParam(name = "id", required = false) Long id) {
         return ResponseEntity.accepted().body(examinationService.getExamById(id));
     }
 
@@ -36,24 +37,71 @@ public class ScheduleController {
         return ResponseEntity.accepted().body(examinationService.getAllExams());
     }
 
-    @PostMapping(value = "/update")
-    public ResponseEntity<Examination> updateExam(@RequestBody Examination examination) {
-        return ResponseEntity.accepted().body(examinationService.updateExam(examination));
+    @GetMapping(value = "/update")
+    public ResponseEntity<Examination> updateExam(@RequestParam(name = "id", required = false) Long id,
+                                                  @RequestParam(name = "ownerId", required = false) Long ownerId,
+                                                  @RequestParam(name = "doctorId", required = false) Long doctorId,
+                                                  @RequestParam(name = "firstDescription", required = false) String firstDescription,
+                                                  @RequestParam(name = "result", required = false) String result,
+                                                  @RequestParam(name = "status", required = false) Integer status) {
+        Examination updateExamination = Examination.builder().id(id)
+                .ownerId(ownerId)
+                .doctorId(doctorId)
+                .firstDescription(firstDescription)
+                .result(result)
+                .status(status)
+                .build();
+        return ResponseEntity.accepted().body(examinationService.updateExam(updateExamination));
     }
 
-    @PostMapping(value = "/delete")
-    public ResponseEntity<String> deleteExam(@RequestBody Examination examination) {
-        examinationService.deleteExam(examination);
+    @GetMapping(value = "/delete")
+    public ResponseEntity<String> deleteExam(@RequestParam(name = "id", required = false) Long id,
+                                             @RequestParam(name = "ownerId", required = false) Long ownerId,
+                                             @RequestParam(name = "doctorId", required = false) Long doctorId,
+                                             @RequestParam(name = "firstDescription", required = false) String firstDescription,
+                                             @RequestParam(name = "result", required = false) String result,
+                                             @RequestParam(name = "status", required = false) Integer status) {
+        Examination deleteExamination = Examination.builder().id(id)
+                .ownerId(ownerId)
+                .doctorId(doctorId)
+                .firstDescription(firstDescription)
+                .result(result)
+                .status(status)
+                .build();
+        examinationService.deleteExam(deleteExamination);
         return ResponseEntity.accepted().body("Delete examination success");
     }
 
-    @PostMapping(value = "/create")
-    public ResponseEntity<Examination> createExam(@RequestBody Examination examination) {
-        return ResponseEntity.accepted().body(examinationService.createExam(examination));
+    @GetMapping(value = "/create")
+    public ResponseEntity<Examination> createExam(@RequestParam(name = "ownerId", required = false) Long ownerId,
+                                                  @RequestParam(name = "doctorId", required = false) Long doctorId,
+                                                  @RequestParam(name = "firstDescription", required = false) String firstDescription,
+                                                  @RequestParam(name = "result", required = false) String result,
+                                                  @RequestParam(name = "status", required = false) Integer status) {
+        Examination createExamination = Examination.builder()
+                .ownerId(ownerId)
+                .doctorId(doctorId)
+                .firstDescription(firstDescription)
+                .result(result)
+                .status(status)
+                .build();
+        return ResponseEntity.accepted().body(examinationService.createExam(createExamination));
     }
 
-    @PostMapping(value = "/set-schedule")
-    public ResponseEntity<Examination> setSchedule(@RequestBody Examination examination) {
+    @GetMapping(value = "/set-schedule")
+    public ResponseEntity<Examination> setSchedule(@RequestParam(name = "id", required = false) Long id,
+                                                   @RequestParam(name = "ownerId", required = false) Long ownerId,
+                                                   @RequestParam(name = "doctorId", required = false) Long doctorId,
+                                                   @RequestParam(name = "firstDescription", required = false) String firstDescription,
+                                                   @RequestParam(name = "result", required = false) String result,
+                                                   @RequestParam(name = "status", required = false) Integer status) {
+        Examination examination = Examination.builder().id(id)
+                .ownerId(ownerId)
+                .doctorId(doctorId)
+                .firstDescription(firstDescription)
+                .result(result)
+                .status(status)
+                .build();
         return ResponseEntity.accepted().body(examinationService.setExam(examination));
     }
 }
