@@ -1,7 +1,7 @@
 <template>
   <div class="bg">
     <div class="login-card">
-        <h1>Đăng nhập</h1>
+      <h1>Đăng nhập</h1>
       <div class="form">
         <InputItem
           :is-editing="true"
@@ -10,7 +10,7 @@
           :is-only-alpha="false"
           :is-only-numeric="false"
         />
-      <InputItem
+        <InputItem
           :is-editing="true"
           placeholder="Password"
           v-model="password"
@@ -31,7 +31,7 @@
         <div class="sign-up">
           Bạn chưa có tài khoản? <a href="/register">Đăng ký</a>
         </div>
-    </div>
+      </div>
     </div>
 
   </div>
@@ -106,8 +106,8 @@ export default {
     position: absolute;
     top: 80px;
     bottom: 80px;
-    left: 600px;
-    right: 600px;
+    left: 35%;
+    right: 35%;
     padding: 20px;
     background-color: #fff;
     box-sizing: border-box;
@@ -121,12 +121,15 @@ export default {
       height: 225px;
       background-size: cover;
       background-position: center;
-      cursor: pointer;
+      .message {
+        color: red;
+      }
       .button-login {
         display: flex;
         align-items: center;
         justify-content: center;
         padding: 30px;
+
       }
       .forget {
         text-align: right;
@@ -152,9 +155,5 @@ export default {
       }
     }
   }
-}
-.message {
-  color: red;
-  margin-left: 10%;
 }
 </style>
