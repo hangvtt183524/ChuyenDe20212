@@ -25,7 +25,6 @@
           
         </div>
         <div class="account">
-
 <!--            <div class="choice">-->
 <!--                Đăng xuất-->
 <!--                <div class="underline"></div>-->
@@ -35,15 +34,17 @@
             <div class="underline"></div>
           </router-link>
           <router-link to="/login" class="choice" v-on:click.native="highLight(5)">
-          <router-link to="/signup" class="choice">
-            <div class="page-link">Đăng ký</div>
-            <div class="underline"></div>
-          </router-link>
-          <router-link to="/login" class="choice">
-
             <div class="page-link">Đăng nhập</div>
             <div class="underline"></div>
           </router-link>
+          <!-- <router-link to="/signup" class="choice">
+            <div class="page-link">Đăng ký</div>
+            <div class="underline"></div>
+          </router-link> -->
+<!--            <div class="choice">-->
+<!--                Đăng Nhập-->
+<!--                <div class="underline"></div>-->
+<!--            </div>-->
         </div>
     </div>
 </template>
@@ -67,15 +68,22 @@ export default {
                 name: 'Hỏi đáp'
             },
         ],
-        pets: []
+        pets: [
+            {
+                id: '1',
+                name: 'Milu'
+            },
+            {
+                id: '2',
+                name: 'Ki'
+            }
+        ]
     }
   },
   mounted(){
     var element = this.$refs.menu
     element.childNodes[1].childNodes[0].childNodes[1].classList.add('visible')
     // console.log(element.childNodes[1].childNodes[0].childNodes[1])
-    this.pets = this.petsOfUsre
-
   },
   methods: {
     highLight(index){
@@ -105,8 +113,7 @@ export default {
   computed: {
     ...mapGetters({
       configUser: 'config/getConfigUser',
-      currentUser: 'config/getCurrentUser',
-      petsOfUsre: 'config/getPetOfUser'
+      currentUser: 'config/getCurrentUser'
     })
   }
 }

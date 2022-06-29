@@ -6,7 +6,7 @@
     width: fit-content;
     border-radius: 4px;
     text-align: center;
-    display: flex;
+    display: flex !important;
     align-items: center;
     /* margin-left: 16px; */
     cursor: pointer;
