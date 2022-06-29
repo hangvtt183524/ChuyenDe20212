@@ -18,6 +18,7 @@
                 <Dropdown
                     label = "Giới tính"
                     :items="this.genders"
+                    @setValue="setGender"
                 />
             </div>
             <div class="pet-info-right">
@@ -65,6 +66,11 @@ export default {
                     text: "Giống cái"
                 }
             ]
+        }
+    },
+    methods:{
+        setGender(gender){
+            console.log(gender)
         }
     }
 }

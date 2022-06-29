@@ -79,7 +79,7 @@ export default {
                 console.log(e.target.innerText)
                 this.selectedText = e.target.innerText
             }
-            
+            this.$emit('setValue', this.selectedText)
             // if(this.displaySelectedText){
             //     this.selectedText = e.currentTarget.children.item(1).innerHTML
             // }
