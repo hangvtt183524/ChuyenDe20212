@@ -20,10 +20,14 @@
         padding-bottom: 20px;
     }
         .user-page .avatar-holder{
-            width: 200px;
-            height: 200px;
+            width: 150px;
+            height: 150px;
             border-radius: 100%;
             background-color: aliceblue;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 80px;
         }
         .user-page .info-content{
             width: calc(100% - 200px);
@@ -58,11 +62,9 @@
         padding: 5px;
         box-sizing: border-box;
         background-color: #fff;
+       
     }
     .user-page .pet-holder{
         border-bottom: 1px solid #b5b5b5;
-    }
-    .user-page div:last-child{
-        border-bottom: none !important;
     }
         

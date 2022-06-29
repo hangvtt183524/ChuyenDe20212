@@ -54,7 +54,7 @@
 .pet-avatar-holder .menu{
     background-color: #33a6f8;
     display: flex;
-    justify-content: start;
+    justify-content: flex-start;
     flex-direction: column;
     width: 100%;
     height: calc(100% - 225px);
