@@ -59,20 +59,11 @@ export default {
                 name: 'Hỏi đáp'
             },
         ],
-        pets: [
-            {
-                id: '1',
-                name: 'Milu'
-            },
-            {
-                id: '2',
-                name: 'Ki'
-            }
-        ]
+        pets: []
     }
   },
   mounted(){
-    console.log(this.$refs.menu.childNodes[0].childNodes[1].classList.add('visible'))
+    this.pets = this.petsOfUsre
   },
   methods: {
     highLight(index){
@@ -96,7 +87,8 @@ export default {
   computed: {
     ...mapGetters({
       configUser: 'config/getConfigUser',
-      currentUser: 'config/getCurrentUser'
+      currentUser: 'config/getCurrentUser',
+      petsOfUsre: 'config/getPetOfUser'
     })
   }
 }

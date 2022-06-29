@@ -33,8 +33,8 @@ export default {
             const pets = await InfotypeServices.searchPetByUser(user)
             commit('setPetOfUser', pets)
         },
-        async loginAndSetCurrentUser({commit}, {user}) {
-            const loginUser = await InfotypeServices.login(user)
+        async loginAndSetCurrentUser({commit}, {params}) {
+            const loginUser = await InfotypeServices.login(params)
             commit('setCurrentUser', loginUser)
         }
     }

@@ -57,9 +57,8 @@ export default {
     },
     async searchPetByUser(user) {
         const response = await http.request({
-            method: 'POST',
-            url: `${PATHS.PETS.SEARCH_BY_ID}`,
-            data: user.id
+            method: 'GET',
+            url: `${PATHS.PETS.SEARCH_BY_USER}` + '?' + prepareParams({userId: user.id})
         })
         return response.data
     },
@@ -84,9 +83,11 @@ export default {
         })
         return response.data
     },
-    async login(user) {
-        console.log(user)
-        const response = null
+    async login(params) {
+        const response = await http.request({
+            method: 'GET',
+            url: `${PATHS.AUTHS.LOGIN}` + '?' + prepareParams(params)
+        })
         return response.data
     }
 }
