@@ -75,7 +75,6 @@ export default {
             items.forEach(item => {
                 item.classList.remove('selected-item')
             });
-            console.log(items)
             items[index].classList.add('selected-item')
         },
         setUpPetMenuPath(){

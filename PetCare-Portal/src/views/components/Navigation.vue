@@ -1,4 +1,4 @@
-<template lang="">
+<template>
     <div class="navigation">
         <div class="navigation-tittle">Pet Care</div>
         <div class="menu" ref="menu">
@@ -6,7 +6,7 @@
                 <div class="page-link">{{page.name}}</div>
                 <div class="underline"></div>
             </router-link>
-             <div class="choice" v-on:click="showNavMenu">
+             <div class="choice" v-on:click="showNavMenu" v-if="Object.keys(currentUser).length > 0">
                 <div class="page-link">Thú cưng của tôi</div>
                 <div class="underline" ref="thirdUnderline"></div>
                 <div class="navMenu" ref="navMenu">
@@ -18,6 +18,10 @@
                     </router-link>
                 </div>
             </div>
+          <router-link to="/not-found" class="choice" v-else>
+            <div class="page-link">Thú cưng của tôi</div>
+            <div class="underline"></div>
+          </router-link>
         </div>
         <div class="account">
             <div class="choice">
@@ -50,10 +54,6 @@ export default {
                 path: '/',
                 name: 'Hỏi đáp'
             },
-            // {
-            //     path: '/my-pet/info',
-            //     name: 'Thú cưng của tôi'
-            // },      
         ],
         pets: [
             {
@@ -91,7 +91,8 @@ export default {
 },
   computed: {
     ...mapGetters({
-      configUser: 'config/getConfigUser'
+      configUser: 'config/getConfigUser',
+      currentUser: 'config/getCurrentUser'
     })
   }
 }

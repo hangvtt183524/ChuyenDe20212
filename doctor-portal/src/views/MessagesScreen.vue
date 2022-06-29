@@ -159,7 +159,6 @@ export default {
     }, 
     watch:{
         msgs(){
-            console.log("ahihi")
             Vue.nextTick(()=>{
                 this.autoScroll()
             })

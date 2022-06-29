@@ -5,15 +5,15 @@
             <div class="pet-info-left">
                 <InputItem 
                     label = "Tên thú cưng"
-                    isEditing="true"
+                    :isEditing="true"
                 />
                 <InputItem 
                     label = "Loại thú cưng"
-                    isEditing="true"
+                    :isEditing="true"
                 />
                 <InputItem 
                     label = "Tuổi"
-                    isEditing="true"
+                    :isEditing="true"
                 />
                 <Dropdown
                     label = "Giới tính"
@@ -23,15 +23,15 @@
             <div class="pet-info-right">
                 <InputItem 
                     label = "Cân nặng"
-                    isEditing="true"
+                    :isEditing="true"
                 />
                 <InputItem 
                     label = "Tình trạng sức khỏe"
-                    isEditing="true"
+                    :isEditing="true"
                 />
                 <InputItem 
                     label = "Sở thích"
-                    isEditing="true"
+                    :isEditing="true"
                 />
             </div>
         </div>

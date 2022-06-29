@@ -1,6 +1,6 @@
 <template>
   <div class="background">
-    <p class="text Font_20">Không tìm thấy trang bạn yêu cầu</p>
+    <p class="text Font_20">Bạn cần đăng nhập trước khi thực hiện yêu cầu</p>
   </div>
 </template>
 

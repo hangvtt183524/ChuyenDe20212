@@ -5,6 +5,7 @@ import BookingSchedule from "../views/BookingSchedule";
 import MyPet from "../views/MyPet.vue";
 import PetInfo from "../views/PetInfo.vue"
 import PetHistory from "../views/PetHistory.vue"
+import NotFound from "../views/NotFound.vue"
 
 Vue.use(VueRouter);
 
@@ -18,6 +19,11 @@ const routes = [
     path: "/booking-schedule",
     name: "BookingSchedule",
     component: BookingSchedule,
+  },
+  {
+    path: "/not-found",
+    name: "NotFound",
+    component: NotFound,
   },
   {
     path: "/my-pet/:petId",
