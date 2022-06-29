@@ -31,7 +31,10 @@ export default {
   },
   methods: {
     disappearElement(){
-      // document.querySelector('.navMenu').classList.remove('nm-activate')
+      var element = document.querySelector('.navMenu')
+      if(element){
+        document.querySelector('.navMenu').classList.remove('nm-activate')
+      }
     }
   },
   watch: {},

@@ -8,6 +8,8 @@ import PetHistory from "../views/PetHistory.vue"
 import NotFound from "../views/NotFound.vue"
 import Login from "../views/Login"
 
+import User from "../views/User.vue"
+import Signup from "../views/SignUp"
 Vue.use(VueRouter);
 
 const routes = [
@@ -32,6 +34,11 @@ const routes = [
     component: Login
   },
   {
+    path: "/signup",
+    name: "Signup",
+    component: Signup
+  },
+  {
     path: "/my-pet/:petId",
     name: "MyPet",
     component: MyPet,
@@ -45,6 +52,10 @@ const routes = [
         component: PetHistory
       }
     ]
+  },
+  {
+    path: '/user',
+    component: User
   }
 ];
 
