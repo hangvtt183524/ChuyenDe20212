@@ -30,8 +30,8 @@ public class UserController {
         return ResponseEntity.accepted().body(userService.getUser(username, mail, phone, address));
     }
 
-    @PostMapping(value = "/searchById")
-    public ResponseEntity<User> searchUserById(@RequestBody String id) {
+    @GetMapping(value = "/searchById")
+    public ResponseEntity<User> searchUserById(@RequestParam(name = "id", required = false) String id) {
         return ResponseEntity.accepted().body(userService.getUserById(id));
     }
 
@@ -40,19 +40,60 @@ public class UserController {
         return ResponseEntity.accepted().body(userService.getAllUsers());
     }
 
-    @PutMapping(value = "/update")
-    public ResponseEntity<User> updateUser(@RequestBody User user) {
-        return ResponseEntity.accepted().body(userService.updateUser(user));
+    @GetMapping(value = "/update")
+    public ResponseEntity<User> updateUser(@RequestParam(name = "id", required = true) Long id,
+                                           @RequestParam(name = "username", required = false) String username,
+                                           @RequestParam(name = "password", required = false) String password,
+                                           @RequestParam(name = "mail", required = false) String mail,
+                                           @RequestParam(name = "phone", required = false) String phone,
+                                           @RequestParam(name = "address", required = false) String address,
+                                           @RequestParam(name = "birthDate", required = false) String birthDate) {
+        User updateUser = User.builder().id(id)
+                .username(username)
+                .password(password)
+                .phone(phone)
+                .address(address)
+                .mail(mail)
+                .birthDate(birthDate)
+                .build();
+        return ResponseEntity.accepted().body(userService.updateUser(updateUser));
     }
 
-    @PostMapping(value = "/create")
-    public ResponseEntity<User> createUser(@RequestBody User user) {
-        return ResponseEntity.accepted().body(userService.createUser(user));
+    @GetMapping(value = "/create")
+    public ResponseEntity<User> createUser(@RequestParam(name = "username", required = false) String username,
+                                           @RequestParam(name = "password", required = false) String password,
+                                           @RequestParam(name = "mail", required = false) String mail,
+                                           @RequestParam(name = "phone", required = false) String phone,
+                                           @RequestParam(name = "address", required = false) String address,
+                                           @RequestParam(name = "birthDate", required = false) String birthDate) {
+        User createUser = User.builder()
+                .username(username)
+                .password(password)
+                .phone(phone)
+                .address(address)
+                .mail(mail)
+                .birthDate(birthDate)
+                .build();
+        return ResponseEntity.accepted().body(userService.createUser(createUser));
     }
 
-    @PostMapping(value = "/delete")
-    public ResponseEntity<String> deleteUser(@RequestBody User user) {
-        userService.deleteUser(user);
+    @GetMapping(value = "/delete")
+    public ResponseEntity<String> deleteUser(@RequestParam(name = "id", required = true) Long id,
+                                             @RequestParam(name = "username", required = false) String username,
+                                             @RequestParam(name = "password", required = false) String password,
+                                             @RequestParam(name = "mail", required = false) String mail,
+                                             @RequestParam(name = "phone", required = false) String phone,
+                                             @RequestParam(name = "address", required = false) String address,
+                                             @RequestParam(name = "birthDate", required = false) String birthDate) {
+        User deleteUser = User.builder().id(id)
+                .username(username)
+                .password(password)
+                .phone(phone)
+                .address(address)
+                .mail(mail)
+                .birthDate(birthDate)
+                .build();
+        userService.deleteUser(deleteUser);
         return ResponseEntity.accepted().body("Delete user success");
     }
 }

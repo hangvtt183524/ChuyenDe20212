@@ -27,8 +27,8 @@ public class DoctorController {
         return ResponseEntity.accepted().body(doctorService.getDoctor(username, mail, phone, address, major));
     }
 
-    @PostMapping(value = "/searchById")
-    public ResponseEntity<Doctor> searchDoctorById(@RequestBody String id) {
+    @GetMapping(value = "/searchById")
+    public ResponseEntity<Doctor> searchDoctorById(@RequestParam(name = "id", required = false) String id) {
         return ResponseEntity.accepted().body(doctorService.getDoctorById(id));
     }
 
@@ -37,19 +37,60 @@ public class DoctorController {
         return ResponseEntity.accepted().body(doctorService.getAllDoctors());
     }
 
-    @PutMapping(value = "/update")
-    public ResponseEntity<Doctor> updateDoctor(@RequestBody Doctor doctor) {
-        return ResponseEntity.accepted().body(doctorService.updateDoctor(doctor));
+    @GetMapping(value = "/update")
+    public ResponseEntity<Doctor> updateDoctor(@RequestParam(name = "id", required = false) Long id,
+                                               @RequestParam(name = "doctorName", required = false) String doctorName,
+                                               @RequestParam(name = "mail", required = false) String mail,
+                                               @RequestParam(name = "phone", required = false) String phone,
+                                               @RequestParam(name = "address", required = false) String address,
+                                               @RequestParam(name = "major", required = false) String major,
+                                               @RequestParam(name = "password", required = false) String password) {
+        Doctor updateDoctor = Doctor.builder().id(id)
+                .doctorName(doctorName)
+                .mail(mail)
+                .phone(phone)
+                .password(password)
+                .address(address)
+                .major(major)
+                .build();
+        return ResponseEntity.accepted().body(doctorService.updateDoctor(updateDoctor));
     }
 
-    @PostMapping(value = "/create")
-    public ResponseEntity<Doctor> createDoctor(@RequestBody Doctor doctor) {
-        return ResponseEntity.accepted().body(doctorService.createDoctor(doctor));
+    @GetMapping(value = "/create")
+    public ResponseEntity<Doctor> createDoctor(@RequestParam(name = "doctorName", required = false) String doctorName,
+                                               @RequestParam(name = "mail", required = false) String mail,
+                                               @RequestParam(name = "phone", required = false) String phone,
+                                               @RequestParam(name = "address", required = false) String address,
+                                               @RequestParam(name = "major", required = false) String major,
+                                               @RequestParam(name = "password", required = false) String password) {
+        Doctor saveDoctor = Doctor.builder()
+                .doctorName(doctorName)
+                .mail(mail)
+                .phone(phone)
+                .password(password)
+                .address(address)
+                .major(major)
+                .build();
+        return ResponseEntity.accepted().body(doctorService.createDoctor(saveDoctor));
     }
 
-    @PostMapping(value = "/delete")
-    public ResponseEntity<String> deleteDoctor(@RequestBody Doctor doctor) {
-        doctorService.deleteDoctor(doctor);
+    @GetMapping(value = "/delete")
+    public ResponseEntity<String> deleteDoctor(@RequestParam(name = "id", required = false) Long id,
+                                               @RequestParam(name = "doctorName", required = false) String doctorName,
+                                               @RequestParam(name = "mail", required = false) String mail,
+                                               @RequestParam(name = "phone", required = false) String phone,
+                                               @RequestParam(name = "address", required = false) String address,
+                                               @RequestParam(name = "major", required = false) String major,
+                                               @RequestParam(name = "password", required = false) String password) {
+        Doctor deleteDoctor = Doctor.builder().id(id)
+                .doctorName(doctorName)
+                .mail(mail)
+                .phone(phone)
+                .password(password)
+                .address(address)
+                .major(major)
+                .build();
+        doctorService.deleteDoctor(deleteDoctor);
         return ResponseEntity.accepted().body("Delete doctor success");
     }
 }
