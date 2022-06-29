@@ -5,7 +5,11 @@ import BookingSchedule from "../views/BookingSchedule";
 import MyPet from "../views/MyPet.vue";
 import PetInfo from "../views/PetInfo.vue"
 import PetHistory from "../views/PetHistory.vue"
+import NotFound from "../views/NotFound.vue"
+import Login from "../views/Login"
 
+import User from "../views/User.vue"
+import Signup from "../views/SignUp"
 Vue.use(VueRouter);
 
 const routes = [
@@ -18,6 +22,21 @@ const routes = [
     path: "/booking-schedule",
     name: "BookingSchedule",
     component: BookingSchedule,
+  },
+    {
+        path: "/not-found",
+        name: "NotFound",
+        component: NotFound
+    },
+    {
+    path: "/login",
+    name: "Login",
+    component: Login
+  },
+  {
+    path: "/signup",
+    name: "Signup",
+    component: Signup
   },
   {
     path: "/my-pet/:petId",
@@ -34,6 +53,10 @@ const routes = [
       }
     ]
   },
+  {
+    path: '/user',
+    component: User
+  }
 ];
 
 const router = new VueRouter({

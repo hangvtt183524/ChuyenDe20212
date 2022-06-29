@@ -13,12 +13,14 @@ export default {
             username: 'VTTHang'
         },
         currentUser: {},
-        petOfUser: []
+        petOfUser: [],
+        currentPetIndex: 0
     },
     getters: {
         getConfigUser: state => state.configUser,
         getCurrentUser: state => state.currentUser,
-        getPetOfUser: state => state.petOfUser
+        getPetOfUser: state => state.petOfUser,
+        getCurrentPetIndex: state => state.currentPetIndex
     },
     mutations: {
         setCurrentUser(state, currentUser) {
@@ -26,6 +28,9 @@ export default {
         },
         setPetOfUser(state, listPet) {
             state.petOfUser = listPet
+        },
+        setCurrentPetIndex(state, petIndex) {
+            state.currentPetIndex = petIndex
         }
     },
     actions: {
@@ -33,9 +38,12 @@ export default {
             const pets = await InfotypeServices.searchPetByUser(user)
             commit('setPetOfUser', pets)
         },
-        async loginAndSetCurrentUser({commit}, {user}) {
-            const loginUser = await InfotypeServices.login(user)
+        async loginAndSetCurrentUser({commit}, {params}) {
+            const loginUser = await InfotypeServices.login(params)
             commit('setCurrentUser', loginUser)
+        },
+        async choosePet({commit}, petIndex) {
+            commit('choosePet', petIndex)
         }
     }
 }

@@ -51,10 +51,10 @@ public class ExaminationService {
                 equalPet = exam.getPetId().equals(petId);
             }
             if (dateStart != null) {
-                inDateStart = exam.getStartDate() >= dateStart;
+                inDateStart = exam.getDate() >= dateStart;
             }
             if (dateEnd != null) {
-                inDateEnd = exam.getEndDate() <= dateEnd;
+                inDateEnd = exam.getDate() <= dateEnd;
             }
             if (status != null) {
                 equalStatus = exam.getStatus().equals(status);
@@ -81,9 +81,13 @@ public class ExaminationService {
     }
 
     public Examination createExam(final Examination examination) {
-        Optional<Examination> existedExamination = examinationRepository.findById(examination.getId());
-        if (existedExamination.isPresent() && existedExamination.get() != null) {
-            throw new IllegalArgumentException("Examination with same Id had been existed!");
+        if (examination.getId() != null) {
+            Optional<Examination> existedExamination = examinationRepository.findById(examination.getId());
+            if (existedExamination.isPresent() && existedExamination.get() != null) {
+                throw new IllegalArgumentException("Examination with same Id had been existed!");
+            } else {
+                examination.setId(null);
+            }
         }
 
         Examination savedExam = examinationRepository.save(examination);

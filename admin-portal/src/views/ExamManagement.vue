@@ -134,7 +134,7 @@
 
       </div>
     </div>
-
+    </div>
   </div>
 </template>
 
@@ -288,6 +288,7 @@ export default {
       /*
       call api save exam
       */
+      console.log(exam.doctor)
       exam.isEditing = false
       this.isEditing = false
       this.examsDataBackup = JSON.parse(JSON.stringify(this.exams))
@@ -322,6 +323,9 @@ export default {
 .management-page{
   padding: 2%;
   background-color: $colorPrimary100;
+  .noti {
+    padding-left: 100px;
+  }
   .page-title {
     padding-left: 5%;
     font-size: 40px;

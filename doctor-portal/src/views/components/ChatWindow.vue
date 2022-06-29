@@ -101,7 +101,6 @@ export default {
     }, 
     watch:{
         msgs(){
-            console.log("ahihi")
             this.autoScroll()
         }
     }

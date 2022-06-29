@@ -44,8 +44,6 @@ export default {
         setSelectedItem(){
             this.items.forEach((item, index) => {
                 var itemList = this.$refs.selectList.querySelectorAll('.select-item')
-                console.log(itemList)
-                console.log(item)
                 if(this.valueInput == item.id){
                     itemList[index].click()
                 }
@@ -54,7 +52,6 @@ export default {
         ddSelectOnclick(){
             this.$refs.selectList.classList.toggle("dd-activate")
             var ddProp = this.$refs.dropdown.getBoundingClientRect()
-            console.log(ddProp)
             
             this.$refs.selectList.style.setProperty('width', ddProp.width +'px', 'important');
             this.$refs.selectList.style.setProperty('top', ddProp.bottom +'px', 'important');

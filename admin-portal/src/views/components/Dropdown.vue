@@ -5,7 +5,11 @@
       <div v-if="isEditing">
         <div class="dropdown-content">
             <div class="select-list" ref="selectList">
-                <div class="select-item" v-for="(item, index) in items" :key="index" @click="selectItemOnclick(index, $event)" :id="item.id">
+                <div class="select-item"
+                     v-for="(item, index) in items" :key="index"
+                     @click="selectItemOnclick(index, $event)"
+                     :id="item.id"
+                >
                     <i class="fa-solid fa-check"></i>
                     <div class="dd-item-text">{{item.text}}</div>
                 </div>
@@ -79,7 +83,6 @@ export default {
         ddSelectOnclick(){
             this.$refs.selectList.classList.toggle("dd-activate")
             var ddProp = this.$refs.dropdown.getBoundingClientRect()
-            console.log(ddProp)
             
             this.$refs.selectList.style.setProperty('width', ddProp.width +'px', 'important');
             this.$refs.selectList.style.setProperty('top', ddProp.bottom +'px', 'important');
@@ -88,19 +91,16 @@ export default {
         selectItemOnclick(index, e){
             if(Array.from(e.currentTarget.classList).includes('selected-item')){
                 e.currentTarget.classList.remove('selected-item')
-                
-                console.log('first')
+
                 this.selectedText = this.originSelectedText
             }
             // console.log(Array.from(e.currentTarget.classList))
             else{
-                console.log('second')
                 var itemList = this.$refs.selectList.querySelectorAll(".select-item")
                 Array.from(itemList).forEach(element => {
                     element.classList.remove('selected-item')
                 });
                 e.currentTarget.classList.add('selected-item')
-                console.log(e.target.innerText)
                 this.selectedText = e.target.innerText
             }
             
@@ -111,7 +111,8 @@ export default {
             
             this.$emit('setValue', this.selectedText)
         }
-    }
+      }
+
 }
 </script>
 <style scoped>
