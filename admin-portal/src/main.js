@@ -3,6 +3,7 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store/index";
 import Vue2Editor from "vue2-editor";
+import Notifications from 'vue-notification'
 import { BootstrapVue, IconsPlugin, BootstrapVueIcons } from 'bootstrap-vue';
 
 import './assets/scss/main.scss';
@@ -14,6 +15,7 @@ Vue.config.productionTip = false;
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 Vue.use(BootstrapVueIcons);
+Vue.use(Notifications);
 
 new Vue({
     router,

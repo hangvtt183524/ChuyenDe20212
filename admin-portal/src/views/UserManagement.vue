@@ -119,6 +119,7 @@ import crossIcon from '@/assets/svg/close.svg'
 import InputItem from "@/views/components/InputItem";
 import Pagination from "./components/Pagination.vue"
 import {mapGetters} from "vuex";
+import InfotypeServices from "@/services/InfotypeServices"
 export default {
   name: 'UserManagement',
   props: {
@@ -168,7 +169,6 @@ export default {
     getRenderUsers() {
       let first = this.firstIndex
       let last = this.lastIndex
-      console.log('in gender user')
       if (this.users != null) {
         return this.users.slice(first, last + 1);
       } else {
@@ -177,14 +177,16 @@ export default {
     },
     editUser(user) {
       if (user.isEditing === false) {
-        user.isEditing = !user.isEditing
+        let userClone = JSON.parse(JSON.stringify(user))
+        userClone.isEditing = true
+        let userIndex = this.users.indexOf(user)
+        this.users.splice(userIndex, 1)
+        this.users.splice(userIndex, 0, userClone)
       }
     },
-    deleteUser(user) {
+    async deleteUser(user) {
       user.isEditing = false
-      /*
-      call api delete user
-      */
+
       let userIndex = this.users.indexOf(user)
       this.users.splice(userIndex, 1)
       this.usersDataBackup.splice(userIndex, 1)
@@ -192,12 +194,19 @@ export default {
       this.lastIndex = Math.min(this.lastIndex, this.len - 1)
       this.totalPage = Math.ceil(this.users.length / this.numOfUsersPerPage)
     },
-    saveUser(user) {
-      console.log(user)
-      /*
-      call api save user
-      */
-      user.isEditing = false
+    async saveUser(user) {
+      let userIndex = this.users.indexOf(user)
+      await InfotypeServices.saveUser(user)
+      let savedUser = JSON.parse(JSON.stringify(user))
+      savedUser.isEditing = false
+      this.users.splice(userIndex, 1)
+      this.users.splice(userIndex, 0, savedUser)
+
+      this.$notify({
+        group: 'default',
+        type: 'success',
+        title: 'Save successfully!'
+      })
       this.usersDataBackup = JSON.parse(JSON.stringify(this.users))
     },
     cancelEdit(user) {

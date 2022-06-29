@@ -14,10 +14,10 @@ public class ExaminationService {
     @Autowired
     ExaminationRepository examinationRepository;
 
-    public Examination getExamById(final String id) {
+    public Examination getExamById(final Long id) {
         Examination examination = null;
         if (id != null) {
-            Optional<Examination> optionalExam = examinationRepository.findById(Long.parseLong(id));
+            Optional<Examination> optionalExam = examinationRepository.findById(id);
             if (optionalExam.isPresent() && optionalExam.get() != null) {
                 examination = optionalExam.get();
             } else {

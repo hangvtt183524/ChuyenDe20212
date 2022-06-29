@@ -18,7 +18,7 @@ public class PetController {
     PetService petService;
 
     @PostMapping(value = "/searchByUser")
-    public ResponseEntity<List<Pet>> searchAllByUser(@RequestBody Long userId) {
+    public ResponseEntity<List<Pet>> searchAllByUser(@RequestParam(name = "userId", required = false) Long userId) {
         return ResponseEntity.accepted().body(petService.getAllPets(userId));
     }
 }
