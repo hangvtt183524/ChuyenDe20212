@@ -13,6 +13,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value = "select * from user where username like %:username%", nativeQuery = true)
     public Optional<User> findUserByUsername(@Param("username") String username);
 
-    @Query(value = "select * from user where mail like %:mail", nativeQuery = true)
+    @Query(value = "select * from user where mail like CONCAT('%', :mail,'%')", nativeQuery = true)
     public Optional<User> findFirstByMail(@Param("mail") String mail);
 }
