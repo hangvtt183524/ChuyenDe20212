@@ -6,6 +6,7 @@
 
     <p v-if="len === 0" class="noti">Không có dữ liệu hiển thị</p>
 
+    <div v-else>
     <div class="table-wrapper">
       <table class="data-table">
         <thead class="header-row">
@@ -41,9 +42,10 @@
           <td>
             <div>
                 <Dropdown
-                  :is-editting="exam.isEditing"
+                  :is-editing="exam.isEditing"
                   :items="doctors"
-                  :value="exam.doctor"
+                  :valueInput="exam.doctor"
+                  @setDoctor="setDoctor"
                 />
             </div>
           </td>
@@ -72,29 +74,35 @@
             />
           </td>
           <td>
-            <div class="flex">
-              <div class="svg-icon" v-if="exam.isEditing === false">
-                <div v-if="exam.status">
-                  <done-icon class="is-fill-green"/>
-                </div>
-                <div v-else>
-                  <done-icon class="is-fill-gray"/>
-                </div>
-              </div>
-              <div v-else class="svg-icon clickable">
-                <div v-if="exam.status">
-                  <done-icon class="is-fill-green" @click="exam.status=!exam.status"/>
-                </div>
-                <div v-else>
-                  <done-icon class="is-fill-gray" @click="exam.status=!exam.status"/>
-                </div>
-              </div>
-            </div>
+            <Dropdown
+                :is-editing="exam.isEditing"
+                :items=""
+                :valueInput="examStatus[exam.status]"
+                @setDoctor="setDoctor"
+            />
+<!--            <div class="flex">-->
+<!--              <div class="svg-icon" v-if="exam.isEditing === false">-->
+<!--                <div v-if="exam.status">-->
+<!--                  <done-icon class="is-fill-green"/>-->
+<!--                </div>-->
+<!--                <div v-else>-->
+<!--                  <done-icon class="is-fill-gray"/>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              <div v-else class="svg-icon clickable">-->
+<!--                <div v-if="exam.status">-->
+<!--                  <done-icon class="is-fill-green" @click="exam.status=!exam.status"/>-->
+<!--                </div>-->
+<!--                <div v-else>-->
+<!--                  <done-icon class="is-fill-gray" @click="exam.status=!exam.status"/>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
           </td>
           <td class="flex">
             <div class="svg-icon clickable" v-if="exam.isEditing === false">
               <edit-icon class="is-fill-blue" @click="editExam(exam)" />
-<!--              <delete-icon class="is-fill-blue" @click="deleteUser(exam)" />-->
+              <delete-icon class="is-fill-blue" @click="deleteExam(exam)" />
             </div>
             <div class="svg-icon clickable" v-if="exam.isEditing === true">
               <save-icon class="is-fill-blue" @click="saveExam(exam)" />
@@ -117,13 +125,14 @@
       />
 
     </div>
+    </div>
 
   </div>
 </template>
 
 <script>
 import editIcon from '@/assets/svg/edit.svg'
-// import deleteIcon from '@/assets/svg/delete.svg'
+import deleteIcon from '@/assets/svg/delete.svg'
 import saveIcon from '@/assets/svg/save.svg'
 import crossIcon from '@/assets/svg/close.svg'
 import doneIcon from '@/assets/svg/success.svg'
@@ -141,7 +150,7 @@ export default {
   components: {
     pagination: Pagination,
     editIcon,
-    // deleteIcon,
+    deleteIcon,
     saveIcon,
     crossIcon,
     doneIcon,
@@ -158,6 +167,25 @@ export default {
       firstIndex: 0,
       lastIndex: 0,
       examsDataBackup: null,
+      selectedDoctor: null,
+      examStatus: [
+        {
+          number: '0',
+          status: 'Chưa gửi mail xác nhận'
+        },
+        {
+          number: '1',
+          status: 'Đã gửi mail xác nhận'
+        },
+        {
+          number: '2',
+          status: 'Bị huỷ'
+        },
+        {
+          number: '3',
+          status: 'Đã hoàn thành'
+        }
+      ]
     }
   },
   methods: {
@@ -171,7 +199,7 @@ export default {
           date: '2/4/2022',
           description: '',
           result: '',
-          status: true,
+          status: 1,
           isEditing: false,
         },
         {
@@ -182,7 +210,7 @@ export default {
           date: '2/4/2022',
           description: '',
           result: '',
-          status: false,
+          status: 2,
           isEditing: false,
         }
       ]
@@ -192,6 +220,9 @@ export default {
         {text: 'Hằng'},
         {text: 'Thu'}
       ]
+    },
+    setDoctor(doctor) {
+      this.selectedDoctor = doctor;
     },
     onPageChange(page) {
       // console.log(page)
@@ -213,22 +244,25 @@ export default {
     editExam(exam) {
       if (exam.isEditing === false) {
         exam.isEditing = !exam.isEditing
+        this.selectedDoctor = exam.doctor;
       }
     },
-    // deleteExam(exam) {
-    //   exam.isEditing = false
-    //   /*
-    //   call api delete exam
-    //   */
-    //   let examIndex = this.exams.indexOf(exam)
-    //   this.exams.splice(examIndex, 1)
-    //   this.examsDataBackup.splice(examIndex, 1)
-    //   this.len = this.exams.length
-    //   this.lastIndex = Math.min(this.lastIndex, this.len - 1)
-    //   this.totalPage = Math.ceil(this.exams.length / this.numOfExamsPerPage)
-    // },
+    deleteExam(exam) {
+      exam.isEditing = false
+      /*
+      call api delete exam
+      */
+      let examIndex = this.exams.indexOf(exam)
+      this.exams.splice(examIndex, 1)
+      this.examsDataBackup.splice(examIndex, 1)
+      this.len = this.exams.length
+      this.lastIndex = Math.min(this.lastIndex, this.len - 1)
+      this.totalPage = Math.ceil(this.exams.length / this.numOfExamsPerPage)
+    },
     saveExam(exam) {
       console.log(exam)
+      exam.doctor = this.selectedDoctor;
+      this.selectedDoctor = null;
       /*
       call api save exam
       */
@@ -249,7 +283,6 @@ export default {
   created() {
     this.exams = this.getData()
     this.doctors = this.getDoctor()
-    console.log(this.exams)
     this.len = this.exams.length
     this.totalPage = Math.ceil(this.exams.length / this.numOfExamsPerPage)
     this.lastIndex = Math.min(this.numOfExamsPerPage - 1, this.len - 1)

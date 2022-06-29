@@ -1,26 +1,28 @@
 <template>
     <div class="dropdown" ref='dropdown'>
         <div class="label">{{this.label}}</div>
+
       <div v-if="isEditing">
-        <div class="dropdown-content">                   
+        <div class="dropdown-content">
             <div class="select-list" ref="selectList">
                 <div class="select-item" v-for="(item, index) in items" :key="index" @click="selectItemOnclick(index, $event)" :id="item.id">
                     <i class="fa-solid fa-check"></i>
                     <div class="dd-item-text">{{item.text}}</div>
                 </div>
             </div>
-            
+
             <div class="select" @click="ddSelectOnclick" ref="select">
-                <div class="select-content">
-                    <div class="dd-item-text">{{this.selectedText}}</div>
-                </div>
-                <i class="fas fa-angle-down"></i>
+              <div class="select-content">
+                <div class="dd-item-text">{{this.selectedText}}</div>
+              </div>
+              <i class="fas fa-angle-down"></i>
             </div>
+
         </div>
       </div>
       <div v-else>
-        <div v-if="value">
-          {{value}}
+        <div v-if="valueInput">
+          {{valueInput}}
         </div>
         <div v-else>
           Chưa có
@@ -56,15 +58,16 @@ export default {
         }
     },
     mounted() {
-        // this.setSelectedItem()
+      this.setSelectedItem()
     },
     methods: {
         setSelectedItem(){
+          console.log("Hi")
             this.items.forEach((item, index) => {
                 var itemList = this.$refs.selectList.querySelectorAll('.select-item')
                 console.log(itemList)
                 console.log(item)
-                if(this.valueInput == item.id){
+                if(this.valueInput == item){
                     itemList[index].click()
                 }
             });
@@ -102,7 +105,7 @@ export default {
             // }
             this.$refs.selectList.classList.remove('dd-activate')
             
-            // this.$emit('setValue', this.items[index].id)
+            this.$emit('setDoctor', this.selectedText)
         }
     }
 }
