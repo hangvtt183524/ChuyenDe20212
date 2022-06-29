@@ -18,7 +18,7 @@ public class ExaminationService {
         Examination examination = null;
         if (id != null) {
             Optional<Examination> optionalExam = examinationRepository.findById(Long.parseLong(id));
-            if (optionalExam.isPresent()) {
+            if (optionalExam.isPresent() && optionalExam.get() != null) {
                 examination = optionalExam.get();
             } else {
                 throw new IllegalArgumentException("No Examination existed!");
@@ -82,7 +82,7 @@ public class ExaminationService {
 
     public Examination createExam(final Examination examination) {
         Optional<Examination> existedExamination = examinationRepository.findById(examination.getId());
-        if (existedExamination.isPresent()) {
+        if (existedExamination.isPresent() && existedExamination.get() != null) {
             throw new IllegalArgumentException("Examination with same Id had been existed!");
         }
 

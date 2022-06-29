@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping(path = "v1/doctor")
 @Slf4j
@@ -36,13 +37,18 @@ public class DoctorController {
         return ResponseEntity.accepted().body(doctorService.getAllDoctors());
     }
 
-    @PostMapping(value = "/update")
-    public ResponseEntity<Doctor> updateUser(@RequestBody Doctor doctor) {
+    @PutMapping(value = "/update")
+    public ResponseEntity<Doctor> updateDoctor(@RequestBody Doctor doctor) {
         return ResponseEntity.accepted().body(doctorService.updateDoctor(doctor));
     }
 
+    @PostMapping(value = "/create")
+    public ResponseEntity<Doctor> createDoctor(@RequestBody Doctor doctor) {
+        return ResponseEntity.accepted().body(doctorService.createDoctor(doctor));
+    }
+
     @PostMapping(value = "/delete")
-    public ResponseEntity<String> deleteUser(@RequestBody Doctor doctor) {
+    public ResponseEntity<String> deleteDoctor(@RequestBody Doctor doctor) {
         doctorService.deleteDoctor(doctor);
         return ResponseEntity.accepted().body("Delete doctor success");
     }

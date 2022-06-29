@@ -1,7 +1,7 @@
 import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
-import store from "./store";
+import store from "./store/index";
 import Vue2Editor from "vue2-editor";
 import VueNotification from "vue-notification";
 import { BootstrapVue, IconsPlugin, BootstrapVueIcons } from 'bootstrap-vue';

@@ -64,6 +64,7 @@ export default {
         return response.data
     },
     async searchUserAll() {
+        prepareParams(null)
         const response = await http.request({
             method: 'GET',
             url: `${PATHS.USERS.SEARCH_ALL}`

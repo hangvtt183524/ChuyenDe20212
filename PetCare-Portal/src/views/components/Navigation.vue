@@ -32,6 +32,7 @@
     </div>
 </template>
 <script>
+import {mapGetters} from "vuex";
 export default {
   name: 'TheNavigation',
   data(){
@@ -88,6 +89,11 @@ export default {
         // console.log(window.location.pathname)
     },
 },
+  computed: {
+    ...mapGetters({
+      configUser: 'config/getConfigUser'
+    })
+  }
 }
 </script>
 <style scoped>

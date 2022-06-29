@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping(path = "v1/user")
 @Slf4j
@@ -39,9 +40,14 @@ public class UserController {
         return ResponseEntity.accepted().body(userService.getAllUsers());
     }
 
-    @PostMapping(value = "/update")
+    @PutMapping(value = "/update")
     public ResponseEntity<User> updateUser(@RequestBody User user) {
         return ResponseEntity.accepted().body(userService.updateUser(user));
+    }
+
+    @PostMapping(value = "/create")
+    public ResponseEntity<User> createUser(@RequestBody User user) {
+        return ResponseEntity.accepted().body(userService.createUser(user));
     }
 
     @PostMapping(value = "/delete")
