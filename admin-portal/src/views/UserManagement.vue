@@ -79,9 +79,9 @@
               />
             </td>
             <td class="flex">
-              <div class="svg-icon clickable" v-if="user.isEditing === false">
-                <edit-icon class="is-fill-blue" @click="editUser(user)" />
-              </div>
+<!--              <div class="svg-icon clickable" v-if="user.isEditing === false">-->
+<!--                <edit-icon class="is-fill-blue" @click="editUser(user)" />-->
+<!--              </div>-->
               <div class="svg-icon clickable" v-if="user.isEditing === true">
                 <save-icon class="is-fill-blue" @click="saveUser(user)" />
               </div>
@@ -89,6 +89,7 @@
                 <cross-icon class="is-fill-red" @click="cancelEdit(user)" />
               </div>
               <div class="svg-icon clickable" v-else>
+                <edit-icon class="is-fill-blue" @click="editUser(user)" />
                 <delete-icon class="is-fill-blue" @click="deleteUser(user)" />
               </div>
             </td>
@@ -123,7 +124,7 @@ export default {
   props: {
     numOfUsersPerPage: {
       type: Number,
-      default: 15,
+      default: 8,
     }
   },
   components: {
@@ -137,7 +138,6 @@ export default {
   data() {
     return {
       users: null,
-      // renderUsers: this.fetchData().users.slice(0, this.numOfUsersPerPage),
       len: 0,
       totalPage: 0,
       currentPage: 1,
@@ -189,6 +189,7 @@ export default {
       this.users.splice(userIndex, 1)
       this.usersDataBackup.splice(userIndex, 1)
       this.len = this.users.length
+      this.lastIndex = Math.min(this.lastIndex, this.len - 1)
       this.totalPage = Math.ceil(this.users.length / this.numOfUsersPerPage)
     },
     saveUser(user) {
