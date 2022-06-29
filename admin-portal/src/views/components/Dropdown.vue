@@ -66,8 +66,6 @@ export default {
         setSelectedItem(){
             this.items.forEach((item, index) => {
                 var itemList = this.$refs.selectList.querySelectorAll('.select-item')
-                console.log(itemList)
-                console.log(item)
               this.value = item
                 if(this.valueInput == item.id){
                     itemList[index].click()
@@ -77,7 +75,6 @@ export default {
         ddSelectOnclick(){
             this.$refs.selectList.classList.toggle("dd-activate")
             var ddProp = this.$refs.dropdown.getBoundingClientRect()
-            console.log(ddProp)
             
             this.$refs.selectList.style.setProperty('width', ddProp.width +'px', 'important');
             this.$refs.selectList.style.setProperty('top', ddProp.bottom +'px', 'important');
@@ -86,19 +83,16 @@ export default {
         selectItemOnclick(index, e){
             if(Array.from(e.currentTarget.classList).includes('selected-item')){
                 e.currentTarget.classList.remove('selected-item')
-                
-                console.log('first')
+
                 this.selectedText = this.originSelectedText
             }
             // console.log(Array.from(e.currentTarget.classList))
             else{
-                console.log('second')
                 var itemList = this.$refs.selectList.querySelectorAll(".select-item")
                 Array.from(itemList).forEach(element => {
                     element.classList.remove('selected-item')
                 });
                 e.currentTarget.classList.add('selected-item')
-                console.log(e.target.innerText)
                 this.selectedText = e.target.innerText
             }
             

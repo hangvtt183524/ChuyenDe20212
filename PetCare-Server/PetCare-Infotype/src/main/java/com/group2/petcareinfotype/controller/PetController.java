@@ -19,6 +19,11 @@ public class PetController {
     @Autowired
     PetService petService;
 
+    @GetMapping(value = "/searchAll")
+    public ResponseEntity<List<Pet>> searchAll() {
+        return ResponseEntity.accepted().body(petService.getAllPets());
+    }
+
     @GetMapping(value = "/searchByUser")
     public ResponseEntity<List<Pet>> searchAllByUser(@RequestParam(name = "userId", required = false) Long userId) {
         return ResponseEntity.accepted().body(petService.getAllPets(userId));

@@ -1,0 +1,105 @@
+.button {
+  text-align: center;
+  display: block;
+  color: #FFFFFF;
+  border: 0;
+  outline: none;
+  cursor: pointer;
+
+  &:disabled {
+    background-color: grey !important;
+  }
+
+  &.disabled {
+    background-color: grey !important;
+    cursor: unset;
+  }
+
+  &.is-small {
+    height: 24px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 24px;
+    padding: 0 15px;
+  }
+
+  &.is-normal {
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 16px;
+    text-align: center;
+    height: 40px;
+    padding: 10px 15px;
+    border-radius: 15px;
+  }
+
+  &.is-blue.is-outlined {
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 16px;
+    text-align: center;
+    height: 40px;
+    padding: 10px 15px;
+    border-radius: 15px;
+    background: white;
+    border: 1px solid $colorMainBlue;
+    color: $colorMainBlue;
+
+    svg path {
+      fill: $colorMainBlue;
+    }
+
+    &:hover,
+    &:active {
+      background-color: #3366ffd6;
+      color: white;
+
+      svg path {
+        fill: white;
+      }
+    }
+  }
+
+  &.is-chip {
+    border: 1px solid #00E58F;
+    background-color: #EBFDF7;
+    color: #00DB92;
+    font-weight: 600;
+    padding-right: 10px;
+
+    &::after {
+      content: '\2716';
+      position: relative;
+      padding-left: 10px;
+      color: #00DB92;
+      cursor: pointer;
+      pointer-events: none;
+      -webkit-transition: .25s all ease;
+      -o-transition: .25s all ease;
+      transition: .25s all ease;
+      line-height: 24px;
+    }
+  }
+
+  &.is-blue:hover,
+  &.is-blue:active {
+    background-color: #3366ffd6;
+  }
+
+  &.is-orange:hover,
+  &.is-orange:active {
+    background-color: #ffc021;
+  }
+}
+
+.is-chip-group {
+  display:flex;
+  flex-wrap: wrap;
+  margin-top:10px;
+
+  .is-chip {
+    margin-left:5px;
+    margin-bottom: 10px;
+  }
+}

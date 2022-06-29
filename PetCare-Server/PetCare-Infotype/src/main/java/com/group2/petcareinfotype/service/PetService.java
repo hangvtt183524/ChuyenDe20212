@@ -15,6 +15,10 @@ public class PetService {
     @Autowired
     PetRepository petRepository;
 
+    public List<Pet> getAllPets() {
+        return petRepository.findAll();
+    }
+
     public List<Pet> getAllPets(final Long userId) {
         Optional<List<Pet>> optionalPets = petRepository.findByOwnerId(userId);
         if (!optionalPets.isPresent()) {

@@ -111,7 +111,7 @@ export default {
     },
     watch:{
         numberOfPets(){
-            console.log(this.$refs.userPage.querySelectorAll('.pet-holder'))          
+            // console.log(this.$refs.userPage.querySelectorAll('.pet-holder'))
         }
     }
 }

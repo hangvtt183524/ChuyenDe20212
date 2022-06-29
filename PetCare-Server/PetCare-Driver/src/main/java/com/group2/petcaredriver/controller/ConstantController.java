@@ -13,6 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping(path = "v1/constant")
 @Slf4j
+@CrossOrigin
 public class ConstantController {
     @Autowired
     ServiceService service;
