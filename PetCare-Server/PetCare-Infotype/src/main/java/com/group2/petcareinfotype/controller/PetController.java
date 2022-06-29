@@ -40,4 +40,22 @@ public class PetController {
                 .weight(weight).build();
         return ResponseEntity.accepted().body(petService.ceatePet(newPet));
     }
+
+    @GetMapping(value = "/update")
+    public ResponseEntity<Pet> updatePet(@RequestParam(name = "id", required = true) Long id,
+                                         @RequestParam(name = "ownerId", required = false) Long ownerId,
+                                            @RequestParam(name = "name", required = false) String name,
+                                            @RequestParam(name = "species", required = false) String species,
+                                            @RequestParam(name = "age", required = false) Integer age,
+                                            @RequestParam(name = "gender", required = false) String gender,
+                                            @RequestParam(name = "weight", required = false) Double weight) {
+        Pet updatePet = Pet.builder().id(id)
+                .ownerId(ownerId)
+                .name(name)
+                .species(species)
+                .gender(gender)
+                .age(age)
+                .weight(weight).build();
+        return ResponseEntity.accepted().body(petService.updatePet(updatePet));
+    }
 }

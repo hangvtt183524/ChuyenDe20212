@@ -27,10 +27,10 @@ export default {
         return response.data
     },
     async savePet(pet) {
+        let pathUrl = pet.id ? `${PATHS.PETS.UPDATE}` : `${PATHS.PETS.CREATE}`
         const response = await http.request({
-            method: pet.id ? 'PUT' : 'POST',
-            url: pet.id ? `${PATHS.PETS.UPDATE}` : `${PATHS.PETS.CREATE}`,
-            data: pet
+            method: 'GET',
+            url: pathUrl + '?' + prepareParams(pet)
         })
         return response.data
     },

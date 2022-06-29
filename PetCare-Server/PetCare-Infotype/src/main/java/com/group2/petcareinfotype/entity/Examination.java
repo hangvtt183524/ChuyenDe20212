@@ -27,6 +27,8 @@ public class Examination implements Serializable {
 
     private Integer date;
 
+    private Integer time;
+
     private String firstDescription;
 
     private String result;
