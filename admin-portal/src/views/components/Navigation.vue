@@ -3,15 +3,15 @@
     <div class="navigation-tittle">Pet Care</div>
     <div class="menu">
       <div class="choice">
-        <router-link class="page-link" to="/">Trang chủ</router-link>
+        <router-link class="page-link" to="/user-management">Quản lý khách hàng</router-link>
         <div class="underline"></div>
       </div>
       <div class="choice">
-        <router-link class="page-link" to="/">Quản lý khách hàng</router-link>
+        <router-link class="page-link" to="/doctor-management">Quản lý bác sĩ</router-link>
         <div class="underline"></div>
       </div>
       <div class="choice">
-        <router-link class="page-link" to="/">Quản lý bác sĩ</router-link>
+        <router-link class="page-link" to="/exam-management">Quản lý lịch khám</router-link>
         <div class="underline"></div>
       </div>
     </div>

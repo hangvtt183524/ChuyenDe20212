@@ -31,6 +31,7 @@
     </div>
 </template>
 <script>
+// import Vue from 'vue'
 export default {
     name: "MDropdown",
     props: {
@@ -58,19 +59,22 @@ export default {
         }
     },
     mounted() {
-      this.setSelectedItem()
+      if (this.isEditing)
+        this.setSelectedItem()
     },
     methods: {
-        setSelectedItem(){
-          console.log("Hi")
+        setSelectedItem() {
+          // Vue.nextTick(() => {
             this.items.forEach((item, index) => {
-                var itemList = this.$refs.selectList.querySelectorAll('.select-item')
-                console.log(itemList)
-                console.log(item)
-                if(this.valueInput == item){
-                    itemList[index].click()
-                }
+              var itemList = this.$refs.selectList.querySelectorAll('.select-item')
+              console.log(itemList)
+              console.log(item)
+              // this.value = item
+              if (this.valueInput == item) {
+                itemList[index].click()
+              }
             });
+          // })
         },
         ddSelectOnclick(){
             this.$refs.selectList.classList.toggle("dd-activate")
@@ -105,7 +109,7 @@ export default {
             // }
             this.$refs.selectList.classList.remove('dd-activate')
             
-            this.$emit('setDoctor', this.selectedText)
+            this.$emit('setValue', this.selectedText)
         }
     }
 }
