@@ -1,4 +1,38 @@
+<template>
+  <div class="bg">
+    <div class="login-card">
+        <h1>Đăng nhập</h1>
+      <div class="form">
+        <InputItem
+          :is-editing="true"
+          placeholder="Email"
+        />
+      <InputItem
+          :is-editing="true"
+          placeholder="Password"
+      />
+        <div class="forget">
+          <a href="/forget_password">Quên mật khẩu</a>
+        </div>
+        <div class="button-login">
+        <Button
+            text="Đăng nhập"
+            color="blue"
+        />
+        </div>
+        <div class="sign-up">
+          Bạn chưa có tài khoản? <a href="/register">Đăng ký</a>
+        </div>
+    </div>
+    </div>
+
+  </div>
+</template>
+
+
 <script>
+import Button from "./components/Button"
+import InputItem from './components/InputItem'
 export default {
   name: 'Login',
   data() {
@@ -6,6 +40,10 @@ export default {
       usernameOrEmail: null,
       password: null,
     }
+  },
+  components: {
+    Button,
+    InputItem
   },
   methods: {
     api() {
@@ -16,103 +54,69 @@ export default {
 </script>
 
 
-<template>
-  <div class="Card d-flex flex-column bg-white align-items-center">
-    <p class="title text-capitalize">Đăng nhập</p>
-
-    <form @submit.prevent="api" class="d-flex flex-column align-items-center">
-      <div class="input-wrap px-3 py-2 mb-3">
-        <input v-model="usernameOrEmail" placeholder="Username hoặc email"/>
-      </div>
-      <div class="input-wrap px-3 py-2">
-        <input v-model="password" placeholder="Mật khẩu"/>
-      </div>
-
-      <div class='w-100' align="right">
-        <router-link to="" class="ForgotPass">
-          <p>Quên mật khẩu ?</p>
-        </router-link>
-      </div>
-
-      <button class="blue-btn py-2 mt-1 mb-2">Đăng Nhập</button>
-    </form>
-
-    <p class="sub_text">Bạn chưa có tài khoản ?</p>
-    <router-link to="/sign-up">
-      <button class="py-2 my-2">Đăng Ký</button>
-    </router-link>
-  </div>
-</template>
-
-
 <style lang="scss" scoped>
-.Card {
-  width: 90%;
-  border-radius: 18px;
-  padding: 1.25rem 4rem;
-}
-.title {
-  font-size: 25px;
-  font-weight: 900;
-  margin-bottom: 18px;
-  color: #009fff;
-}
-form { width: 100%; }
-.input-wrap {
-  width: 100%;
-  border: 1px solid #e4e4e4;
-  border-radius: 3px;
-}
+@import "../assets/scss/main";
+.bg {
+  background-color: #a1d8ff7a;
+  height: calc(100vh - 70px);
+  position: relative;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .login-card {
+    position: absolute;
+    top: 80px;
+    bottom: 80px;
+    left: 600px;
+    right: 600px;
+    padding: 20px;
+    background-color: #fff;
+    box-sizing: border-box;
+    align-content: center;
+    h1 {
+      text-align: center;
+      color: $colorPrimary600;
+    }
+    .form {
+      width: 100%;
+      height: 225px;
+      background-size: cover;
+      background-position: center;
+      cursor: pointer;
+      .button-login {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 30px;
+      }
+      .forget {
+        text-align: right;
+        padding-right: 5px;
+      }
+      .forget a {
+        text-decoration: none;
+        color: #9c9c9c;
+        font-size: 0.9rem;
+      }
 
-input {
-  border: 0;
-  outline: none;
-  font-weight: 600;
-  font-size: 18px;
+      .sign-up {
+        text-align: center;
+      }
+      .sign-up a {
+        text-decoration: none;
+        color: $colorPrimary500;
+        font-weight: 600;
+      }
+      .sign-up span {
+        font-weight: 600;
+        color: $colorPrimary500;
+      }
+    }
+  }
 }
-.blue-btn {
-  background: #009fff;
-}
-.blue-btn:hover {
-  background: #3183c8;
-}
-button, a, a button {
-  width: 100%;
-  font-size: 18px;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  font-weight: 600;
-}
-
-.sub_text {
-  font-weight: 600;
-  font-size: 18px;
-  color: #ccc;
-}
-
-.ForgotPass {
-  width:fit-content;
-  color: #009fff;
-  font-size: 1.2rem;
-}
-
-::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-  color: #ccc;
-  opacity: 1;/* Firefox */
-  font-weight: 600;
-  font-size: 18px;
-}
-
-:-ms-input-placeholder { /* Internet Explorer 10-11 */
-  color: #ccc;
-  font-weight: 600;
-  font-size: 18px;
-}
-
-::-ms-input-placeholder { /* Microsoft Edge */
-  color: #ccc;
-  font-weight: 600;
-  font-size: 18px;
+.message {
+  color: red;
+  margin-left: 10%;
 }
 </style>
