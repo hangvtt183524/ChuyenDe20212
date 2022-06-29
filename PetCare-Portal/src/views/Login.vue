@@ -69,6 +69,10 @@ export default {
           this.$store.commit('config/setCurrentUser', currentUser[0])
           const petList = await InfotypeServices.searchPetByUser(currentUser[0])
           this.$store.commit('config/setPetOfUser', petList)
+          const examList = await InfotypeServices.searchScheduleAll()
+          this.$store.commit('config/setAllExams', examList)
+          const doctorList = await  InfotypeServices.searchDoctorAll()
+          this.$store.commit('config/setAllDoctors', doctorList)
           await this.$router.push({ path: '/' })
         } else {
           this.$notify({

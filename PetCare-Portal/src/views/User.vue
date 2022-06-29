@@ -1,4 +1,4 @@
-<template lang="">
+<template>
     <div class="blue-bg">
         <div class="user-page scrollable" ref="userPage">
             <div class="header">Thông tin người dùng</div>
@@ -7,28 +7,40 @@
                 <div class="info-content">
                     <div class="info-part">
                         <InputItem 
-                            label = "Họ và tên"
+                            label = "Username"
                             :isEditing="true"
+                            v-model="userInfo.username"
+                            :is-only-alpha="false"
+                            :is-only-numeric="false"
                         />
                         <InputItem 
                             label = "Số điện thoại"
                             :isEditing="true"
+                            v-model="userInfo.phone"
+                            :is-only-alpha="false"
+                            :is-only-numeric="false"
                         />
                     </div>
                     <div class="info-part">
                         <InputItem 
                             label = "Email"
                             :isEditing="true"
+                            v-model="userInfo.mail"
+                            :is-only-alpha="false"
+                            :is-only-numeric="false"
                         />
                         <InputItem 
                             label = "Địa chỉ"
                             :isEditing="true"
+                            v-model="userInfo.address"
+                            :is-only-alpha="false"
+                            :is-only-numeric="false"
                         />
                     </div>
                 </div>
 
             </div>
-            <div class="pet-holder" v-for="(pet, index) in numberOfPets" :key="index">
+            <div class="pet-holder" v-for="(pet, index) in petsInfo" :key="index">
                 <div class="header">Thông tin thú cưng
                     <Button
                         text="Xóa"
@@ -43,24 +55,39 @@
                         <InputItem 
                             label = "Tên thú cưng"
                             :isEditing="true"
+                            v-model="pet.name"
+                            :is-only-alpha="false"
+                            :is-only-numeric="false"
                         />
                         <InputItem 
                             label = "Loại thú cưng"
                             :isEditing="true"
+                            v-model="pet.species"
+                            :is-only-alpha="false"
+                            :is-only-numeric="false"
                         />
                         <InputItem 
                             label = "Tuổi"
                             :isEditing="true"
+                            v-model="pet.age"
+                            :is-only-alpha="false"
+                            :is-only-numeric="false"
                         />
                     </div>
                     <div class="info-part">
                         <InputItem 
                             label = "Giới tính"
                             :isEditing="true"
+                            v-model="pet.gender"
+                            :is-only-alpha="false"
+                            :is-only-numeric="false"
                         />
                         <InputItem 
                             label = "Cân nặng"
                             :isEditing="true"
+                            v-model="pet.weight"
+                            :is-only-alpha="false"
+                            :is-only-numeric="false"
                         />
                     </div>
                 </div>
@@ -76,10 +103,11 @@
                     color="orange"
                     @click.native="addPetBtnOnClick"
                 />
-                <Button 
+                <Button
                     text="Lưu"
                     color="blue"
-                />     
+                    @click.native="saveInfo"
+                />
             </div>
         </div>
     </div>
@@ -87,6 +115,9 @@
 <script>
 import InputItem from './components/InputItem.vue'
 import Button from './components/Button.vue'
+import InfotypeServices from "@/services/InfotypeServices"
+import {mapGetters} from "vuex"
+
 export default {
     name: 'User',
     components: {
@@ -94,12 +125,22 @@ export default {
     },
     data(){
         return{
-            numberOfPets: 1,
+          numberOfPets: 1,
+          userInfo: null,
+          petsInfo: []
         }
     },
     methods: {
         addPetBtnOnClick(){
             this.numberOfPets += 1
+            this.petsInfo.push({
+              id: null,
+              name: null,
+              gender: null,
+              age: null,
+              species: null,
+              weight: null
+            })
         },
         deletaPetBtnOnClick(e){
             var currentPet = e.target.parentNode.parentNode
@@ -107,13 +148,32 @@ export default {
                 this.$refs.userPage.removeChild(currentPet)
             }
             
-        }
+        },
+      async saveInfo() {
+        await InfotypeServices.saveUser(this.userInfo)
+        this.$store.commit('config/setCurrentUser', this.userInfo)
+        this.$notify({
+          group: 'default',
+          type: 'success',
+          title: 'Save successfully!'
+        })
+      }
     },
     watch:{
         numberOfPets(){
             // console.log(this.$refs.userPage.querySelectorAll('.pet-holder'))
         }
-    }
+    },
+  created() {
+      this.userInfo = this.currentUser
+    this.petsInfo = this.petOfUser
+  },
+  computed: {
+    ...mapGetters({
+      currentUser: 'config/getCurrentUser',
+      petOfUser: 'config/getPetOfUser'
+    })
+  }
 }
 </script>
 <style scoped>

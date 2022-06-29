@@ -1,4 +1,4 @@
-<template lang="">
+<template>
     <div class="pet-history">
         <div class="pet-history-title">Lịch sử khám bệnh</div> 
         <div class="pet-history-table scrollable">
@@ -14,17 +14,17 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>  
-                        <td class="align-center">1</td>
-                        <td>Rụng lông</td>
-                        <td>Nguyễn Văn A</td>
-                        <td class="align-center">09-12-2022</td>
-                        <td>Đã chữa khỏi</td>
+                    <tr v-for="(exam, index) in petExams" :key="index">
+                        <td class="align-center">{{index + 1}}</td>
+                        <td>{{exam.firstDescription}}</td>
+                        <td>{{exam.doctorName}}</td>
+                        <td class="align-center">{{exam.date}}</td>
+                        <td>{{exam.result}}</td>
                         <td>
                             <Button
                                 text="Chi tiết"
                                 color="blue"
-                                @click.native="detailBtnOnClick"
+                                @click.native="detailBtnOnClick(exam)"
                             />
                         </td>
                     </tr>
@@ -34,12 +34,15 @@
         <PetHistoryDetail
             v-if="showPetHistoryDetail"
             @exitDetail="hidePetHistoryDetail"
+            :exam-info="detailExam"
         />
     </div>
 </template>
 <script>
 import Button from './components/Button.vue'
 import PetHistoryDetail from './PetHistoryDetail.vue'
+import {mapGetters} from "vuex"
+import moment from 'moment'
 export default {
     components:{
         Button, PetHistoryDetail
@@ -47,16 +50,34 @@ export default {
     data(){
         return{
             showPetHistoryDetail: false,
+          petExams: [],
+          detailExam: null
         }
     },
     methods: {
-        detailBtnOnClick(){
+        detailBtnOnClick(exam){
             this.showPetHistoryDetail = true
+          this.detailExam = exam
         },
         hidePetHistoryDetail(){
             this.showPetHistoryDetail = false
         }
-    }
+    },
+  computed: {
+    ...mapGetters({
+      allExams: 'config/getAllExams',
+      allDoctors: 'config/getAllDoctors'
+    })
+  },
+  created() {
+      this.petExams = this.allExams.filter(exam => Number(exam.ownerId) === Number(this.$store.state.config.currentUser.id)
+          && Number(exam.petId) === Number(this.$store.state.config.currentPetIndex))
+    this.petExams.forEach(exam => {
+      let doctor = this.allDoctors.filter(doctor => Number(doctor.id) === Number(exam.doctorId))[0]
+      exam.doctorName = doctor.doctorName
+      exam.date = moment(exam.date, 'DDMMYYYY').format('DD-MM-YYYY')
+    })
+  }
 }
 </script>
 <style lang="">
