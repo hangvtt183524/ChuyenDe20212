@@ -5,7 +5,7 @@
     </div>
 
     <p v-if="len === 0" class="noti">Không có dữ liệu hiển thị</p>
-
+    <div v-else>
     <div class="table-wrapper">
       <table class="data-table">
         <thead class="header-row">
@@ -39,13 +39,11 @@
             />
           </td>
           <td>
-            <div>
-                <Dropdown
-                  :is-editting="exam.isEditing"
-                  :items="doctors"
-                  :value="exam.doctor"
-                />
-            </div>
+            <Dropdown
+              :is-editing="exam.isEditing"
+              :items="doctors"
+              :value="exam.doctor"
+            />
           </td>
           <td>
             <InputItem
@@ -94,7 +92,7 @@
           <td class="flex">
             <div class="svg-icon clickable" v-if="exam.isEditing === false">
               <edit-icon class="is-fill-blue" @click="editExam(exam)" />
-<!--              <delete-icon class="is-fill-blue" @click="deleteUser(exam)" />-->
+              <delete-icon class="is-fill-blue" @click="deleteExam(exam)" />
             </div>
             <div class="svg-icon clickable" v-if="exam.isEditing === true">
               <save-icon class="is-fill-blue" @click="saveExam(exam)" />
@@ -117,13 +115,13 @@
       />
 
     </div>
-
+    </div>
   </div>
 </template>
 
 <script>
 import editIcon from '@/assets/svg/edit.svg'
-// import deleteIcon from '@/assets/svg/delete.svg'
+import deleteIcon from '@/assets/svg/delete.svg'
 import saveIcon from '@/assets/svg/save.svg'
 import crossIcon from '@/assets/svg/close.svg'
 import doneIcon from '@/assets/svg/success.svg'
@@ -135,13 +133,13 @@ export default {
   props: {
     numOfExamsPerPage: {
       type: Number,
-      default: 15,
+      default: 8,
     }
   },
   components: {
     pagination: Pagination,
     editIcon,
-    // deleteIcon,
+    deleteIcon,
     saveIcon,
     crossIcon,
     doneIcon,
@@ -215,23 +213,24 @@ export default {
         exam.isEditing = !exam.isEditing
       }
     },
-    // deleteExam(exam) {
-    //   exam.isEditing = false
-    //   /*
-    //   call api delete exam
-    //   */
-    //   let examIndex = this.exams.indexOf(exam)
-    //   this.exams.splice(examIndex, 1)
-    //   this.examsDataBackup.splice(examIndex, 1)
-    //   this.len = this.exams.length
-    //   this.lastIndex = Math.min(this.lastIndex, this.len - 1)
-    //   this.totalPage = Math.ceil(this.exams.length / this.numOfExamsPerPage)
-    // },
+    deleteExam(exam) {
+      exam.isEditing = false
+      /*
+      call api delete exam
+      */
+      let examIndex = this.exams.indexOf(exam)
+      this.exams.splice(examIndex, 1)
+      this.examsDataBackup.splice(examIndex, 1)
+      this.len = this.exams.length
+      this.lastIndex = Math.min(this.lastIndex, this.len - 1)
+      this.totalPage = Math.ceil(this.exams.length / this.numOfExamsPerPage)
+    },
     saveExam(exam) {
       console.log(exam)
       /*
       call api save exam
       */
+      console.log(exam.doctor)
       exam.isEditing = false
       this.examsDataBackup = JSON.parse(JSON.stringify(this.exams))
     },
@@ -249,7 +248,6 @@ export default {
   created() {
     this.exams = this.getData()
     this.doctors = this.getDoctor()
-    console.log(this.exams)
     this.len = this.exams.length
     this.totalPage = Math.ceil(this.exams.length / this.numOfExamsPerPage)
     this.lastIndex = Math.min(this.numOfExamsPerPage - 1, this.len - 1)
@@ -263,6 +261,9 @@ export default {
 .management-page{
   padding: 30px;
   background-color: $colorPrimary100;
+  .noti {
+    padding-left: 100px;
+  }
   .page-title {
     padding-left: 100px;
     font-size: 40px;

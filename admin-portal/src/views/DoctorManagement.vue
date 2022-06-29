@@ -5,6 +5,7 @@
     </div>
 
     <p v-if="len == 0" class="noti">Không có dữ liệu hiển thị</p>
+    <div v-else>
 
     <div class="table-wrapper">
       <table class="data-table">
@@ -106,7 +107,7 @@
       />
 
     </div>
-
+    </div>
   </div>
 </template>
 

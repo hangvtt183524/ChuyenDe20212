@@ -1,29 +1,37 @@
 <template>
   <div class="bg">
     <div class="login-card">
-        <h1>Đăng nhập</h1>
+      <h1>Đăng nhập</h1>
       <div class="form">
         <InputItem
           :is-editing="true"
           placeholder="Email"
+          v-model="email"
+          :is-only-alpha="false"
+          :is-only-numeric="false"
         />
-      <InputItem
+        <InputItem
           :is-editing="true"
           placeholder="Password"
+          v-model="password"
+          :is-only-alpha="false"
+          :is-only-numeric="false"
       />
         <div class="forget">
           <a href="/forget_password">Quên mật khẩu</a>
         </div>
         <div class="button-login">
-        <Button
-            text="Đăng nhập"
-            color="blue"
-        />
+          <button
+              class="button is-normal is-blue"
+              @click="handleLogin"
+          >
+            Đăng nhập
+          </button>
         </div>
         <div class="sign-up">
           Bạn chưa có tài khoản? <a href="/register">Đăng ký</a>
         </div>
-    </div>
+      </div>
     </div>
 
   </div>
@@ -31,23 +39,53 @@
 
 
 <script>
-import Button from "./components/Button"
+// import Button from "./components/Button"
 import InputItem from './components/InputItem'
+import InfotypeServices from "@/services/InfotypeServices"
 export default {
   name: 'Login',
   data() {
     return {
-      usernameOrEmail: null,
+      email: null,
       password: null,
     }
   },
   components: {
-    Button,
+    // Button,
     InputItem
   },
   methods: {
-    api() {
-      console.log('auth');
+    async handleLogin() {
+      if (this.email && this.password) {
+        const loginResult = await InfotypeServices.login({mail: this.email, password: this.password})
+        if (loginResult === 'Login success!') {
+          this.$notify({
+            group: 'default',
+            type: 'success',
+            title: loginResult,
+            duration: 3000
+          })
+          const currentUser = await InfotypeServices.searchUser({mail: this.email})
+          this.$store.commit('config/setCurrentUser', currentUser[0])
+          const petList = await InfotypeServices.searchPetByUser(currentUser[0])
+          this.$store.commit('config/setPetOfUser', petList)
+          await this.$router.push({ path: '/' })
+        } else {
+          this.$notify({
+            group: 'default',
+            type: 'error',
+            title: loginResult,
+            duration: 5000
+          })
+        }
+      } else {
+        this.$notify({
+          group: 'default',
+          type: 'error',
+          title: 'Hãy điền thông tin email và mật khẩu hợp lệ',
+          duration: 5000
+        })
+      }
     }
   },
 }
@@ -68,8 +106,8 @@ export default {
     position: absolute;
     top: 80px;
     bottom: 80px;
-    left: 600px;
-    right: 600px;
+    left: 35%;
+    right: 35%;
     padding: 20px;
     background-color: #fff;
     box-sizing: border-box;
@@ -83,12 +121,15 @@ export default {
       height: 225px;
       background-size: cover;
       background-position: center;
-      cursor: pointer;
+      .message {
+        color: red;
+      }
       .button-login {
         display: flex;
         align-items: center;
         justify-content: center;
         padding: 30px;
+
       }
       .forget {
         text-align: right;
@@ -114,9 +155,5 @@ export default {
       }
     }
   }
-}
-.message {
-  color: red;
-  margin-left: 10%;
 }
 </style>

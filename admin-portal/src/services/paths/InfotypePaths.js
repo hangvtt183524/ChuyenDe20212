@@ -14,12 +14,14 @@ const USERS = 'user'
 const DOCTORS = 'doctor'
 const SCHEDULES = 'schedule'
 const PETS = 'pet'
+const AUTHS = 'auth'
 
 
 const BASE_USERS = `${BASE}/${USERS}`
 const BASE_DOCTORS = `${BASE}/${DOCTORS}`
 const BASE_SCHEDULES = `${BASE}/${SCHEDULES}`
 const BASE_PETS = `${BASE}/${PETS}`
+const BASE_AUTHS = `${BASE}/${AUTHS}`
 
 function getSearchPath(basePath, segment = SEARCH) {
     return `${basePath}/${segment}`
@@ -62,6 +64,9 @@ export const PATHS = {
         DELETE: getSearchPath(BASE_PETS, DELETE),
         SEARCH_BY_ID: getSearchPath(BASE_PETS, SEARCH_BY_ID),
         SEARCH_BY_USER: getSearchPath(BASE_PETS, 'searchByUser')
+    },
+    AUTHS: {
+        LOGIN: getSearchPath(BASE_AUTHS, 'login')
     }
 }
 
