@@ -7,6 +7,7 @@ import PetInfo from "../views/PetInfo.vue"
 import PetHistory from "../views/PetHistory.vue"
 import NotFound from "../views/NotFound.vue"
 import Login from "../views/Login"
+import User from "../views/User.vue"
 
 Vue.use(VueRouter);
 
@@ -45,6 +46,10 @@ const routes = [
         component: PetHistory
       }
     ]
+  },
+  {
+    path: '/user',
+    component: User
   }
 ];
 

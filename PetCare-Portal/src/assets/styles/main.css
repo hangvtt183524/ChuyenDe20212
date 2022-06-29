@@ -39,6 +39,14 @@ input {
     justify-content: center;
     align-items: center;
 }
+.blue-bg{
+    width: 100%;
+    background-color: #a1d8ff7a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 70px);
+}
 .exit{
     font-size: 20px;
     cursor: pointer;

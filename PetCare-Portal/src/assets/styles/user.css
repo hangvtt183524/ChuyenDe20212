@@ -1,0 +1,68 @@
+.user-page{
+    width: 60%;
+    height: 600px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    padding: 0 20px;
+    box-sizing: border-box;
+    overflow: auto;
+}
+    .user-page .header{
+        padding-left: 0;
+    }
+    .user-page .user-info{
+        width: 100%;
+        /* height: 300px; */
+        display: flex;
+        flex-direction: row;
+        border-bottom: 1px solid #b5b5b5;
+        padding-bottom: 20px;
+    }
+        .user-page .avatar-holder{
+            width: 200px;
+            height: 200px;
+            border-radius: 100%;
+            background-color: aliceblue;
+        }
+        .user-page .info-content{
+            width: calc(100% - 200px);
+            /* height: 200px; */
+            padding-left: 20px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: row;
+        }
+        .user-page .info-part{
+            width: 50%;
+            /* height: 200px; */
+            padding: 20px;
+            box-sizing: border-box;
+        }
+    .user-page .pet-info{
+        width: 100%;
+        height: 260px;
+        display: flex;
+        flex-direction: row;
+        /* background-color: antiquewhite; */
+    }
+    .user-page .buttons-holder{
+        position: sticky;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: right;
+        padding: 5px;
+        box-sizing: border-box;
+        background-color: #fff;
+    }
+    .user-page .pet-holder{
+        border-bottom: 1px solid #b5b5b5;
+    }
+    .user-page div:last-child{
+        border-bottom: none !important;
+    }
+        

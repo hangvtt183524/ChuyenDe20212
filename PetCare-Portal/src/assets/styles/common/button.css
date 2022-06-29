@@ -34,4 +34,11 @@
 .button.orange:hover{
     background-color: #ffb700;
 }
+.button.red{
+    background-color: rgb(255, 81, 0);
+    color: #fff!important;
+}
+.button.red:hover {
+    background-color: rgb(225, 73, 2);
+}
 
