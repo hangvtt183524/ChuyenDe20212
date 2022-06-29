@@ -5,6 +5,7 @@ import BookingSchedule from "../views/BookingSchedule";
 import MyPet from "../views/MyPet.vue";
 import PetInfo from "../views/PetInfo.vue"
 import PetHistory from "../views/PetHistory.vue"
+import Login from "../views/Login"
 
 Vue.use(VueRouter);
 
@@ -20,6 +21,11 @@ const routes = [
     component: BookingSchedule,
   },
   {
+    path: "/login",
+    name: "Login",
+    component: Login
+  },
+  {
     path: "/my-pet/:petId",
     name: "MyPet",
     component: MyPet,
@@ -33,7 +39,7 @@ const routes = [
         component: PetHistory
       }
     ]
-  },
+  }
 ];
 
 const router = new VueRouter({

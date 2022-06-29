@@ -1,4 +1,4 @@
-<template lang="">
+<template>
     <div class="navigation">
         <div class="navigation-tittle">Pet Care</div>
         <div class="menu" ref="menu">
@@ -20,14 +20,18 @@
             </div>
         </div>
         <div class="account">
-            <div class="choice">
-                Đăng xuất
-                <div class="underline"></div>
-                </div>
-            <div class="choice">
-                Đăng Nhập
-                <div class="underline"></div>
-                </div>
+<!--            <div class="choice">-->
+<!--                Đăng xuất-->
+<!--                <div class="underline"></div>-->
+<!--            </div>-->
+          <router-link to="/login" class="choice" v-on:click.native="highLight(index)">
+            <div class="page-link">Đăng nhập</div>
+            <div class="underline"></div>
+          </router-link>
+<!--            <div class="choice">-->
+<!--                Đăng Nhập-->
+<!--                <div class="underline"></div>-->
+<!--            </div>-->
         </div>
     </div>
 </template>
@@ -49,7 +53,7 @@ export default {
             {
                 path: '/',
                 name: 'Hỏi đáp'
-            },
+            }
             // {
             //     path: '/my-pet/info',
             //     name: 'Thú cưng của tôi'
