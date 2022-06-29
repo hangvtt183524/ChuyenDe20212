@@ -10,7 +10,7 @@
                 <div class="page-link">Thú cưng của tôi</div>
                 <div class="underline" ref="thirdUnderline"></div>
                 <div class="navMenu" ref="navMenu">
-                    <router-link class="navItem" v-for="(pet, index) in this.pets" :key="index" :to="{path: `/my-pet/${pet.id}/info`}">
+                    <router-link class="navItem" v-for="(pet, index) in this.petsOfUsre" :key="index" :to="{path: `/my-pet/${pet.id}/info`}">
                         <div class="navIcon">
                             <i class="fa-solid fa-paw"></i>
                         </div>

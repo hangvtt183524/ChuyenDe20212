@@ -27,4 +27,16 @@ public class PetService {
     public Pet ceatePet(Pet pet) {
         return petRepository.save(pet);
     }
+
+    public Pet updatePet(Pet pet) {
+        if (pet.getId() == null) {
+            throw new IllegalArgumentException("No Doctor existed!");
+        }
+        Optional<Pet> optionalExistPet = petRepository.findById(pet.getId());
+        if (!optionalExistPet.isPresent() || optionalExistPet.get() == null) {
+            throw new IllegalArgumentException("No Doctor existed!");
+        }
+
+        return petRepository.save(pet);
+    }
 }

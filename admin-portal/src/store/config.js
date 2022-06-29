@@ -14,13 +14,15 @@ export default {
         },
         currentUser: {},
         petOfUser: [],
-        allUsers: []
+        allUsers: [],
+        allDoctors: []
     },
     getters: {
         getConfigUser: state => state.configUser,
         getCurrentUser: state => state.currentUser,
         getPetOfUser: state => state.petOfUser,
-        getAllUsers: state => state.allUsers
+        getAllUsers: state => state.allUsers,
+        getAllDoctors: state => state.allDoctors
     },
     mutations: {
         setCurrentUser(state, currentUser) {
@@ -31,6 +33,9 @@ export default {
         },
         setAllUsers(state, listUser) {
             state.allUsers = listUser
+        },
+        setAllDoctors(state, listDoctor) {
+            state.allDoctors = listDoctor
         }
     },
     actions: {
@@ -46,6 +51,10 @@ export default {
         async getAllUsersByAdmin({commit}) {
             const allUsers = await InfotypeServices.searchUserAll()
             commit('setAllUsers', allUsers)
+        },
+        async getAllDoctorsByAdmin({commit}) {
+            const allDoctors = await InfotypeServices.searchDoctorAll()
+            commit('setAllDoctors', allDoctors)
         }
     }
 }
