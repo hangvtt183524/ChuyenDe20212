@@ -4,7 +4,11 @@
       <div v-if="isEditing">
         <div class="dropdown-content">                   
             <div class="select-list" ref="selectList">
-                <div class="select-item" v-for="(item, index) in items" :key="index" @click="selectItemOnclick(index, $event)" :id="item.id">
+                <div class="select-item"
+                     v-for="(item, index) in items" :key="index"
+                     @click="selectItemOnclick(index, $event)"
+                     :id="item.id"
+                >
                     <i class="fa-solid fa-check"></i>
                     <div class="dd-item-text">{{item.text}}</div>
                 </div>
@@ -64,6 +68,7 @@ export default {
                 var itemList = this.$refs.selectList.querySelectorAll('.select-item')
                 console.log(itemList)
                 console.log(item)
+              this.value = item
                 if(this.valueInput == item.id){
                     itemList[index].click()
                 }
@@ -104,7 +109,8 @@ export default {
             
             // this.$emit('setValue', this.items[index].id)
         }
-    }
+      }
+
 }
 </script>
 <style scoped>
