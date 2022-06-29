@@ -1,8 +1,24 @@
-import Vue from 'vue'
-import App from './App.vue'
+import Vue from "vue";
+import App from "./App.vue";
+import router from "./router";
+import store from "./store";
+import Vue2Editor from "vue2-editor";
+import VueNotification from "vue-notification";
+import { BootstrapVue, IconsPlugin, BootstrapVueIcons } from 'bootstrap-vue';
 
-Vue.config.productionTip = false
+import './assets/scss/main.scss';
+
+Vue.use(Vue2Editor);
+
+Vue.config.productionTip = false;
+
+Vue.use(BootstrapVue);
+Vue.use(IconsPlugin);
+Vue.use(BootstrapVueIcons);
+Vue.use(VueNotification);
 
 new Vue({
-  render: h => h(App),
-}).$mount('#app')
+    router,
+    store,
+    render: (h) => h(App),
+}).$mount("#app");
