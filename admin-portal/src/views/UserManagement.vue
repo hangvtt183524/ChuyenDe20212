@@ -223,7 +223,6 @@ export default {
     })
   },
   mounted() {
-    this.$store.dispatch('config/getAllUsersByAdmin')
     this.getData()
   },
 }

@@ -71,8 +71,6 @@ export default {
           // Vue.nextTick(() => {
             this.items.forEach((item, index) => {
               var itemList = this.$refs.selectList.querySelectorAll('.select-item')
-              console.log(itemList)
-              console.log(item)
               // this.value = item
               if (this.valueInput == item) {
                 itemList[index].click()

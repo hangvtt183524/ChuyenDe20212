@@ -7,22 +7,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Properties;
 
 @RestController
 @RequestMapping(path = "v1/mail")
 @Slf4j
+@CrossOrigin
 public class MailController {
 
     @Autowired
     MailService mailService;
 
-    @PostMapping(value = "/confirm-mail")
+    @GetMapping(value = "/confirm-mail")
     public ResponseEntity<String> sendConfirmMail(@RequestParam(name = "mail", required = true) String mail,
                                                   @RequestParam(name = "date", required = true) String date,
                                                   @RequestParam(name = "time", required = true) String time) {
@@ -58,7 +56,7 @@ public class MailController {
         return ResponseEntity.accepted().body("Confirm mail sent!");
     }
 
-    @PostMapping(value = "/update-schedule-mail")
+    @GetMapping(value = "/update-schedule-mail")
     public ResponseEntity<String> sendUpdateScheduleMail(@RequestParam(name = "mail", required = true) String mail,
                                                   @RequestParam(name = "date", required = true) String date,
                                                   @RequestParam(name = "time", required = true) String time) {

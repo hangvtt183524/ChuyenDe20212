@@ -17,7 +17,9 @@ export default {
         petOfUser: [],
         allUsers: [],
         allDoctors: [],
-        allServices: []
+        allServices: [],
+        allExams: [],
+        allPets: []
     },
     getters: {
         getConfigUser: state => state.configUser,
@@ -25,7 +27,9 @@ export default {
         getPetOfUser: state => state.petOfUser,
         getAllUsers: state => state.allUsers,
         getAllDoctors: state => state.allDoctors,
-        getAllServices: state => state.allServices
+        getAllServices: state => state.allServices,
+        getAllExams: state => state.allExams,
+        getAllPets: state => state.allPets
     },
     mutations: {
         setCurrentUser(state, currentUser) {
@@ -42,6 +46,12 @@ export default {
         },
         setAllServices(state, listService) {
             state.allServices = listService
+        },
+        setAllExams(state, listExam) {
+            state.allExams = listExam
+        },
+        setAllPets(state, listPet) {
+            state.allPets = listPet
         }
     },
     actions: {
@@ -64,6 +74,14 @@ export default {
         async getAllServicesByAdmin({commit}) {
             const allServices = await DriverServices.getAllServices()
             commit('setAllServices', allServices)
+        },
+        async getAllExamsByAdmin({commit}) {
+            const allExams = await InfotypeServices.searchScheduleAll()
+            commit('setAllExams', allExams)
+        },
+        async getAllPetsByAdmin({commit}) {
+            const allPets = await InfotypeServices.searchPetAll()
+            commit('setAllPets', allPets)
         }
     }
 }

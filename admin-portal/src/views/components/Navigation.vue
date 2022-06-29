@@ -17,7 +17,7 @@
     </div>
     <div class="account">
       <div class="choice">
-        Đăng xuất
+        ADMIN
         <div class="underline"></div>
       </div>
     </div>
