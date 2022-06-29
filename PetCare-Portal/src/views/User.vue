@@ -3,7 +3,9 @@
         <div class="user-page scrollable" ref="userPage">
             <div class="header">Thông tin người dùng</div>
             <div class="user-info">
-                <div class="avatar-holder"></div>
+                <div class="avatar-holder">
+                    <i class="fa-solid fa-user"></i>
+                </div>
                 <div class="info-content">
                     <div class="info-part">
                         <InputItem 
@@ -49,7 +51,9 @@
                     />
                 </div>
                 <div class="pet-info">
-                <div class="avatar-holder"></div>
+                <div class="avatar-holder">
+                    <i class="fa-solid fa-dog"></i>
+                </div>
                 <div class="info-content">
                     <div class="info-part">
                         <InputItem 
@@ -141,11 +145,8 @@ export default {
             })
         },
         deletaPetBtnOnClick(index){
-            console.log(this.petList)
-            if(this.petList.length > 1){
-                console.log(index)
-                this.petList.splice(index, 1) 
-                console.log(this.petList)             
+            if(this.petsInfo.length > 1){
+                this.petsInfo.splice(index, 1)             
             }
             
         },
