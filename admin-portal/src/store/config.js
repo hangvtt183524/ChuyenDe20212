@@ -1,4 +1,5 @@
 import InfotypeServices from "@/services/InfotypeServices"
+import DriverServices from "@/services/DriverServices"
 
 export default {
     namespaced: true,
@@ -15,14 +16,16 @@ export default {
         currentUser: {},
         petOfUser: [],
         allUsers: [],
-        allDoctors: []
+        allDoctors: [],
+        allServices: []
     },
     getters: {
         getConfigUser: state => state.configUser,
         getCurrentUser: state => state.currentUser,
         getPetOfUser: state => state.petOfUser,
         getAllUsers: state => state.allUsers,
-        getAllDoctors: state => state.allDoctors
+        getAllDoctors: state => state.allDoctors,
+        getAllServices: state => state.allServices
     },
     mutations: {
         setCurrentUser(state, currentUser) {
@@ -36,6 +39,9 @@ export default {
         },
         setAllDoctors(state, listDoctor) {
             state.allDoctors = listDoctor
+        },
+        setAllServices(state, listService) {
+            state.allServices = listService
         }
     },
     actions: {
@@ -55,6 +61,10 @@ export default {
         async getAllDoctorsByAdmin({commit}) {
             const allDoctors = await InfotypeServices.searchDoctorAll()
             commit('setAllDoctors', allDoctors)
+        },
+        async getAllServicesByAdmin({commit}) {
+            const allServices = await DriverServices.getAllServices()
+            commit('setAllServices', allServices)
         }
     }
 }
