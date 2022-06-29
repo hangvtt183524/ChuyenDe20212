@@ -6,6 +6,7 @@ import MyPet from "../views/MyPet.vue";
 import PetInfo from "../views/PetInfo.vue"
 import PetHistory from "../views/PetHistory.vue"
 import NotFound from "../views/NotFound.vue"
+import Login from "../views/Login"
 
 Vue.use(VueRouter);
 
@@ -20,10 +21,15 @@ const routes = [
     name: "BookingSchedule",
     component: BookingSchedule,
   },
-  {
-    path: "/not-found",
-    name: "NotFound",
-    component: NotFound,
+    {
+        path: "/not-found",
+        name: "NotFound",
+        component: NotFound
+    },
+    {
+    path: "/login",
+    name: "Login",
+    component: Login
   },
   {
     path: "/my-pet/:petId",
@@ -39,7 +45,7 @@ const routes = [
         component: PetHistory
       }
     ]
-  },
+  }
 ];
 
 const router = new VueRouter({

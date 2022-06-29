@@ -1,5 +1,5 @@
 <template>
-  <div class="user-management-page">
+  <div class="management-page">
     <div class="page-title">
       <p>Quản lý tài khoản khách hàng</p>
     </div>
@@ -7,7 +7,7 @@
     <p v-if="len == 0" class="noti">Không có dữ liệu hiển thị</p>
 
     <div class="table-wrapper">
-      <table class="user-table">
+      <table class="data-table">
         <thead class="header-row">
           <tr>
             <th>STT</th>
@@ -229,7 +229,7 @@ export default {
 
 <style lang="scss">
 @import "../assets/scss/main.scss";
-.user-management-page{
+.management-page{
   padding: 30px;
   background-color: $colorPrimary100;
   .page-title {
@@ -240,13 +240,16 @@ export default {
   .table-wrapper {
     padding-left: 100px;
     padding-right: 100px;
-    .user-table {
+    .data-table {
       border: 1px solid #ddd;
       border-collapse: collapse;
       width: 100%;
       .header-row {
         margin: 50px;
         background-color: $colorPrimary900;
+        position: sticky;
+        z-index: 100;
+        top: 0;
         th {
           color: white;
           border: 1px solid #ddd;

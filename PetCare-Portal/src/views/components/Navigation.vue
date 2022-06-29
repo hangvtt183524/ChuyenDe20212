@@ -24,14 +24,18 @@
           </router-link>
         </div>
         <div class="account">
-            <div class="choice">
-                Đăng xuất
-                <div class="underline"></div>
-                </div>
-            <div class="choice">
-                Đăng Nhập
-                <div class="underline"></div>
-                </div>
+<!--            <div class="choice">-->
+<!--                Đăng xuất-->
+<!--                <div class="underline"></div>-->
+<!--            </div>-->
+          <router-link to="/login" class="choice" v-on:click.native="highLight(index)">
+            <div class="page-link">Đăng nhập</div>
+            <div class="underline"></div>
+          </router-link>
+<!--            <div class="choice">-->
+<!--                Đăng Nhập-->
+<!--                <div class="underline"></div>-->
+<!--            </div>-->
         </div>
     </div>
 </template>
