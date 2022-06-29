@@ -3,7 +3,9 @@
         <div class="user-page scrollable" ref="userPage">
             <div class="header">Thông tin người dùng</div>
             <div class="user-info">
-                <div class="avatar-holder"></div>
+                <div class="avatar-holder">
+                    <i class="fa-solid fa-user"></i>
+                </div>
                 <div class="info-content">
                     <div class="info-part">
                         <InputItem 
@@ -28,16 +30,18 @@
                 </div>
 
             </div>
-            <div class="pet-holder" v-for="(pet, index) in numberOfPets" :key="index">
+            <div class="pet-holder" v-for="(pet, index) in petList" :key="index">
                 <div class="header">Thông tin thú cưng
                     <Button
                         text="Xóa"
                         color="red"
-                        @click.native = "deletaPetBtnOnClick"
+                        @click.native = "deletaPetBtnOnClick(index)"
                     />
                 </div>
                 <div class="pet-info">
-                <div class="avatar-holder"></div>
+                <div class="avatar-holder">
+                    <i class="fa-solid fa-dog"></i>
+                </div>
                 <div class="info-content">
                     <div class="info-part">
                         <InputItem 
@@ -54,13 +58,14 @@
                         />
                     </div>
                     <div class="info-part">
-                        <InputItem 
+                        <Dropdown 
                             label = "Giới tính"
-                            :isEditing="true"
+                            :items="genders"
                         />
                         <InputItem 
                             label = "Cân nặng"
                             :isEditing="true"
+                            v-model="petList[index].weight"
                         />
                     </div>
                 </div>
@@ -87,32 +92,45 @@
 <script>
 import InputItem from './components/InputItem.vue'
 import Button from './components/Button.vue'
+import Dropdown from './components/Dropdown.vue'
 export default {
     name: 'User',
     components: {
-        InputItem, Button
+        InputItem, Button, Dropdown
     },
     data(){
         return{
-            numberOfPets: 1,
+            petList: [
+                {}
+            ],
+            genders: [
+                {
+                    text: "Giống đực"
+                },
+                {
+                    text: "Giống cái"
+                }
+            ],
         }
     },
     methods: {
         addPetBtnOnClick(){
-            this.numberOfPets += 1
+            this.petList.push({})
         },
-        deletaPetBtnOnClick(e){
-            var currentPet = e.target.parentNode.parentNode
-            if(this.numberOfPets > 1){
-                this.$refs.userPage.removeChild(currentPet)
+        deletaPetBtnOnClick(index){
+            console.log(this.petList)
+            if(this.petList.length > 1){
+                console.log(index)
+                this.petList.splice(index, 1) 
+                console.log(this.petList)             
             }
             
         }
     },
     watch:{
-        numberOfPets(){
-            console.log(this.$refs.userPage.querySelectorAll('.pet-holder'))          
-        }
+        // numberOfPets(){
+        //     console.log(this.$refs.userPage.querySelectorAll('.pet-holder'))          
+        // }
     }
 }
 </script>

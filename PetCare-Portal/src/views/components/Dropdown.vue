@@ -38,15 +38,14 @@ export default {
         }
     },
     mounted() {
-        // this.setSelectedItem()
+        this.setSelectedItem()
+        // console.log(this.items)
     },
     methods: {
         setSelectedItem(){
             this.items.forEach((item, index) => {
                 var itemList = this.$refs.selectList.querySelectorAll('.select-item')
-                console.log(itemList)
-                console.log(item)
-                if(this.valueInput == item.id){
+                if(this.valueInput == item.id & this.valueInput != null){
                     itemList[index].click()
                 }
             });
@@ -54,7 +53,6 @@ export default {
         ddSelectOnclick(){
             this.$refs.selectList.classList.toggle("dd-activate")
             var ddProp = this.$refs.dropdown.getBoundingClientRect()
-            console.log(ddProp)
             
             this.$refs.selectList.style.setProperty('width', ddProp.width +'px', 'important');
             this.$refs.selectList.style.setProperty('top', ddProp.bottom +'px', 'important');
