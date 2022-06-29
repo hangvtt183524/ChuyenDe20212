@@ -2,6 +2,7 @@ package com.group2.petcareinfotype.service;
 
 import com.group2.petcareinfotype.entity.Pet;
 import com.group2.petcareinfotype.repository.PetRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class PetService {
     @Autowired
     PetRepository petRepository;
@@ -20,5 +22,9 @@ public class PetService {
         }
 
         return optionalPets.get();
+    }
+
+    public Pet ceatePet(Pet pet) {
+        return petRepository.save(pet);
     }
 }

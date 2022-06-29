@@ -11,6 +11,6 @@ import java.util.Optional;
 
 @Repository
 public interface PetRepository extends JpaRepository<Pet, Long> {
-    @Query(value = "select * from pet where ownerId = :ownerId;", nativeQuery = true)
-    public Optional<List<Pet>> findByOwnerId(@Param("ownerId") Long ownerId);
+    @Query(value = "select * from pet where owner_id = ?1", nativeQuery = true)
+    public Optional<List<Pet>> findByOwnerId(@Param("owner_id") Long owner_id);
 }

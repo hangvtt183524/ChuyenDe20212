@@ -84,9 +84,12 @@ export default {
         })
         return response.data
     },
-    async login(user) {
-        console.log(user)
-        const response = null
-        return response.data
+    async login(params) {
+        console.log('params: ', params)
+        const response = await http.request({
+            method: 'GET',
+            url: `${PATHS.AUTHS.LOGIN}` + '?' + prepareParams(params)
+        })
+        return response
     }
 }

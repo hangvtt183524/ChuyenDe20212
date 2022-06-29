@@ -6,20 +6,27 @@
         <InputItem
           :is-editing="true"
           placeholder="Email"
+          v-model="email"
+          :is-only-alpha="false"
+          :is-only-numeric="false"
         />
         <InputItem
           :is-editing="true"
           placeholder="Password"
-        />
+          v-model="password"
+          :is-only-alpha="false"
+          :is-only-numeric="false"
+      />
         <div class="forget">
           <a href="/forget_password">Quên mật khẩu</a>
         </div>
         <div class="button-login">
-        <Button
-          text="Đăng nhập"
-          color="blue"
-          @click="login()"
-        />
+          <button
+              class="button is-normal is-blue"
+              @click="handleLogin"
+          >
+            Đăng nhập
+          </button>
         </div>
         <div class="sign-up">
           Bạn chưa có tài khoản? <a href="/register">Đăng ký</a>
@@ -32,8 +39,9 @@
 
 
 <script>
-import Button from "./components/Button"
+// import Button from "./components/Button"
 import InputItem from './components/InputItem'
+import InfotypeServices from "@/services/InfotypeServices"
 export default {
   name: 'Login',
   data() {
@@ -43,14 +51,42 @@ export default {
     }
   },
   components: {
-    Button,
+    // Button,
     InputItem
   },
   methods: {
-    api() {
-      /* api login */
-    },
-
+    async handleLogin() {
+      if (this.email && this.password) {
+        const loginResult = await InfotypeServices.login({mail: this.email, password: this.password})
+        if (loginResult === 'Login success!') {
+          this.$notify({
+            group: 'default',
+            type: 'success',
+            title: loginResult,
+            duration: 3000
+          })
+          const currentUser = await InfotypeServices.searchUser({mail: this.email})
+          this.$store.commit('config/setCurrentUser', currentUser[0])
+          const petList = await InfotypeServices.searchPetByUser(currentUser[0])
+          this.$store.commit('config/setPetOfUser', petList)
+          await this.$router.push({ path: '/' })
+        } else {
+          this.$notify({
+            group: 'default',
+            type: 'error',
+            title: loginResult,
+            duration: 5000
+          })
+        }
+      } else {
+        this.$notify({
+          group: 'default',
+          type: 'error',
+          title: 'Hãy điền thông tin email và mật khẩu hợp lệ',
+          duration: 5000
+        })
+      }
+    }
   },
 }
 </script>

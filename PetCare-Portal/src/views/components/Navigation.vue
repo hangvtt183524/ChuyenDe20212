@@ -6,7 +6,7 @@
                 <div class="page-link">{{page.name}}</div>
                 <div class="underline"></div>
             </router-link>
-             <div class="choice" v-on:click="showNavMenu">
+             <div class="choice" v-on:click="showNavMenu" v-if="Object.keys(currentUser).length > 0">
                 <div class="page-link">Thú cưng của tôi</div>
                 <div class="underline" ref="thirdUnderline"></div>
                 <div class="navMenu" ref="navMenu">
@@ -18,6 +18,10 @@
                     </router-link>
                 </div>
             </div>
+          <router-link to="/not-found" class="choice" v-else>
+            <div class="page-link">Thú cưng của tôi</div>
+            <div class="underline"></div>
+          </router-link>
         </div>
         <div class="account">
           <router-link to="/signup" class="choice">
@@ -49,26 +53,13 @@ export default {
             {
                 path: '/',
                 name: 'Hỏi đáp'
-            }
-            // {
-            //     path: '/my-pet/info',
-            //     name: 'Thú cưng của tôi'
-            // },      
-        ],
-        pets: [
-            {
-                id: '1',
-                name: 'Milu'
             },
-            {
-                id: '2',
-                name: 'Ki'
-            }
-        ]
+        ],
+        pets: []
     }
   },
   mounted(){
-    console.log(this.$refs.menu.childNodes[0].childNodes[1].classList.add('visible'))
+    this.pets = this.petsOfUsre
   },
   methods: {
     highLight(index){
@@ -91,7 +82,9 @@ export default {
 },
   computed: {
     ...mapGetters({
-      configUser: 'config/getConfigUser'
+      configUser: 'config/getConfigUser',
+      currentUser: 'config/getCurrentUser',
+      petsOfUsre: 'config/getPetOfUser'
     })
   }
 }
