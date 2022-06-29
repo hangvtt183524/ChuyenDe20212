@@ -7,8 +7,9 @@ import PetInfo from "../views/PetInfo.vue"
 import PetHistory from "../views/PetHistory.vue"
 import NotFound from "../views/NotFound.vue"
 import Login from "../views/Login"
-import Signup from "../views/SignUp"
 
+import User from "../views/User.vue"
+import Signup from "../views/SignUp"
 Vue.use(VueRouter);
 
 const routes = [
@@ -51,6 +52,10 @@ const routes = [
         component: PetHistory
       }
     ]
+  },
+  {
+    path: '/user',
+    component: User
   }
 ];
 
