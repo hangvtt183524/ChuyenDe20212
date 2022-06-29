@@ -75,6 +75,7 @@ export default {
       },
       set(value) {
         this.$emit('input', value)
+        console.log(value)
       }
     }
   },

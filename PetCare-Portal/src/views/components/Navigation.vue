@@ -1,7 +1,7 @@
 <template>
-    <div class="navigation">
+    <div class="navigation" ref="menu">
         <div class="navigation-tittle">Pet Care</div>
-        <div class="menu" ref="menu">
+        <div class="menu">
             <router-link :to="page.path" class="choice" v-on:click.native="highLight(index)" v-for="(page, index) in pages" :key="index">
                 <div class="page-link">{{page.name}}</div>
                 <div class="underline"></div>
@@ -18,24 +18,32 @@
                     </router-link>
                 </div>
             </div>
-          <router-link to="/not-found" class="choice" v-else>
+          <router-link to="/not-found" class="choice" v-on:click.native="showNavMenu" v-else>
             <div class="page-link">Thú cưng của tôi</div>
-            <div class="underline"></div>
+            <div class="underline" ref="thirdUnderline"></div>
           </router-link>
+          
         </div>
         <div class="account">
+
 <!--            <div class="choice">-->
 <!--                Đăng xuất-->
 <!--                <div class="underline"></div>-->
 <!--            </div>-->
-          <router-link to="/login" class="choice" v-on:click.native="highLight(index)">
+          <router-link to="/user" class="choice" v-on:click.native="highLight(4)">
+            <div class="page-link">Người dùng</div>
+            <div class="underline"></div>
+          </router-link>
+          <router-link to="/login" class="choice" v-on:click.native="highLight(5)">
+          <router-link to="/signup" class="choice">
+            <div class="page-link">Đăng ký</div>
+            <div class="underline"></div>
+          </router-link>
+          <router-link to="/login" class="choice">
+
             <div class="page-link">Đăng nhập</div>
             <div class="underline"></div>
           </router-link>
-<!--            <div class="choice">-->
-<!--                Đăng Nhập-->
-<!--                <div class="underline"></div>-->
-<!--            </div>-->
         </div>
     </div>
 </template>
@@ -63,7 +71,11 @@ export default {
     }
   },
   mounted(){
+    var element = this.$refs.menu
+    element.childNodes[1].childNodes[0].childNodes[1].classList.add('visible')
+    // console.log(element.childNodes[1].childNodes[0].childNodes[1])
     this.pets = this.petsOfUsre
+
   },
   methods: {
     highLight(index){
@@ -72,15 +84,21 @@ export default {
             u.classList.remove('visible')
         });
         underlines[index].classList.add('visible')
-        this.$refs.navMenu.classList.remove('nm-activate')
+        if( this.$refs.navMenu){
+            this.$refs.navMenu.classList.remove('nm-activate')
+        }       
     },
     showNavMenu(){
-        this.$refs.navMenu.classList.toggle('nm-activate')
         var underlines = this.$refs.menu.querySelectorAll('.underline')
         underlines.forEach(u => {
             u.classList.remove('visible')
         });
+        if(this.$refs.navMenu){
+            this.$refs.navMenu.classList.toggle('nm-activate')
+        }
         this.$refs.thirdUnderline.classList.add('visible')
+        // console.log(this.$refs.thirdUnderline)
+        // console.log("ahihi")
         // console.log(window.location.pathname)
     },
 },
