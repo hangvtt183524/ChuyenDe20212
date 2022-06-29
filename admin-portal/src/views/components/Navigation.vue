@@ -3,10 +3,6 @@
     <div class="navigation-tittle">Pet Care</div>
     <div class="menu">
       <div class="choice">
-        <router-link class="page-link" to="/">Trang chủ</router-link>
-        <div class="underline"></div>
-      </div>
-      <div class="choice">
         <router-link class="page-link" to="/user-management">Quản lý khách hàng</router-link>
         <div class="underline"></div>
       </div>

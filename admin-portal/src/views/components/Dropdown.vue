@@ -1,8 +1,9 @@
 <template>
     <div class="dropdown" ref='dropdown'>
         <div class="label">{{this.label}}</div>
+
       <div v-if="isEditing">
-        <div class="dropdown-content">                   
+        <div class="dropdown-content">
             <div class="select-list" ref="selectList">
                 <div class="select-item"
                      v-for="(item, index) in items" :key="index"
@@ -13,18 +14,19 @@
                     <div class="dd-item-text">{{item.text}}</div>
                 </div>
             </div>
-            
+
             <div class="select" @click="ddSelectOnclick" ref="select">
-                <div class="select-content">
-                    <div class="dd-item-text">{{this.selectedText}}</div>
-                </div>
-                <i class="fas fa-angle-down"></i>
+              <div class="select-content">
+                <div class="dd-item-text">{{this.selectedText}}</div>
+              </div>
+              <i class="fas fa-angle-down"></i>
             </div>
+
         </div>
       </div>
       <div v-else>
-        <div v-if="value">
-          {{value}}
+        <div v-if="valueInput">
+          {{valueInput}}
         </div>
         <div v-else>
           Chưa có
@@ -33,6 +35,7 @@
     </div>
 </template>
 <script>
+// import Vue from 'vue'
 export default {
     name: "MDropdown",
     props: {
@@ -60,17 +63,22 @@ export default {
         }
     },
     mounted() {
-        // this.setSelectedItem()
+      if (this.isEditing)
+        this.setSelectedItem()
     },
     methods: {
-        setSelectedItem(){
+        setSelectedItem() {
+          // Vue.nextTick(() => {
             this.items.forEach((item, index) => {
-                var itemList = this.$refs.selectList.querySelectorAll('.select-item')
-              this.value = item
-                if(this.valueInput == item.id){
-                    itemList[index].click()
-                }
+              var itemList = this.$refs.selectList.querySelectorAll('.select-item')
+              console.log(itemList)
+              console.log(item)
+              // this.value = item
+              if (this.valueInput == item) {
+                itemList[index].click()
+              }
             });
+          // })
         },
         ddSelectOnclick(){
             this.$refs.selectList.classList.toggle("dd-activate")
@@ -101,7 +109,7 @@ export default {
             // }
             this.$refs.selectList.classList.remove('dd-activate')
             
-            // this.$emit('setValue', this.items[index].id)
+            this.$emit('setValue', this.selectedText)
         }
       }
 
