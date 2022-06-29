@@ -45,7 +45,7 @@
                     <Button
                         text="Xóa"
                         color="red"
-                        @click.native = "deletaPetBtnOnClick"
+                        @click.native = "deletaPetBtnOnClick(index)"
                     />
                 </div>
                 <div class="pet-info">
@@ -125,14 +125,12 @@ export default {
     },
     data(){
         return{
-          numberOfPets: 1,
           userInfo: null,
           petsInfo: []
         }
     },
     methods: {
         addPetBtnOnClick(){
-            this.numberOfPets += 1
             this.petsInfo.push({
               id: null,
               name: null,
@@ -142,10 +140,12 @@ export default {
               weight: null
             })
         },
-        deletaPetBtnOnClick(e){
-            var currentPet = e.target.parentNode.parentNode
-            if(this.numberOfPets > 1){
-                this.$refs.userPage.removeChild(currentPet)
+        deletaPetBtnOnClick(index){
+            console.log(this.petList)
+            if(this.petList.length > 1){
+                console.log(index)
+                this.petList.splice(index, 1) 
+                console.log(this.petList)             
             }
             
         },
