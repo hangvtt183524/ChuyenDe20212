@@ -35,6 +35,7 @@ export default {
     },
     actions: {
         async getListPetOfUser({commit}, {user}) {
+            console.log('user in get pet: ', user)
             const pets = await InfotypeServices.searchPetByUser(user)
             commit('setPetOfUser', pets)
         },
