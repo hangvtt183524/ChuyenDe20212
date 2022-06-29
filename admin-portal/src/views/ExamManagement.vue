@@ -5,115 +5,134 @@
     </div>
 
     <p v-if="len === 0" class="noti">Không có dữ liệu hiển thị</p>
+
     <div v-else>
-    <div class="table-wrapper">
-      <table class="data-table">
-        <thead class="header-row">
-        <tr>
-          <th>Tên chủ</th>
-          <th>Tên thú cưng</th>
-          <th>Bác sĩ</th>
-          <th>Ngày khám</th>
-          <th>Ghi chú</th>
-          <th>Kết quả</th>
-          <th>Tình trạng</th>
-          <th>Actions</th>
-        </tr>
-        </thead>
-        <tbody class="body-row">
-        <tr v-for="exam in examItems" :key="exam.id">
-          <td>
-            <InputItem
-                :is-editing="exam.isEditing"
-                v-model="exam.owner"
-                :is-only-numeric="false"
-                :is-only-alpha="false"
-            />
-          </td>
-          <td>
-            <InputItem
-                :is-editing="exam.isEditing"
-                v-model="exam.pet"
-                :is-only-numeric="false"
-                :is-only-alpha="false"
-            />
-          </td>
-          <td>
-            <Dropdown
-              :is-editing="exam.isEditing"
-              :items="doctors"
-              :value="exam.doctor"
-            />
-          </td>
-          <td>
-            <InputItem
-                :is-editing="exam.isEditing"
-                v-model="exam.date"
-                :is-only-numeric="false"
-                :is-only-alpha="false"
-            />
-          </td>
-          <td>
-            <InputItem
-                :is-editing="exam.isEditing"
-                v-model="exam.description"
-                :is-only-numeric="false"
-                :is-only-alpha="false"
-            />
-          </td>
-          <td>
-            <InputItem
-                :is-editing="exam.isEditing"
-                v-model="exam.result"
-                :is-only-numeric="false"
-                :is-only-alpha="false"
-            />
-          </td>
-          <td>
-            <div class="flex">
-              <div class="svg-icon" v-if="exam.isEditing === false">
-                <div v-if="exam.status">
-                  <done-icon class="is-fill-green"/>
-                </div>
-                <div v-else>
-                  <done-icon class="is-fill-gray"/>
-                </div>
+      <div class="filter-card">
+          <Dropdown
+              :is-editing="true"
+              label="Lọc theo bác sĩ"
+              :items="filterChoice"
+              @setValue="setDoctor"
+          />
+      </div>
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead class="header-row">
+          <tr>
+            <th>Tên chủ</th>
+            <th>Tên thú cưng</th>
+            <th>Bác sĩ</th>
+            <th>Ngày khám</th>
+            <th>Ghi chú</th>
+            <th>Kết quả</th>
+            <th>Tình trạng</th>
+            <th>Actions</th>
+          </tr>
+          </thead>
+          <tbody class="body-row">
+          <tr v-for="exam in examItems" :key="exam.id">
+            <td>
+              <InputItem
+                  :is-editing="exam.isEditing"
+                  v-model="exam.owner"
+                  :is-only-numeric="false"
+                  :is-only-alpha="false"
+              />
+            </td>
+            <td>
+              <InputItem
+                  :is-editing="exam.isEditing"
+                  v-model="exam.pet"
+                  :is-only-numeric="false"
+                  :is-only-alpha="false"
+              />
+            </td>
+            <td>
+              <div>
+                  <Dropdown
+                    :is-editing="exam.isEditing"
+                    :items="doctors"
+                    :valueInput="exam.doctor"
+                    @setValue="setDoctor"
+                  />
               </div>
-              <div v-else class="svg-icon clickable">
-                <div v-if="exam.status">
-                  <done-icon class="is-fill-green" @click="exam.status=!exam.status"/>
-                </div>
-                <div v-else>
-                  <done-icon class="is-fill-gray" @click="exam.status=!exam.status"/>
-                </div>
+            </td>
+            <td>
+              <InputItem
+                  :is-editing="exam.isEditing"
+                  v-model="exam.date"
+                  :is-only-numeric="false"
+                  :is-only-alpha="false"
+              />
+            </td>
+            <td>
+              <InputItem
+                  :is-editing="exam.isEditing"
+                  v-model="exam.description"
+                  :is-only-numeric="false"
+                  :is-only-alpha="false"
+              />
+            </td>
+            <td>
+              <InputItem
+                  :is-editing="exam.isEditing"
+                  v-model="exam.result"
+                  :is-only-numeric="false"
+                  :is-only-alpha="false"
+              />
+            </td>
+            <td>
+              <Dropdown
+                  :is-editing="exam.isEditing"
+                  :items="examStatusText"
+                  :valueInput="examStatus[exam.status]"
+                  @setValue="setStatus"
+              />
+  <!--            <div class="flex">-->
+  <!--              <div class="svg-icon" v-if="exam.isEditing === false">-->
+  <!--                <div v-if="exam.status">-->
+  <!--                  <done-icon class="is-fill-green"/>-->
+  <!--                </div>-->
+  <!--                <div v-else>-->
+  <!--                  <done-icon class="is-fill-gray"/>-->
+  <!--                </div>-->
+  <!--              </div>-->
+  <!--              <div v-else class="svg-icon clickable">-->
+  <!--                <div v-if="exam.status">-->
+  <!--                  <done-icon class="is-fill-green" @click="exam.status=!exam.status"/>-->
+  <!--                </div>-->
+  <!--                <div v-else>-->
+  <!--                  <done-icon class="is-fill-gray" @click="exam.status=!exam.status"/>-->
+  <!--                </div>-->
+  <!--              </div>-->
+  <!--            </div>-->
+            </td>
+            <td class="flex">
+              <div class="svg-icon clickable" v-if="exam.isEditing === false">
+                <edit-icon class="is-fill-blue" @click="editExam(exam)" />
+                <delete-icon class="is-fill-blue" @click="deleteExam(exam)" />
               </div>
-            </div>
-          </td>
-          <td class="flex">
-            <div class="svg-icon clickable" v-if="exam.isEditing === false">
-              <edit-icon class="is-fill-blue" @click="editExam(exam)" />
-              <delete-icon class="is-fill-blue" @click="deleteExam(exam)" />
-            </div>
-            <div class="svg-icon clickable" v-if="exam.isEditing === true">
-              <save-icon class="is-fill-blue" @click="saveExam(exam)" />
-            </div>
-            <div class="svg-icon clickable" v-if="exam.isEditing === true">
-              <cross-icon class="is-fill-red" @click="cancelEdit(exam)" />
-            </div>
-          </td>
-        </tr>
-        </tbody>
-      </table>
+              <div class="svg-icon clickable" v-if="exam.isEditing === true">
+                <save-icon class="is-fill-blue" @click="saveExam(exam)" />
+              </div>
+              <div class="svg-icon clickable" v-if="exam.isEditing === true">
+                <cross-icon class="is-fill-red" @click="cancelEdit(exam)" />
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
 
 
-      <pagination
-          :total-pages="totalPage"
-          :total="len"
-          :per-page="numOfExamsPerPage"
-          :current-page="currentPage"
-          @pagechanged="onPageChange"
-      />
+        <pagination
+            :total-pages="totalPage"
+            :total="len"
+            :per-page="numOfExamsPerPage"
+            :current-page="currentPage"
+            @pagechanged="onPageChange"
+        />
 
+      </div>
     </div>
     </div>
   </div>
@@ -124,10 +143,11 @@ import editIcon from '@/assets/svg/edit.svg'
 import deleteIcon from '@/assets/svg/delete.svg'
 import saveIcon from '@/assets/svg/save.svg'
 import crossIcon from '@/assets/svg/close.svg'
-import doneIcon from '@/assets/svg/success.svg'
+// import doneIcon from '@/assets/svg/success.svg'
 import InputItem from "@/views/components/InputItem";
 import Pagination from "@/views/components/Pagination.vue"
 import Dropdown from "@/views/components/Dropdown";
+// import Button from "@/views/components/Button";
 export default {
   name: 'ExamManagement',
   props: {
@@ -142,9 +162,10 @@ export default {
     deleteIcon,
     saveIcon,
     crossIcon,
-    doneIcon,
+    // doneIcon,
     InputItem,
-    Dropdown
+    Dropdown,
+    // Button
   },
   data() {
     return {
@@ -156,6 +177,22 @@ export default {
       firstIndex: 0,
       lastIndex: 0,
       examsDataBackup: null,
+      selectedDoctor: null,
+      selectedStatus: null,
+      isEditing: false,
+      filterChoice: null,
+      examStatus: {
+        0: 'Chưa gửi mail xác nhận',
+        1: 'Đã gửi mail xác nhận',
+        2: 'Bị huỷ',
+        3: 'Đã hoàn thành'
+      },
+      examStatusText: [
+        {text: 'Chưa gửi mail xác nhận'},
+        {text: 'Đã gửi mail xác nhận'},
+        {text: 'Bị huỷ'},
+        {text: 'Đã hoàn thành'}
+      ]
     }
   },
   methods: {
@@ -169,7 +206,7 @@ export default {
           date: '2/4/2022',
           description: '',
           result: '',
-          status: true,
+          status: 1,
           isEditing: false,
         },
         {
@@ -180,7 +217,7 @@ export default {
           date: '2/4/2022',
           description: '',
           result: '',
-          status: false,
+          status: 2,
           isEditing: false,
         }
       ]
@@ -191,6 +228,12 @@ export default {
         {text: 'Thu'}
       ]
     },
+    setDoctor(doctor) {
+      this.selectedDoctor = doctor;
+    },
+    setStatus(status) {
+      this.selectedStatus = Object.keys(this.examStatus).find(key => this.examStatus[key] === status);
+    },
     onPageChange(page) {
       // console.log(page)
       this.currentPage = page;
@@ -200,17 +243,28 @@ export default {
       else this.lastIndex = page * this.numOfExamsPerPage - 1;
     },
     getRenderExams() {
-      let first = this.firstIndex
-      let last = this.lastIndex
       const renderExams = []
-      for (let i = first; i <= last; i++) {
-        renderExams.push(this.exams[i])
+      if (this.selectedDoctor && !this.isEditing) {
+        this.exams.forEach(exam => {
+          if (exam.doctor == this.selectedDoctor)
+            renderExams.push(exam);
+        })
+      }
+      else {
+        let first = this.firstIndex
+        let last = this.lastIndex
+        for (let i = first; i <= last; i++) {
+          renderExams.push(this.exams[i])
+        }
       }
       return renderExams;
     },
     editExam(exam) {
       if (exam.isEditing === false) {
         exam.isEditing = !exam.isEditing
+        this.selectedDoctor = exam.doctor;
+        this.selectedStatus = exam.status;
+        this.isEditing = true;
       }
     },
     deleteExam(exam) {
@@ -227,11 +281,16 @@ export default {
     },
     saveExam(exam) {
       console.log(exam)
+      exam.doctor = this.selectedDoctor;
+      exam.status = this.selectedStatus;
+      this.selectedDoctor = null;
+      this.selectedStatus = null;
       /*
       call api save exam
       */
       console.log(exam.doctor)
       exam.isEditing = false
+      this.isEditing = false
       this.examsDataBackup = JSON.parse(JSON.stringify(this.exams))
     },
     cancelEdit(exam) {
@@ -248,6 +307,9 @@ export default {
   created() {
     this.exams = this.getData()
     this.doctors = this.getDoctor()
+    const choices = this.getDoctor();
+    choices.push('Tất cả');
+    this.filterChoice = choices;
     this.len = this.exams.length
     this.totalPage = Math.ceil(this.exams.length / this.numOfExamsPerPage)
     this.lastIndex = Math.min(this.numOfExamsPerPage - 1, this.len - 1)
@@ -259,19 +321,19 @@ export default {
 <style lang="scss">
 @import "../assets/scss/main.scss";
 .management-page{
-  padding: 30px;
+  padding: 2%;
   background-color: $colorPrimary100;
   .noti {
     padding-left: 100px;
   }
   .page-title {
-    padding-left: 100px;
+    padding-left: 5%;
     font-size: 40px;
     color: $colorPrimary900;
   }
   .table-wrapper {
-    padding-left: 100px;
-    padding-right: 100px;
+    padding-left: 5%;
+    padding-right: 5%;
     .data-table {
       border: 1px solid #ddd;
       border-collapse: collapse;
@@ -303,6 +365,10 @@ export default {
         }
       }
     }
+  }
+  .filter-card {
+    padding-left: 5%;
+    padding-right: 80%;
   }
 }
 </style>

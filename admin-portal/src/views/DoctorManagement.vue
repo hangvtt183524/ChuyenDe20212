@@ -116,7 +116,7 @@ export default {
   props: {
     numOfDoctorsPerPage: {
       type: Number,
-      default: 15,
+      default: 8,
     }
   },
   components: {
