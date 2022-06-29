@@ -10,18 +10,18 @@ const routes = [
   {
     path: "/user-management",
     name: "UserManagement",
-    component: UserManagement,
+    component: UserManagement
   },
   {
     path: "/doctor-management",
     name: "DoctorManagement",
-    component: DoctorManagement,
+    component: DoctorManagement
   },
   {
     path: "/exam-management",
     name: "ExamManagement",
-    component: ExamManagement,
-  },
+    component: ExamManagement
+  }
 ];
 
 const router = new VueRouter({
@@ -29,5 +29,6 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes,
 });
+
 
 export default router;

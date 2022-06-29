@@ -215,7 +215,6 @@ export default {
     })
   },
   mounted() {
-    this.$store.dispatch('config/getAllDoctorsByAdmin')
     this.getData()
   },
 }

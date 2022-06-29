@@ -84,8 +84,14 @@ export default {
         })
         return response.data
     },
+    async searchPetAll() {
+        const response = await http.request({
+            method: 'GET',
+            url: `${PATHS.PETS.SEARCH_ALL}`
+        })
+        return response.data
+    },
     async login(params) {
-        console.log('params: ', params)
         const response = await http.request({
             method: 'GET',
             url: `${PATHS.AUTHS.LOGIN}` + '?' + prepareParams(params)

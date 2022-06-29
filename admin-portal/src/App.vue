@@ -27,6 +27,11 @@ export default {
   created() {
   },
   mounted() {
+    this.$store.dispatch('config/getAllDoctorsByAdmin')
+    this.$store.dispatch('config/getAllUsersByAdmin')
+    this.$store.dispatch('config/getAllExamsByAdmin')
+    this.$store.dispatch('config/getAllServicesByAdmin')
+    this.$store.dispatch('config/getAllPetsByAdmin')
   },
   methods: {},
   watch: {},
