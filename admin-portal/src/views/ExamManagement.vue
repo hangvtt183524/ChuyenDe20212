@@ -4,29 +4,31 @@
       <p>Quản lý lịch khám bệnh</p>
     </div>
 
-    <p v-if="len === 0" class="noti">Không có dữ liệu hiển thị</p>
+    <div class="filter-card">
+      <Dropdown
+          :is-editing="true"
+          label="Lọc theo bác sĩ"
+          :items="filterChoice"
+          valueInput="Tất cả"
+          @setValue="setDoctor"
+      />
+    </div>
+
+    <p v-if="renderExamLen === 0" class="noti">Không có dữ liệu hiển thị</p>
 
     <div v-else>
-      <div class="filter-card">
-          <Dropdown
-              :is-editing="true"
-              label="Lọc theo bác sĩ"
-              :items="filterChoice"
-              @setValue="setDoctor"
-          />
-      </div>
       <div class="table-wrapper">
         <table class="data-table">
           <thead class="header-row">
           <tr>
-            <th>Tên chủ</th>
-            <th>Tên thú cưng</th>
-            <th>Bác sĩ</th>
-            <th>Ngày khám</th>
-            <th>Ghi chú</th>
-            <th>Kết quả</th>
-            <th>Tình trạng</th>
-            <th>Actions</th>
+            <th style="width: 13em">Tên chủ</th>
+            <th style="width: 7em">Tên thú cưng</th>
+            <th style="width: 15em">Bác sĩ</th>
+            <th style="width: 15em">Ngày khám</th>
+            <th style="width: 10em">Ghi chú</th>
+            <th style="width: 10em">Kết quả</th>
+            <th style="width: 25em">Tình trạng</th>
+            <th style="width: 5em">Actions</th>
           </tr>
           </thead>
           <tbody class="body-row">
@@ -49,12 +51,12 @@
             </td>
             <td>
               <div>
-                  <Dropdown
+                <Dropdown
                     :is-editing="exam.isEditing"
                     :items="doctors"
                     :valueInput="exam.doctor"
                     @setValue="setDoctor"
-                  />
+                />
               </div>
             </td>
             <td>
@@ -88,24 +90,24 @@
                   :valueInput="examStatus[exam.status]"
                   @setValue="setStatus"
               />
-  <!--            <div class="flex">-->
-  <!--              <div class="svg-icon" v-if="exam.isEditing === false">-->
-  <!--                <div v-if="exam.status">-->
-  <!--                  <done-icon class="is-fill-green"/>-->
-  <!--                </div>-->
-  <!--                <div v-else>-->
-  <!--                  <done-icon class="is-fill-gray"/>-->
-  <!--                </div>-->
-  <!--              </div>-->
-  <!--              <div v-else class="svg-icon clickable">-->
-  <!--                <div v-if="exam.status">-->
-  <!--                  <done-icon class="is-fill-green" @click="exam.status=!exam.status"/>-->
-  <!--                </div>-->
-  <!--                <div v-else>-->
-  <!--                  <done-icon class="is-fill-gray" @click="exam.status=!exam.status"/>-->
-  <!--                </div>-->
-  <!--              </div>-->
-  <!--            </div>-->
+              <!--            <div class="flex">-->
+              <!--              <div class="svg-icon" v-if="exam.isEditing === false">-->
+              <!--                <div v-if="exam.status">-->
+              <!--                  <done-icon class="is-fill-green"/>-->
+              <!--                </div>-->
+              <!--                <div v-else>-->
+              <!--                  <done-icon class="is-fill-gray"/>-->
+              <!--                </div>-->
+              <!--              </div>-->
+              <!--              <div v-else class="svg-icon clickable">-->
+              <!--                <div v-if="exam.status">-->
+              <!--                  <done-icon class="is-fill-green" @click="exam.status=!exam.status"/>-->
+              <!--                </div>-->
+              <!--                <div v-else>-->
+              <!--                  <done-icon class="is-fill-gray" @click="exam.status=!exam.status"/>-->
+              <!--                </div>-->
+              <!--              </div>-->
+              <!--            </div>-->
             </td>
             <td class="flex">
               <div class="svg-icon clickable" v-if="exam.isEditing === false">
@@ -134,8 +136,8 @@
 
       </div>
     </div>
-
   </div>
+
 </template>
 
 <script>
@@ -181,6 +183,7 @@ export default {
       selectedStatus: null,
       isEditing: false,
       filterChoice: null,
+      renderExamLen: 0,
       examStatus: {
         0: 'Chưa gửi mail xác nhận',
         1: 'Đã gửi mail xác nhận',
@@ -229,7 +232,10 @@ export default {
       ]
     },
     setDoctor(doctor) {
-      this.selectedDoctor = doctor;
+      if (doctor === 'Tất cả') {
+        this.selectedDoctor = null;
+      }
+      else this.selectedDoctor = doctor;
     },
     setStatus(status) {
       this.selectedStatus = Object.keys(this.examStatus).find(key => this.examStatus[key] === status);
@@ -249,6 +255,7 @@ export default {
           if (exam.doctor == this.selectedDoctor)
             renderExams.push(exam);
         })
+        console.log("day"+renderExams)
       }
       else {
         let first = this.firstIndex
@@ -257,6 +264,7 @@ export default {
           renderExams.push(this.exams[i])
         }
       }
+      this.renderExamLen = renderExams.length;
       return renderExams;
     },
     editExam(exam) {
@@ -280,7 +288,6 @@ export default {
       this.totalPage = Math.ceil(this.exams.length / this.numOfExamsPerPage)
     },
     saveExam(exam) {
-      console.log(exam)
       exam.doctor = this.selectedDoctor;
       exam.status = this.selectedStatus;
       this.selectedDoctor = null;
@@ -307,12 +314,13 @@ export default {
     this.exams = this.getData()
     this.doctors = this.getDoctor()
     const choices = this.getDoctor();
-    choices.push('Tất cả');
+    choices.push({text: 'Tất cả'});
     this.filterChoice = choices;
     this.len = this.exams.length
     this.totalPage = Math.ceil(this.exams.length / this.numOfExamsPerPage)
     this.lastIndex = Math.min(this.numOfExamsPerPage - 1, this.len - 1)
     this.examsDataBackup = JSON.parse(JSON.stringify(this.exams))
+    this.renderExamLen = this.exams.len;
   }
 }
 </script>
@@ -322,6 +330,9 @@ export default {
 .management-page{
   padding: 2%;
   background-color: $colorPrimary100;
+  .noti {
+    padding-left: 100px;
+  }
   .page-title {
     padding-left: 5%;
     font-size: 40px;
@@ -330,6 +341,11 @@ export default {
   .table-wrapper {
     padding-left: 5%;
     padding-right: 5%;
+    table.fixed
+    {
+      table-layout:fixed;
+      width:90px;
+    }
     .data-table {
       border: 1px solid #ddd;
       border-collapse: collapse;
@@ -338,7 +354,7 @@ export default {
         margin: 50px;
         background-color: $colorPrimary900;
         position: sticky;
-        z-index: 100;
+        z-index: 2;
         top: 0;
         th {
           color: white;
@@ -361,10 +377,12 @@ export default {
         }
       }
     }
+
   }
   .filter-card {
     padding-left: 5%;
     padding-right: 80%;
+    z-index: 3;
   }
 }
 </style>

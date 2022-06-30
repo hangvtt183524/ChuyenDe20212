@@ -15,23 +15,22 @@
               <div class="select-content">
                 <div class="dd-item-text">{{this.selectedText}}</div>
               </div>
-              <i class="fas fa-angle-down"></i>
+              <div class="svg-icon clickable">
+                <arrow-icon class="is-fill-blue"/>
+              </div>
+<!--              <i class="fas fa-angle-down"></i>-->
             </div>
 
         </div>
       </div>
       <div v-else>
-        <div v-if="valueInput">
-          {{valueInput}}
-        </div>
-        <div v-else>
-          Chưa có
-        </div>
+        {{valueInput}}
       </div>
     </div>
 </template>
 <script>
-// import Vue from 'vue'
+import Vue from 'vue'
+import arrowIcon from "../../assets/svg/arrow-drop-down.svg"
 export default {
     name: "MDropdown",
     props: {
@@ -51,6 +50,9 @@ export default {
       valueInput: null,
       label: null,
     },
+  components: {
+    arrowIcon
+  },
     data(){
         return{
             selectedIcon: null,
@@ -64,22 +66,19 @@ export default {
     },
     methods: {
         setSelectedItem() {
-          // Vue.nextTick(() => {
+          Vue.nextTick(() => {
             this.items.forEach((item, index) => {
               var itemList = this.$refs.selectList.querySelectorAll('.select-item')
-              console.log(itemList)
-              console.log(item)
               // this.value = item
               if (this.valueInput == item) {
                 itemList[index].click()
               }
             });
-          // })
+          })
         },
         ddSelectOnclick(){
             this.$refs.selectList.classList.toggle("dd-activate")
             var ddProp = this.$refs.dropdown.getBoundingClientRect()
-            console.log(ddProp)
             
             this.$refs.selectList.style.setProperty('width', ddProp.width +'px', 'important');
             this.$refs.selectList.style.setProperty('top', ddProp.bottom +'px', 'important');
@@ -88,19 +87,16 @@ export default {
         selectItemOnclick(index, e){
             if(Array.from(e.currentTarget.classList).includes('selected-item')){
                 e.currentTarget.classList.remove('selected-item')
-                
-                console.log('first')
+
                 this.selectedText = this.originSelectedText
             }
             // console.log(Array.from(e.currentTarget.classList))
             else{
-                console.log('second')
                 var itemList = this.$refs.selectList.querySelectorAll(".select-item")
                 Array.from(itemList).forEach(element => {
                     element.classList.remove('selected-item')
                 });
                 e.currentTarget.classList.add('selected-item')
-                console.log(e.target.innerText)
                 this.selectedText = e.target.innerText
             }
             

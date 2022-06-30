@@ -10,14 +10,14 @@
       <table class="data-table">
         <thead class="header-row">
           <tr>
-            <th>STT</th>
-            <th>Username</th>
-            <th>Ngày sinh</th>
-            <th>Điện thoại</th>
-            <th>Email</th>
-            <th>Địa chỉ</th>
-            <th>Password</th>
-            <th>Actions</th>
+            <th style="width: 3em">STT</th>
+            <th style="width: 15em">Username</th>
+            <th style="width: 15em">Ngày sinh</th>
+            <th style="width: 13em">Điện thoại</th>
+            <th style="width: 20em">Email</th>
+            <th style="width: 15em">Địa chỉ</th>
+            <th style="width: 14em">Password</th>
+            <th style="width: 5em">Actions</th>
           </tr>
         </thead>
         <tbody class="body-row">
