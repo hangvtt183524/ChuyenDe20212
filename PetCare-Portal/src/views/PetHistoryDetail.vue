@@ -76,7 +76,6 @@ export default {
         },
         contactDrBtnOnClick(){
             this.showChatWindow = true
-            console.log(1)
         },
         hideChatWindow(){
             this.showChatWindow = false

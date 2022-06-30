@@ -37,18 +37,10 @@
             <div class="page-link">Đăng nhập</div>
             <div class="underline"></div>
           </router-link>
-          <router-link to="/login" class="choice" v-on:click.native="highLight(5)" v-if="Object.keys(currentUser).length > 0">
+          <router-link to="/" class="choice" v-on:click.native="highLight(5)" v-if="Object.keys(currentUser).length > 0">
             <div class="page-link">Đăng xuất</div>
             <div class="underline"></div>
           </router-link>
-          <!-- <router-link to="/signup" class="choice">
-            <div class="page-link">Đăng ký</div>
-            <div class="underline"></div>
-          </router-link> -->
-<!--            <div class="choice">-->
-<!--                Đăng Nhập-->
-<!--                <div class="underline"></div>-->
-<!--            </div>-->
         </div>
     </div>
 </template>
@@ -66,10 +58,6 @@ export default {
             {
                 path: '/booking-schedule',
                 name: 'Dịch vụ'
-            },
-            {
-                path: '/',
-                name: 'Hỏi đáp'
             },
         ],
         pets: [
@@ -113,6 +101,9 @@ export default {
         // console.log("ahihi")
         // console.log(window.location.pathname)
     },
+    logout() {
+      this.highLight(5)
+    }
 },
   computed: {
     ...mapGetters({

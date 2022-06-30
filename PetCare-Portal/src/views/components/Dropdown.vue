@@ -30,6 +30,11 @@ export default {
         valueInput: null,
         label: null,
     },
+  watch: {
+    selectedText(value) {
+      this.$emit('select-text', value)
+    }
+  },
     data(){
         return{
             selectedIcon: null,
@@ -69,7 +74,6 @@ export default {
                     element.classList.remove('selected-item')
                 });
                 e.currentTarget.classList.add('selected-item')
-                console.log(e.target.innerText)
                 this.selectedText = e.target.innerText
             }
             
