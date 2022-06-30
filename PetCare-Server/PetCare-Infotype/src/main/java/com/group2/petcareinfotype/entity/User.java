@@ -23,11 +23,13 @@ public class User implements Serializable {
 
     private String password;
 
-    private String phone;
+    private String address;
 
     private String mail;
 
     private String birthDate;
 
-    private String address;
+    private String phone;
+
+    private String avatar;
 }

@@ -1,29 +1,40 @@
-<template>
-    <div class="home">
-        <div class="img-zone">
-            <div class='img-zone-part img img1'>
-            </div>
-            <div class='img-zone-part'>
-              <div class='small-img-1 img img2'></div>
-            </div>
-            <div class='img-zone-part'>
-              <div class='small-img-2 img img3'></div>
-            </div>
-            <div class='img-zone-part img img4'>
-            </div>
-        </div>
-        <div class='home-slogan'>
-          <p>Chăm sóc toàn diện <span>Cho thú cưng của bạn</span></p>
-        </div>
-    </div>
-</template>
 <script>
+import AppPoster from './components/AppPoster.vue';
 export default {
-  name: 'HomeView',
-  components: {
-  }
+    name: 'Home',
+    components: {
+      AppPoster,
+    },
+    data() {
+      return {
+      }
+    }
 }
 </script>
+
+<template>
+    <div class="container pb-5">
+      <div class="row">
+        <div class="col-md-6 col-0 mt-5">
+          <AppPoster></AppPoster>
+        </div>
+        <div class="col-md-6 mt-5 d-flex flex-column justify-content-center align-items-center">
+          <div>
+            <p>Chăm sóc toàn diện</p>
+            <p>cho thú cưng của bạn</p>
+          </div>
+        </div>
+      </div>
+    </div>
+</template>
+
+
 <style scoped>
-@import url('../assets/styles/home.css');
+  p{
+    display: block;
+    font-size: 40px;
+    line-height: 45px;
+    font-weight: 900;
+    color: #009fff;
+  }
 </style>

@@ -1,5 +1,5 @@
 <script>
-import AppPoster from '../../general/AppPoster';
+import AppPoster from './components/AppPoster';
 
 export default {
   name: 'Auth',

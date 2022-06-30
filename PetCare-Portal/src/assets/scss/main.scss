@@ -1,11 +1,10 @@
-@import './variables/colors';
-@import './variables/sizes';
+@import 'variables/colors';
+@import 'variables/sizes';
+
+@import 'components/form';
+@import 'components/color';
+@import 'components/content';
+
 @import 'mixins';
 @import 'custom';
 @import 'global';
-@import './components/form';
-@import './components/color';
-@import './components/content';
-@import './components/infotype';
-@import './components/svg';
-@import './components/button';

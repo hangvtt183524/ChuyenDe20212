@@ -1,8 +1,26 @@
-@import url('../font/fontawesome-free-6.1.1/css/all.min.css'); 
-body{
-    margin: 0;
-    font-family: sans-serif !important;
-    font-size: 17px;
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Quicksand", sans-serif;
+}
+
+#app{
+  display: flex;
+  height: 100vh;
+  overflow-x:hidden;
+  overflow-y:auto;
+}
+.flex-root {
+  flex: 1 1 0;
+}
+.flex-fluid {
+  flex: 1 0 0;
+}
+.bg-blue {
+  background-color: #a1d8ff7a;
 }
 input {
     font-size: 17px !important;
