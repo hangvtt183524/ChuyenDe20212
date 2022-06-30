@@ -52,7 +52,7 @@ export default {
                     path: '/booking-schedule'
                 }
             ],
-          petData: null
+          petData: null,
         }
     },
     created(){

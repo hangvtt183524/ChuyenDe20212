@@ -10,7 +10,7 @@
                 <div class="page-link">Thú cưng của tôi</div>
                 <div class="underline" ref="thirdUnderline"></div>
                 <div class="navMenu" ref="navMenu">
-                    <router-link class="navItem" v-for="(pet, index) in this.petsOfUsre" :key="index" :to="{path: `/my-pet/${pet.id}/info`}">
+                    <router-link class="navItem" v-for="(pet, index) in this.$store.state.config.petOfUser" :key="index" :to="{path: `/my-pet/${pet.id}/info`}">
                         <div class="navIcon">
                             <i class="fa-solid fa-paw"></i>
                         </div>
@@ -29,12 +29,16 @@
 <!--                Đăng xuất-->
 <!--                <div class="underline"></div>-->
 <!--            </div>-->
-          <router-link to="/user" class="choice" v-on:click.native="highLight(4)">
-            <div class="page-link">Người dùng</div>
+          <router-link to="/user" class="choice" v-on:click.native="highLight(4)" v-if="Object.keys(currentUser).length > 0">
+            <div class="page-link">{{this.$store.state.config.currentUser.username}}</div>
             <div class="underline"></div>
           </router-link>
-          <router-link to="/login" class="choice" v-on:click.native="highLight(5)">
+          <router-link to="/login" class="choice" v-on:click.native="highLight(5)" v-if="Object.keys(currentUser).length <= 0">
             <div class="page-link">Đăng nhập</div>
+            <div class="underline"></div>
+          </router-link>
+          <router-link to="/login" class="choice" v-on:click.native="highLight(5)" v-if="Object.keys(currentUser).length > 0">
+            <div class="page-link">Đăng xuất</div>
             <div class="underline"></div>
           </router-link>
           <!-- <router-link to="/signup" class="choice">

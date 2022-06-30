@@ -44,7 +44,7 @@ export default {
         setSelectedItem(){
             this.items.forEach((item, index) => {
                 var itemList = this.$refs.selectList.querySelectorAll('.select-item')
-                if(this.valueInput == item.id){
+                if(this.valueInput == item.id & this.valueInput != null){
                     itemList[index].click()
                 }
             });
@@ -60,13 +60,10 @@ export default {
         selectItemOnclick(index, e){
             if(Array.from(e.currentTarget.classList).includes('selected-item')){
                 e.currentTarget.classList.remove('selected-item')
-                
-                console.log('first')
                 this.selectedText = this.originSelectedText
             }
             // console.log(Array.from(e.currentTarget.classList))
             else{
-                console.log('second')
                 var itemList = this.$refs.selectList.querySelectorAll(".select-item")
                 Array.from(itemList).forEach(element => {
                     element.classList.remove('selected-item')

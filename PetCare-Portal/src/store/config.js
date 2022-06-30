@@ -14,13 +14,17 @@ export default {
         },
         currentUser: {},
         petOfUser: [],
-        currentPetIndex: 0
+        currentPetIndex: 0,
+        allExams: [],
+        allDoctors: []
     },
     getters: {
         getConfigUser: state => state.configUser,
         getCurrentUser: state => state.currentUser,
         getPetOfUser: state => state.petOfUser,
-        getCurrentPetIndex: state => state.currentPetIndex
+        getCurrentPetIndex: state => state.currentPetIndex,
+        getAllExams: state => state.allExams,
+        getAllDoctors: state => state.allDoctors
     },
     mutations: {
         setCurrentUser(state, currentUser) {
@@ -31,6 +35,12 @@ export default {
         },
         setCurrentPetIndex(state, petIndex) {
             state.currentPetIndex = petIndex
+        },
+        setAllExams(state, listExam) {
+            state.allExams = listExam
+        },
+        setAllDoctors(state, listDoctor) {
+            state.allDoctors = listDoctor
         }
     },
     actions: {

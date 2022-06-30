@@ -1,4 +1,4 @@
-<template lang="">
+<template>
     <div class="black-bg">
         <div class="pet-history-detail">
             <div class="header phd-header">
@@ -11,37 +11,33 @@
                 <div class="phd-left">
                     <DisplayInfo
                         label="Tên bệnh"
-                        content="Rụng lông"
+                        :content="examInfo.firstDescription"
                     />
                     <DisplayInfo
                         label="Bác sĩ"
-                        content="Nguyễn Văn A"
+                        :content="examInfo.doctorName"
                     />
                     <DisplayInfo
                         label="Thời gian"
-                        content="12-06-2022"
+                        :content="examInfo.date"
                     />
                 </div>
                 <div class="phd-right">
                     <DisplayInfo
                         label="Ghi chú"
-                        content="Cần khám định kỳ"
+                        :content="examInfo.result"
                     />
                     <DisplayInfo
                         label="Dịch vụ sử dụng"
-                        content="Thăm khám, kê thuốc"
-                    />
-                    <DisplayInfo
-                        label="Kết luận"
-                        content="Đã chữa khỏi"
+                        content="Tiêm vacxin HPV"
                     />
                 </div>               
             </div>
             <div class="phd-buttons">
-                <Button
-                    text="In hóa đơn"
-                    color="orange"   
-                />
+<!--                <Button-->
+<!--                    text="In hóa đơn"-->
+<!--                    color="orange"   -->
+<!--                />-->
                 <Button
                     text="Liên hệ bác sĩ"
                     color="blue"  
@@ -53,21 +49,6 @@
             v-if="showChatWindow"
             @hideChatWindow="hideChatWindow"
         />
-        <!-- <div class="chat-window">
-            <div class="header chat-window-header">
-                Bs. Nguyễn Văn A
-                <div class="exit">
-                    <i class="fa-solid fa-xmark"></i>
-                </div>
-            </div>
-            <div class="msgs">
-
-            </div>
-            <div class="send-msg">
-                <input>
-                <i class="fa-solid fa-paper-plane"></i>
-            </div>
-        </div> -->
     </div>
 </template>
 <script>
@@ -78,9 +59,15 @@ export default {
     components: {
         DisplayInfo, Button, ChatWindow
     },
+  props: {
+      examInfo: {
+        type: Object,
+        default: null
+      }
+  },
     data(){
         return{
-            showChatWindow: false
+            showChatWindow: false,
         }
     },
     methods: {
@@ -89,6 +76,7 @@ export default {
         },
         contactDrBtnOnClick(){
             this.showChatWindow = true
+            console.log(1)
         },
         hideChatWindow(){
             this.showChatWindow = false

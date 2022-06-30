@@ -21,6 +21,7 @@
         <table class="data-table">
           <thead class="header-row">
           <tr>
+<<<<<<< HEAD
             <th style="width: 13em">Tên chủ</th>
             <th style="width: 7em">Tên thú cưng</th>
             <th style="width: 15em">Bác sĩ</th>
@@ -29,22 +30,31 @@
             <th style="width: 10em">Kết quả</th>
             <th style="width: 25em">Tình trạng</th>
             <th style="width: 5em">Actions</th>
+=======
+            <th>Owner</th>
+            <th>Pet</th>
+            <th>Bác sĩ</th>
+            <th>Ngày khám</th>
+            <th>Kết quả</th>
+            <th>Tình trạng</th>
+            <th>Actions</th>
+>>>>>>> main
           </tr>
           </thead>
           <tbody class="body-row">
           <tr v-for="exam in examItems" :key="exam.id">
             <td>
               <InputItem
-                  :is-editing="exam.isEditing"
-                  v-model="exam.owner"
+                  :is-editing="false"
+                  v-model="exam.owner.username"
                   :is-only-numeric="false"
                   :is-only-alpha="false"
               />
             </td>
             <td>
               <InputItem
-                  :is-editing="exam.isEditing"
-                  v-model="exam.pet"
+                  :is-editing="false"
+                  v-model="exam.pet.name"
                   :is-only-numeric="false"
                   :is-only-alpha="false"
               />
@@ -61,7 +71,7 @@
             </td>
             <td>
               <InputItem
-                  :is-editing="exam.isEditing"
+                  :is-editing="false"
                   v-model="exam.date"
                   :is-only-numeric="false"
                   :is-only-alpha="false"
@@ -69,15 +79,7 @@
             </td>
             <td>
               <InputItem
-                  :is-editing="exam.isEditing"
-                  v-model="exam.description"
-                  :is-only-numeric="false"
-                  :is-only-alpha="false"
-              />
-            </td>
-            <td>
-              <InputItem
-                  :is-editing="exam.isEditing"
+                  :is-editing="false"
                   v-model="exam.result"
                   :is-only-numeric="false"
                   :is-only-alpha="false"
@@ -90,6 +92,7 @@
                   :valueInput="examStatus[exam.status]"
                   @setValue="setStatus"
               />
+<<<<<<< HEAD
               <!--            <div class="flex">-->
               <!--              <div class="svg-icon" v-if="exam.isEditing === false">-->
               <!--                <div v-if="exam.status">-->
@@ -108,6 +111,8 @@
               <!--                </div>-->
               <!--              </div>-->
               <!--            </div>-->
+=======
+>>>>>>> main
             </td>
             <td class="flex">
               <div class="svg-icon clickable" v-if="exam.isEditing === false">
@@ -139,9 +144,12 @@
 <<<<<<< HEAD
 =======
     </div>
+<<<<<<< HEAD
 >>>>>>> 2ab1fc80de5dc0b7e05be98759d5b808d3f85988
   </div>
 
+=======
+>>>>>>> main
 </template>
 
 <script>
@@ -149,10 +157,13 @@ import editIcon from '@/assets/svg/edit.svg'
 import deleteIcon from '@/assets/svg/delete.svg'
 import saveIcon from '@/assets/svg/save.svg'
 import crossIcon from '@/assets/svg/close.svg'
+import moment from 'moment'
 // import doneIcon from '@/assets/svg/success.svg'
 import InputItem from "@/views/components/InputItem";
 import Pagination from "@/views/components/Pagination.vue"
 import Dropdown from "@/views/components/Dropdown";
+import InfotypeServices from "@/services/InfotypeServices"
+import DriverServices from "@/services/DriverServices"
 // import Button from "@/views/components/Button";
 export default {
   name: 'ExamManagement',
@@ -204,36 +215,24 @@ export default {
   },
   methods: {
     getData() {
-      return [
-        {
-          id: "001",
-          owner: "Bùi Việt Anh",
-          pet: "Corgi",
-          doctor: "Hằng",
-          date: '2/4/2022',
-          description: '',
-          result: '',
-          status: 1,
-          isEditing: false,
-        },
-        {
-          id: "002",
-          owner: "Việt Anh",
-          pet: "Shiba",
-          doctor: '',
-          date: '2/4/2022',
-          description: '',
-          result: '',
-          status: 2,
-          isEditing: false,
-        }
-      ]
+      let allExams = this.$store.state.config.allExams
+      allExams.forEach(exam => {
+        let owner = this.$store.state.config.allUsers.filter(user => Number(user.id) === Number(exam.ownerId))[0]
+        let pet = this.$store.state.config.allPets.filter(pet => Number(pet.id) === Number(exam.petId) && Number(pet.ownerId) === Number(exam.ownerId))[0]
+        exam.isEditing = false
+        exam.date = moment(exam.date, 'DDMMYYYY').format('DD-MM-YYYY')
+        exam.owner = owner
+        exam.pet = pet
+      })
+      allExams = allExams.filter(exam => exam.owner && exam.pet)
+      return allExams
     },
     getDoctor() {
-      return [
-        {text: 'Hằng'},
-        {text: 'Thu'}
-      ]
+      let doctorDropDown = []
+      this.$store.state.config.allDoctors.forEach(doctor => {
+        doctorDropDown.push(doctor.doctorName)
+      })
+      return doctorDropDown
     },
     setDoctor(doctor) {
       if (doctor === 'Tất cả') {
@@ -245,7 +244,6 @@ export default {
       this.selectedStatus = Object.keys(this.examStatus).find(key => this.examStatus[key] === status);
     },
     onPageChange(page) {
-      // console.log(page)
       this.currentPage = page;
       this.firstIndex = (page - 1) * this.numOfExamsPerPage;
       if (page === this.totalPage)
@@ -291,7 +289,12 @@ export default {
       this.lastIndex = Math.min(this.lastIndex, this.len - 1)
       this.totalPage = Math.ceil(this.exams.length / this.numOfExamsPerPage)
     },
+<<<<<<< HEAD
     saveExam(exam) {
+=======
+    async saveExam(exam) {
+      let examIndex = this.exams.indexOf(exam)
+>>>>>>> main
       exam.doctor = this.selectedDoctor;
       exam.status = this.selectedStatus;
       this.selectedDoctor = null;
@@ -299,10 +302,34 @@ export default {
       /*
       call api save exam
       */
-      console.log(exam.doctor)
-      exam.isEditing = false
+      let saveExam = {
+        id: exam.id,
+        ownerId: exam.ownerId,
+        petId: exam.petId,
+        doctorId: 1,
+        date: Number(moment(exam.date, 'DD-MM-YYYY').format('DDMMYYYY')),
+        time: exam.time,
+        firstDescription: exam.firstDescription,
+        result: exam.result
+      }
+      await InfotypeServices.saveSchedule(saveExam)
+      this.$notify({
+        group: 'default',
+        type: 'success',
+        title: "Save success!",
+        duration: 3000
+      })
+      let savedExam = JSON.parse(JSON.stringify(exam))
+      savedExam.isEditing = false
+      this.exams.splice(examIndex, 1)
+      this.exams.splice(examIndex, 0, savedExam)
       this.isEditing = false
       this.examsDataBackup = JSON.parse(JSON.stringify(this.exams))
+      await DriverServices.sendConfirmMail({
+        mail: exam.owner.mail,
+        date: exam.date,
+        time: exam.time
+      })
     },
     cancelEdit(exam) {
       let examIndex = this.exams.indexOf(exam)

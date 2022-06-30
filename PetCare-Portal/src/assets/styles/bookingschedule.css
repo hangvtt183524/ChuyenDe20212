@@ -1,0 +1,33 @@
+.booking-page{
+    width: 60%;
+    height: 600px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    padding: 0 20px;
+    box-sizing: border-box;
+    overflow: auto;
+}
+    .booking-page .header{
+        padding-left: 0;
+    }
+    .booking-page .booking-content{
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        box-sizing: border-box;
+    }
+        .booking-page .booking-content .booking-part{
+            padding: 20px;
+            padding-bottom: 0;
+            height: fit-content;
+            width: 50%;
+            box-sizing: border-box;
+        }
+    .booking-page .pet-history-table{
+        width: 100%;
+        height: 312px;
+        overflow: auto;
+        border: 1px solid #b5b5b5;
+        box-sizing: border-box;
+    }

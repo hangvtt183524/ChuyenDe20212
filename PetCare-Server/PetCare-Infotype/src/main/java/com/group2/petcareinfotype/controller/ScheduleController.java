@@ -41,15 +41,21 @@ public class ScheduleController {
     public ResponseEntity<Examination> updateExam(@RequestParam(name = "id", required = false) Long id,
                                                   @RequestParam(name = "ownerId", required = false) Long ownerId,
                                                   @RequestParam(name = "doctorId", required = false) Long doctorId,
+                                                  @RequestParam(name = "petId", required = false) Long petId,
                                                   @RequestParam(name = "firstDescription", required = false) String firstDescription,
                                                   @RequestParam(name = "result", required = false) String result,
-                                                  @RequestParam(name = "status", required = false) Integer status) {
+                                                  @RequestParam(name = "status", required = false) Integer status,
+                                                  @RequestParam(name = "date", required = false) Integer date,
+                                                  @RequestParam(name = "time", required = false) Double time) {
         Examination updateExamination = Examination.builder().id(id)
                 .ownerId(ownerId)
                 .doctorId(doctorId)
+                .petId(petId)
                 .firstDescription(firstDescription)
                 .result(result)
                 .status(status)
+                .date(date)
+                .time(time)
                 .build();
         return ResponseEntity.accepted().body(examinationService.updateExam(updateExamination));
     }
