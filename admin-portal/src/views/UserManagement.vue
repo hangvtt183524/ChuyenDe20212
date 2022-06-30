@@ -12,12 +12,12 @@
         <thead class="header-row">
           <tr>
             <th style="width: 3em">STT</th>
-            <th style="width: 15em">Username</th>
+            <th style="width: 15em">Tên đăng nhập</th>
             <th style="width: 15em">Ngày sinh</th>
             <th style="width: 13em">Điện thoại</th>
             <th style="width: 20em">Email</th>
             <th style="width: 15em">Địa chỉ</th>
-            <th style="width: 14em">Password</th>
+            <th style="width: 14em">Mật khẩu</th>
             <th style="width: 5em">Actions</th>
           </tr>
         </thead>

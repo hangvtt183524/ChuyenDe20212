@@ -21,12 +21,12 @@
         <table class="data-table">
           <thead class="header-row">
           <tr>
-            <th style="width: 13em">Owner</th>
-            <th style="width: 7em">Pet</th>
-            <th style="width: 15em">Doctor</th>
-            <th style="width: 15em">Date</th>
-            <th style="width: 10em">Result</th>
-            <th style="width: 25em">Status</th>
+            <th style="width: 15em">Chủ nuôi</th>
+            <th style="width: 10em">Tên thú cưng</th>
+            <th style="width: 15em">Bác sĩ</th>
+            <th style="width: 15em">Ngày khám</th>
+            <th style="width: 15em">Kết quả</th>
+            <th style="width: 25em">Tình trạng</th>
             <th style="width: 5em">Actions</th>
           </tr>
           </thead>
