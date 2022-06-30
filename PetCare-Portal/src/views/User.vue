@@ -3,7 +3,9 @@
         <div class="user-page scrollable" ref="userPage">
             <div class="header">Thông tin người dùng</div>
             <div class="user-info">
-                <div class="avatar-holder"></div>
+                <div class="avatar-holder">
+                    <i class="fa-solid fa-user"></i>
+                </div>
                 <div class="info-content">
                     <div class="info-part">
                         <InputItem 
@@ -45,11 +47,13 @@
                     <Button
                         text="Xóa"
                         color="red"
-                        @click.native = "deletaPetBtnOnClick"
+                        @click.native = "deletaPetBtnOnClick(index)"
                     />
                 </div>
                 <div class="pet-info">
-                <div class="avatar-holder"></div>
+                <div class="avatar-holder">
+                    <i class="fa-solid fa-dog"></i>
+                </div>
                 <div class="info-content">
                     <div class="info-part">
                         <InputItem 
@@ -125,14 +129,12 @@ export default {
     },
     data(){
         return{
-          numberOfPets: 1,
           userInfo: null,
           petsInfo: []
         }
     },
     methods: {
         addPetBtnOnClick(){
-            this.numberOfPets += 1
             this.petsInfo.push({
               id: null,
               name: null,
@@ -142,10 +144,9 @@ export default {
               weight: null
             })
         },
-        deletaPetBtnOnClick(e){
-            var currentPet = e.target.parentNode.parentNode
-            if(this.numberOfPets > 1){
-                this.$refs.userPage.removeChild(currentPet)
+        deletaPetBtnOnClick(index){
+            if(this.petsInfo.length > 1){
+                this.petsInfo.splice(index, 1)             
             }
             
         },
