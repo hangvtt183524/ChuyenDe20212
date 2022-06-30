@@ -16,8 +16,8 @@
                 <tbody>
                     <tr v-for="(exam, index) in petExams" :key="index">
                         <td class="align-center">{{index + 1}}</td>
-                        <td>{{exam.firstDescription}}</td>
-                        <td>{{exam.doctorName}}</td>
+                        <td>{{exam.firstDescription ? exam.firstDescription : ''}}</td>
+                        <td>{{exam.doctorName ? exam.doctorName : ''}}</td>
                         <td class="align-center">{{exam.date}}</td>
                         <td>{{exam.result}}</td>
                         <td>
@@ -74,7 +74,7 @@ export default {
           && Number(exam.petId) === Number(this.$store.state.config.currentPetIndex))
     this.petExams.forEach(exam => {
       let doctor = this.allDoctors.filter(doctor => Number(doctor.id) === Number(exam.doctorId))[0]
-      exam.doctorName = doctor.doctorName
+      exam.doctorName = doctor ? doctor.doctorName : null
       exam.date = moment(exam.date, 'DDMMYYYY').format('DD-MM-YYYY')
     })
   }
