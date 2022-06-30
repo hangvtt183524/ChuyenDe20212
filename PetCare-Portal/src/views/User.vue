@@ -9,7 +9,7 @@
                 <div class="info-content">
                     <div class="info-part">
                         <InputItem 
-                            label = "Username"
+                            label = "Tên đăng nhập"
                             :isEditing="true"
                             v-model="userInfo.username"
                             :is-only-alpha="false"
