@@ -100,9 +100,6 @@ export default {
         // console.log(this.$refs.thirdUnderline)
         // console.log("ahihi")
         // console.log(window.location.pathname)
-    },
-    logout() {
-      this.highLight(5)
     }
 },
   computed: {
