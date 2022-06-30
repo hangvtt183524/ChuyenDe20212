@@ -1,4 +1,4 @@
-<template lang="">
+<template>
     <div class="home">
         <div class="img-zone">
             <div class='img-zone-part img img1'>

@@ -21,6 +21,9 @@
 export default {
   name: 'HomeView',
   components: {
+  },
+  mounted() {
+    this.$store.dispatch('config/getAllConfigs')
   }
 }
 </script>

@@ -5,7 +5,11 @@
       <div v-if="isEditing">
         <div class="dropdown-content">
             <div class="select-list" ref="selectList">
-                <div class="select-item" v-for="(item, index) in items" :key="index" @click="selectItemOnclick(index, $event)" :id="item.id">
+                <div class="select-item"
+                     v-for="(item, index) in items" :key="index"
+                     @click="selectItemOnclick(index, $event)"
+                     :id="item.id"
+                >
                     <i class="fa-solid fa-check"></i>
                     <div class="dd-item-text">{{item.text}}</div>
                 </div>
@@ -107,7 +111,8 @@ export default {
             
             this.$emit('setValue', this.selectedText)
         }
-    }
+      }
+
 }
 </script>
 <style scoped>

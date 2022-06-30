@@ -5,6 +5,7 @@
     </div>
 
     <p v-if="len == 0" class="noti">Không có dữ liệu hiển thị</p>
+    <div v-else>
 
     <div class="table-wrapper">
       <table class="data-table">
@@ -108,6 +109,7 @@
 
     </div>
 
+    </div>
   </div>
 </template>
 
@@ -232,6 +234,9 @@ export default {
 .management-page{
   padding: 30px;
   background-color: $colorPrimary100;
+  .noti {
+    padding-left: 100px;
+  }
   .page-title {
     padding-left: 100px;
     font-size: 40px;

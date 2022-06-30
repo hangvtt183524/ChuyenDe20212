@@ -1,4 +1,4 @@
-<template lang="">
+<template>
     <div class="navigation">
         <div class="navigation-tittle">Pet Care</div>
         <div class="menu" ref="menu">
@@ -9,11 +9,7 @@
         </div>
         <div class="account">
             <div class="choice">
-                Đăng xuất
-                <div class="underline"></div>
-                </div>
-            <div class="choice">
-                Đăng Nhập
+                {{$store.state.config.currentDoctor.doctorName}}
                 <div class="underline"></div>
                 </div>
         </div>
@@ -51,7 +47,6 @@ export default {
     }
   },
   mounted(){
-    console.log(this.$refs.menu.childNodes[0].childNodes[1].classList.add('visible'))
   },
   methods: {
     highLight(index){

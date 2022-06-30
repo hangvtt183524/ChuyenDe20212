@@ -136,6 +136,10 @@
 
       </div>
     </div>
+<<<<<<< HEAD
+=======
+    </div>
+>>>>>>> 2ab1fc80de5dc0b7e05be98759d5b808d3f85988
   </div>
 
 </template>
@@ -295,6 +299,7 @@ export default {
       /*
       call api save exam
       */
+      console.log(exam.doctor)
       exam.isEditing = false
       this.isEditing = false
       this.examsDataBackup = JSON.parse(JSON.stringify(this.exams))

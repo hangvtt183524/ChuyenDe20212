@@ -5,6 +5,7 @@
     </div>
 
     <p v-if="len == 0" class="noti">Không có dữ liệu hiển thị</p>
+    <div v-else>
 
     <div class="table-wrapper">
       <table class="data-table">
@@ -21,11 +22,11 @@
         </tr>
         </thead>
         <tbody class="body-row">
-        <tr v-for="doctor in doctorItems" :key="doctor.id">
+        <tr v-for="(doctor, index) in doctors" :key="index">
           <td>
             <InputItem
                 :is-editing="doctor.isEditing"
-                v-model="doctor.name"
+                v-model="doctor.doctorName"
                 :is-only-numeric="false"
                 :is-only-alpha="false"
             />
@@ -33,7 +34,7 @@
           <td>
             <InputItem
                 :is-editing="doctor.isEditing"
-                v-model="doctor.dob"
+                v-model="doctor.birthDate"
                 :is-only-numeric="false"
                 :is-only-alpha="false"
             />
@@ -49,7 +50,7 @@
           <td>
             <InputItem
                 :is-editing="doctor.isEditing"
-                v-model="doctor.email"
+                v-model="doctor.mail"
                 :is-only-numeric="false"
                 :is-only-alpha="false"
             />
@@ -66,14 +67,6 @@
             <InputItem
                 :is-editing="doctor.isEditing"
                 v-model="doctor.major"
-                :is-only-numeric="false"
-                :is-only-alpha="false"
-            />
-          </td>
-          <td>
-            <InputItem
-                :is-editing="doctor.isEditing"
-                v-model="doctor.password"
                 :is-only-numeric="false"
                 :is-only-alpha="false"
             />
@@ -106,7 +99,7 @@
       />
 
     </div>
-
+    </div>
   </div>
 </template>
 
@@ -117,6 +110,8 @@ import saveIcon from '@/assets/svg/save.svg'
 import crossIcon from '@/assets/svg/close.svg'
 import InputItem from "@/views/components/InputItem";
 import Pagination from "./components/Pagination.vue"
+import InfotypeServices from "@/services/InfotypeServices";
+import {mapGetters} from "vuex";
 export default {
   name: 'DoctorManagement',
   props: {
@@ -146,28 +141,14 @@ export default {
   },
   methods: {
     getData() {
-      return [
-        {
-          id: "001",
-          name: "Bùi Việt Anh",
-          dob: "24/1/2000",
-          address: "4 Bạch Mai, Hai Bà Trưng, TP Hà Nội",
-          email: 'anh@gmail.com',
-          password: '',
-          major: '',
-          isEditing: false
-        },
-        {
-          id: "002",
-          name: "Bùi Việt Anh",
-          dob: "24/1/2000",
-          address: "4 Bạch Mai, Hai Bà Trưng, TP Hà Nội",
-          email: 'anh@gmail.com',
-          password: '',
-          major: '',
-          isEditing: false
-        }
-        ]
+      this.doctors = this.getAllDoctors
+      this.len = this.doctors.length
+      this.doctors.forEach(item => {
+        item.isEditing = false
+      })
+      this.doctorsDataBackup = JSON.parse(JSON.stringify(this.doctors))
+      this.totalPage = Math.ceil(this.doctors.length / this.numOfDoctorsPerPage)
+      this.lastIndex = Math.min(this.numOfDoctorsPerPage - 1, this.len - 1)
     },
     onPageChange(page) {
       // console.log(page)
@@ -180,15 +161,19 @@ export default {
     getRenderDoctors() {
       let first = this.firstIndex
       let last = this.lastIndex
-      const renderDoctors = []
-      for (let i = first; i <= last; i++) {
-        renderDoctors.push(this.doctors[i])
+      if (this.doctors != null) {
+        return this.doctors.slice(first, last + 1);
+      } else {
+        return []
       }
-      return renderDoctors;
     },
     editDoctor(doctor) {
       if (doctor.isEditing === false) {
-        doctor.isEditing = !doctor.isEditing
+        let doctorClone = JSON.parse(JSON.stringify(doctor))
+        doctorClone.isEditing = true
+        let doctorIndex = this.doctors.indexOf(doctor)
+        this.doctors.splice(doctorIndex, 1)
+        this.doctors.splice(doctorIndex, 0, doctorClone)
       }
     },
     deleteDoctor(doctor) {
@@ -203,12 +188,20 @@ export default {
       this.lastIndex = Math.min(this.lastIndex, this.len - 1)
       this.totalPage = Math.ceil(this.doctors.length / this.numOfDoctorsPerPage)
     },
-    saveDoctor(doctor) {
-      console.log(doctor)
-      /*
-      call api save doctor
-      */
-      doctor.isEditing = false
+    async saveDoctor(doctor) {
+      let doctorIndex = this.doctors.indexOf(doctor)
+      await InfotypeServices.saveDoctor(doctor)
+      let savedDoctor = JSON.parse(JSON.stringify(doctor))
+      savedDoctor.isEditing = false
+      this.doctors.splice(doctorIndex, 1)
+      this.doctors.splice(doctorIndex, 0, savedDoctor)
+
+      this.$notify({
+        group: 'default',
+        type: 'success',
+        title: 'Save successfully!'
+      })
+
       this.doctorsDataBackup = JSON.parse(JSON.stringify(this.doctors))
     },
     cancelEdit(doctor) {
@@ -218,17 +211,14 @@ export default {
     }
   },
   computed: {
-    doctorItems() {
-      return this.getRenderDoctors()
-    }
+    ...mapGetters({
+      getAllDoctors: 'config/getAllDoctors'
+    })
   },
-  created() {
-    this.doctors = this.getData()
-    this.len = this.doctors.length
-    this.totalPage = Math.ceil(this.doctors.length / this.numOfDoctorsPerPage)
-    this.lastIndex = Math.min(this.numOfDoctorsPerPage - 1, this.len - 1)
-    this.doctorsDataBackup = JSON.parse(JSON.stringify(this.doctors))
-  }
+  mounted() {
+    this.$store.dispatch('config/getAllDoctorsByAdmin')
+    this.getData()
+  },
 }
 </script>
 

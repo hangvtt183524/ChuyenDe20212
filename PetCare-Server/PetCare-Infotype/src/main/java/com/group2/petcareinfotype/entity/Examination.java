@@ -25,9 +25,9 @@ public class Examination implements Serializable {
 
     private Long doctorId;
 
-    private Integer startDate;
+    private Integer date;
 
-    private Integer endDate;
+    private Double time;
 
     private String firstDescription;
 

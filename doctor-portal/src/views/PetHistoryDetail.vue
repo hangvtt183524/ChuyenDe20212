@@ -1,4 +1,4 @@
-<template lang="">
+<template>
     <div class="black-bg">
         <div class="pet-history-detail">
             <div class="header phd-header">
@@ -10,56 +10,51 @@
             <div class="phd-content">
                 <div class="phd-left">
                     <DisplayInfo
-                        label="Tên bệnh"
-                        content="Rụng lông"
+                        label="Triệu chứng"
+                        :content="petData.exam.firstDescription"
                     />
                     <DisplayInfo
                         label="Chủ nuôi"
-                        content="Nguyễn Văn A"
+                        :content="petData.user.username"
                     />
                     <DisplayInfo
-                        label="Số điện thoại"
-                        content="09123456789"
+                        label="Ngày"
+                        :content="petData.exam.date"
                     />
-                    <DisplayInfo
-                        label="Thời gian"
-                        content="12-06-2022 09:00"
-                    />
+                  <DisplayInfo
+                      label="Thời gian"
+                      :content="petData.exam.time"
+                  />
                 </div>
                 <div class="phd-right">
                     <DisplayInfo
                         label="Tên thú cưng"
-                        content="Milu"
+                        :content="petData.pet.name"
                     />
                     
                     <DisplayInfo
                         label="Loại thú cưng"
-                        content="Chó"
+                        :content="petData.pet.species"
                     />
-                    <DisplayInfo
-                        label="Ghi chú"
-                        content="Cần khám định kỳ"
-                    />
-                    <DisplayInfo
-                        label="Dịch vụ sử dụng"
-                        content="Thăm khám, kê thuốc"
-                    />
-                    <DisplayInfo
-                        label="Kết luận"
-                        content="Đã chữa khỏi"
-                    />
+                  <Dropdown
+                      label="Sử dụng dịch vụ"
+                      :items="serviceList"
+                      @select-text="chooseService($event)"
+                  />
+                  <InputItem
+                      v-model="petData.exam.result"
+                      :is-only-alpha="false"
+                      :is-only-numeric="false"
+                      :is-editing="true"
+                  />
                 </div>               
             </div>
             <div class="phd-buttons">
-                <Button
-                    text="In hóa đơn"
-                    color="orange"   
-                />
-                <Button
-                    text="Liên hệ Chủ nuôi"
-                    color="blue"  
-                    @click.native="contactDrBtnOnClick" 
-                />
+              <button
+                  class="button is-normal is-blue"
+                  style="margin-right: 15px;"
+                  @click="saveExam"
+              >Lưu</button>
             </div>
         </div>
         <ChatWindow
@@ -70,15 +65,27 @@
 </template>
 <script>
 import DisplayInfo from './components/DisplayInfo.vue'
-import Button from './components/Button.vue'
 import ChatWindow from './components/ChatWindow.vue'
+import Dropdown from "@/views/components/Dropdown";
+import InputItem from "@/views/components/InputItem";
 export default {
+  props: {
+    petData: {
+      type: Object,
+      default: null
+    }
+  },
     components: {
-        DisplayInfo, Button, ChatWindow
+      InputItem,
+        DisplayInfo, ChatWindow,
+      Dropdown
     },
     data(){
         return{
-            showChatWindow: false
+            showChatWindow: false,
+          serviceList: [],
+          serviceIdList: [],
+          choosenService: ''
         }
     },
     methods: {
@@ -90,8 +97,26 @@ export default {
         },
         hideChatWindow(){
             this.showChatWindow = false
-        }
-    }
+        },
+      chooseService(val) {
+          this.choosenService = val
+      },
+      saveExam() {
+        this.$notify({
+          group: 'default',
+          type: 'success',
+          title: 'Save success!',
+          duration: 3000
+        })
+      }
+
+    },
+  mounted() {
+    this.$store.state.config.allServices.forEach(service => {
+      this.serviceList.push(service.description)
+      this.serviceIdList.push(service.id)
+    })
+  }
 }
 </script>
 <style scoped>

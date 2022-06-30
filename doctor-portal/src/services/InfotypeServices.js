@@ -3,34 +3,34 @@ import { PATHS } from "@/services/paths/InfotypePaths";
 
 export default {
     async saveUser(user) {
+        let urlPath = user.id ? `${PATHS.USERS.UPDATE}` : `${PATHS.USERS.CREATE}`
         const response = await http.request({
-            method: user.id ? 'PUT' : 'POST',
-            url: user.id ? `${PATHS.USERS.UPDATE}` : `${PATHS.USERS.CREATE}`,
-            data: user
+            method: 'GET',
+            url: urlPath + '?' + prepareParams(user)
         })
         return response.data
     },
     async saveDoctor(doctor) {
+        let urlPath = doctor.id ? `${PATHS.DOCTORS.UPDATE}` : `${PATHS.DOCTORS.CREATE}`
         const response = await http.request({
-            method: doctor.id ? 'PUT' : 'POST',
-            url: doctor.id ? `${PATHS.DOCTORS.UPDATE}` : `${PATHS.DOCTORS.CREATE}`,
-            data: doctor
+            method: 'GET',
+            url: urlPath + '?' + prepareParams(doctor)
         })
         return response.data
     },
     async saveSchedule(schedule) {
+        let urlPath = schedule.id ? `${PATHS.SCHEDULES.UPDATE}` : `${PATHS.SCHEDULES.CREATE}`
         const response = await http.request({
-            method: schedule.id ? 'PUT' : 'POST',
-            url: schedule.id ? `${PATHS.SCHEDULES.UPDATE}` : `${PATHS.SCHEDULES.CREATE}`,
-            data: schedule
+            method: 'GET',
+            url: urlPath + '?' + prepareParams(schedule)
         })
         return response.data
     },
     async savePet(pet) {
-        let pathUrl = pet.id ? `${PATHS.PETS.UPDATE}` : `${PATHS.PETS.CREATE}`
+        let urlPath = pet.id ? `${PATHS.PETS.UPDATE}` : `${PATHS.PETS.CREATE}`
         const response = await http.request({
             method: 'GET',
-            url: pathUrl + '?' + prepareParams(pet)
+            url: urlPath + '?' + prepareParams(pet)
         })
         return response.data
     },
@@ -58,11 +58,12 @@ export default {
     async searchPetByUser(user) {
         const response = await http.request({
             method: 'GET',
-            url: `${PATHS.PETS.SEARCH_BY_USER}` + '?' + prepareParams({userId: user.id})
+            url: `${PATHS.PETS.SEARCH_BY_ID}` + '?' + prepareParams(user.id)
         })
         return response.data
     },
     async searchUserAll() {
+        prepareParams(null)
         const response = await http.request({
             method: 'GET',
             url: `${PATHS.USERS.SEARCH_ALL}`
@@ -83,11 +84,18 @@ export default {
         })
         return response.data
     },
+    async searchPetAll() {
+        const response = await http.request({
+            method: 'GET',
+            url: `${PATHS.PETS.SEARCH_ALL}`
+        })
+        return response.data
+    },
     async login(params) {
         const response = await http.request({
             method: 'GET',
             url: `${PATHS.AUTHS.LOGIN}` + '?' + prepareParams(params)
         })
-        return response.data
+        return response
     }
 }

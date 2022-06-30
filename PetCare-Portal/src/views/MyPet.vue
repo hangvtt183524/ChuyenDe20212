@@ -17,7 +17,7 @@
                 </div>                    
             </div>
             <div class="pet-content-holder">
-                <div class="pet-name">Milu
+                <div class="pet-name">{{petData.name}}
                     <div class="pet-name-underline"></div>
                 </div>
                 <router-view></router-view>
@@ -52,20 +52,19 @@ export default {
                     path: '/booking-schedule'
                 }
             ],
-            test: [
-                {
-                    name: this.petId
-                }
-            ]
+          petData: null
         }
     },
     created(){
         // this.petId = this.$route.path.split('/')[2]
         // console.log(this.petId)
+        this.petData = this.$store.state.config.petOfUser.filter(pet => Number(pet.id) === Number(this.petId))[0]
+        this.$store.commit('config/setCurrentPetIndex', Number(this.petId))
         this.setUpPetMenuPath()
     },
-
     mounted(){
+      this.petData = this.$store.state.config.petOfUser.filter(pet => Number(pet.id) === Number(this.petId))[0]
+      this.$store.dispatch('config/choosePet', Number(this.petId))
         this.petMenuItemOnClick(0)
     },
     methods: {
@@ -75,7 +74,6 @@ export default {
             items.forEach(item => {
                 item.classList.remove('selected-item')
             });
-            console.log(items)
             items[index].classList.add('selected-item')
         },
         setUpPetMenuPath(){
