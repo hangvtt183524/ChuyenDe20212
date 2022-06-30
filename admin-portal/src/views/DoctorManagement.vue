@@ -17,7 +17,6 @@
           <th style="width: 20em">Email</th>
           <th style="width: 10em">Địa chỉ</th>
           <th style="width: 15em">Chuyên ngành</th>
-          <th style="width: 11em">Password</th>
           <th style="width: 5em">Actions</th>
         </tr>
         </thead>
