@@ -21,7 +21,6 @@
         <table class="data-table">
           <thead class="header-row">
           <tr>
-<<<<<<< HEAD
             <th style="width: 13em">Tên chủ</th>
             <th style="width: 7em">Tên thú cưng</th>
             <th style="width: 15em">Bác sĩ</th>
@@ -30,15 +29,6 @@
             <th style="width: 10em">Kết quả</th>
             <th style="width: 25em">Tình trạng</th>
             <th style="width: 5em">Actions</th>
-=======
-            <th>Owner</th>
-            <th>Pet</th>
-            <th>Bác sĩ</th>
-            <th>Ngày khám</th>
-            <th>Kết quả</th>
-            <th>Tình trạng</th>
-            <th>Actions</th>
->>>>>>> main
           </tr>
           </thead>
           <tbody class="body-row">
@@ -92,27 +82,6 @@
                   :valueInput="examStatus[exam.status]"
                   @setValue="setStatus"
               />
-<<<<<<< HEAD
-              <!--            <div class="flex">-->
-              <!--              <div class="svg-icon" v-if="exam.isEditing === false">-->
-              <!--                <div v-if="exam.status">-->
-              <!--                  <done-icon class="is-fill-green"/>-->
-              <!--                </div>-->
-              <!--                <div v-else>-->
-              <!--                  <done-icon class="is-fill-gray"/>-->
-              <!--                </div>-->
-              <!--              </div>-->
-              <!--              <div v-else class="svg-icon clickable">-->
-              <!--                <div v-if="exam.status">-->
-              <!--                  <done-icon class="is-fill-green" @click="exam.status=!exam.status"/>-->
-              <!--                </div>-->
-              <!--                <div v-else>-->
-              <!--                  <done-icon class="is-fill-gray" @click="exam.status=!exam.status"/>-->
-              <!--                </div>-->
-              <!--              </div>-->
-              <!--            </div>-->
-=======
->>>>>>> main
             </td>
             <td class="flex">
               <div class="svg-icon clickable" v-if="exam.isEditing === false">
@@ -141,15 +110,7 @@
 
       </div>
     </div>
-<<<<<<< HEAD
-=======
     </div>
-<<<<<<< HEAD
->>>>>>> 2ab1fc80de5dc0b7e05be98759d5b808d3f85988
-  </div>
-
-=======
->>>>>>> main
 </template>
 
 <script>
@@ -289,12 +250,8 @@ export default {
       this.lastIndex = Math.min(this.lastIndex, this.len - 1)
       this.totalPage = Math.ceil(this.exams.length / this.numOfExamsPerPage)
     },
-<<<<<<< HEAD
-    saveExam(exam) {
-=======
     async saveExam(exam) {
       let examIndex = this.exams.indexOf(exam)
->>>>>>> main
       exam.doctor = this.selectedDoctor;
       exam.status = this.selectedStatus;
       this.selectedDoctor = null;
