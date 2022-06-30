@@ -1,6 +1,10 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+
 import Home from "../views/Home.vue";
+import Auth from "../views/Auth.vue";
+  import Login from "../views/Login.vue";
+  import SignUp from "../views/SignUp.vue";
 import BookingSchedule from "../views/BookingSchedule";
 import MyPet from "../views/MyPet.vue";
 import PetInfo from "../views/PetInfo.vue"
@@ -8,56 +12,41 @@ import PetHistory from "../views/PetHistory.vue"
 import NotFound from "../views/NotFound.vue"
 import Login from "../views/Login"
 
-import User from "../views/User.vue"
-import Signup from "../views/SignUp"
+import NotFound from "../views/NotFound";
+
+
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: "/",
-    name: "Home",
+    redirect: '/home',
+  },
+  {
+    path: "/home",
     component: Home,
   },
   {
+    path: '',
+    children: [{
+        path: '/login',
+        component: Login,
+      }, {
+        path: '/sign-up',
+        component: SignUp
+      },
+    ],
+    component: Auth,
+  }, {
     path: "/booking-schedule",
     name: "BookingSchedule",
     component: BookingSchedule,
   },
-    {
-        path: "/not-found",
-        name: "NotFound",
-        component: NotFound
-    },
-    {
-    path: "/login",
-    name: "Login",
-    component: Login
-  },
-  {
-    path: "/signup",
-    name: "Signup",
-    component: Signup
-  },
-  {
-    path: "/my-pet/:petId",
-    name: "MyPet",
-    component: MyPet,
-    children: [
-      {
-        path: "info",
-        component: PetInfo
-      },
-      {
-        path: "history",
-        component: PetHistory
-      }
-    ]
-  },
-  {
-    path: '/user',
-    component: User
-  }
+
+
+  { path: '/:pathMatch(.*)*', component: NotFound },
 ];
+
 
 const router = new VueRouter({
   mode: "history",

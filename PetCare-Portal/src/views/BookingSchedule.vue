@@ -1,81 +1,76 @@
 <template>
-  <div class="blue-bg">
-    <div class="booking-page">
-      <div class="header">
-        Đăng kí lịch khám
-      </div>
-      <div class="booking-content">
-        <div class="booking-part">
-          <InputItem
-              label = "Thú cưng"
-              :isEditing="true"
-              v-model="choosenPet"
-              :placeholder="choosenPet"
-          />
-          <InputItem
-              label = "Ngày khám"
-              :isEditing="true"
-              v-model="chooseDate"
-          />
-          <Button
-              text="Đặt lịch"
-              color="blue"
-              @click.native="saveExam"
-          />
+  <div class="container" align="center">
+    <div id="booking-page flex" class="booking-page">
+      <div class="booking-info">
+        <div class="booking-info-wrapper content-panel">
+          <div class="content-header">
+            <span>Set a schedule</span>
+          </div>
+          <div class="booking-form content-body">
+            <div class="booking-form-input">
+              <div class="left-content">
+                <div class="left-content-wrapper">
+                  <InputItem
+                      label="Your Pet"
+                      :is-editing="true"
+                  />
+                  <InputItem
+                      label="Date"
+                      :is-editing="true"
+                  />
+                    <InputItem
+                      label="Time"
+                      :is-editing="true"
+                  />
+                </div>
+              </div>
+              <div class="right-content">
+                <div class="right-content-wrapper">
+                  <InputItem
+                      label="Doctor"
+                      :is-editing="true"
+                  />
+                  <InputItem
+                      label="Situation"
+                      :is-editing="true"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="button-group">
+              Button
+            </div>
+          </div>
         </div>
-        <div class="booking-part">
-          <InputItem
-              label = "Giờ khám"
-              :isEditing="true"
-              v-model="chooseTime"
-          />
-          <InputItem
-              label = "Ghi chú"
-              :isEditing="true"
-              v-model="chooseDescription"
-              :is-only-numeric="false"
-              :is-only-alpha="false"
-          />
+      </div>
+      <div class="booking-history">
+        <div class="booking-history-wrapper content-panel" v-if="!showHistory">
+          <div
+              class="content-header clickable"
+              @click.stop="showHistory = !showHistory"
+          >
+            <span>History</span>
+            <span class="svg-icon">
+                <down class="is-fill-blue pull-right" />
+              </span>
+          </div>
         </div>
-      </div>
-      <div class="header">
-        Lịch sử khám bệnh
-      </div>
-        <div class="pet-history-table scrollable">
-            <table class="table" ref="table">
-                <thead>
-                    <tr>
-                        <th class="align-center">STT</th>
-                        <th>Tên Bệnh</th>
-                        <th>Bác sĩ</th>
-                        <th class="align-center">Thời gian</th>
-                        <th>Kết luận</th>
-                        <th>Chức năng</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>  
-                        <td class="align-center">1</td>
-                        <td>Rụng lông</td>
-                        <td>VTTHANG</td>
-                        <td class="align-center">12-04-2022</td>
-                        <td>Đã chữa khỏi</td>
-                        <td>
-                            <Button
-                                text="Chi tiết"
-                                color="blue"
-                                @click.native="detailBtnOnClick"
-                            />
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="booking-history-wrapper content-panel" v-if="showHistory">
+          <div
+              class="content-header clickable"
+              @click.stop="showHistory = !showHistory"
+          >
+            <span>History</span>
+            <span class="svg-icon">
+                <up class="is-fill-blue pull-right" />
+              </span>
+          </div>
+          <div class="history-detail">
+
+          </div>
+        </div>
         </div>
     </div>
-    <PetHistoryDetail
-      v-if="showPetHistoryDetail"
-      @exitDetail="hidePetHistoryDetail"
-    />
   </div>
 </template>
 <script>
@@ -141,6 +136,48 @@ export default {
   }
 }
 </script>
-<style scoped>
-  @import url('../assets/styles/bookingschedule.css');
+
+<style lang="scss">
+.booking-page {
+  padding: 20px;
+
+  .booking-info {
+    // max-width: 60%;
+    // min-width: 60%;
+    margin-bottom: 20px;
+    .booking-info-wrapper {
+
+      .booking-form {
+
+        .booking-form-input {
+          display: flex;
+          .left-content {
+            z-index: 19;
+            max-width: 360px;
+            .left-content-wrapper {
+              max-width: 360px;
+              min-width: 360px;
+            }
+          }
+
+          .right-content {
+            margin-left: 0px;
+            z-index: 20;
+            flex: auto;
+
+            .right-content-wrapper {
+              max-width: 360px;
+              min-width: 360px;
+            }
+          }
+        }
+      }
+    }
+  }
+  
+  .booking-history {
+    // max-width: 60%;
+    // min-width: 60%;
+  }
+}
 </style>
