@@ -19,23 +19,22 @@
               <div class="select-content">
                 <div class="dd-item-text">{{this.selectedText}}</div>
               </div>
-              <i class="fas fa-angle-down"></i>
+              <div class="svg-icon clickable">
+                <arrow-icon class="is-fill-blue"/>
+              </div>
+<!--              <i class="fas fa-angle-down"></i>-->
             </div>
 
         </div>
       </div>
       <div v-else>
-        <div v-if="valueInput">
-          {{valueInput}}
-        </div>
-        <div v-else>
-          Chưa có
-        </div>
+        {{valueInput}}
       </div>
     </div>
 </template>
 <script>
-// import Vue from 'vue'
+import Vue from 'vue'
+import arrowIcon from "../../assets/svg/arrow-drop-down.svg"
 export default {
     name: "MDropdown",
     props: {
@@ -55,6 +54,9 @@ export default {
       valueInput: null,
       label: null,
     },
+  components: {
+    arrowIcon
+  },
     data(){
         return{
             selectedIcon: null,
@@ -68,7 +70,7 @@ export default {
     },
     methods: {
         setSelectedItem() {
-          // Vue.nextTick(() => {
+          Vue.nextTick(() => {
             this.items.forEach((item, index) => {
               var itemList = this.$refs.selectList.querySelectorAll('.select-item')
               // this.value = item
@@ -76,7 +78,7 @@ export default {
                 itemList[index].click()
               }
             });
-          // })
+          })
         },
         ddSelectOnclick(){
             this.$refs.selectList.classList.toggle("dd-activate")
